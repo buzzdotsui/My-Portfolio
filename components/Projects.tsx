@@ -12,7 +12,7 @@ const projects: Project[] = [
     description: 'A premium digital agency platform showcasing cutting-edge web solutions. Built with modern React architecture, featuring smooth scroll animations, interactive service showcases, and a focus on high-conversion design.',
     tags: ['React', 'Tailwind CSS', 'UI/UX', 'Netlify'],
     imageUrl: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=800&auto=format&fit=crop',
-    demoUrl: 'https://testytech.netlify.app/',
+    demoUrl: 'https://testytech.pages.dev/',
     featured: true
   },
   {
@@ -21,7 +21,7 @@ const projects: Project[] = [
     description: 'A comprehensive e-learning platform dedicated to empowering African students. Features intuitive course navigation, resource libraries, and a responsive design accessible across devices.',
     tags: ['React', 'Education Tech', 'Platform', 'Responsive'],
     imageUrl: 'https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=800&auto=format&fit=crop',
-    demoUrl: 'https://smartstudy-africa.netlify.app/',
+    demoUrl: 'https://https://smartstudy.pages.dev/',
     featured: true
   },
   {
@@ -31,7 +31,7 @@ const projects: Project[] = [
     tags: ['React', 'TypeScript', 'Tailwind', 'Storybook', 'Real-Time', 'Data-Visualization'],
     imageUrl: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=800&auto=format&fit=crop',
     githubUrl: 'https://github.com/buzzdotsui',
-    demoUrl: 'https://neonguard.netlify.app',
+    demoUrl: 'https://neonguard.pages.dev',
     featured: true
   },
   {
