@@ -18,7 +18,7 @@ const skillCategories: SkillCategory[] = [
   {
     title: "Smart Contracts",
     icon: Hash,
-    skills: ["Sui Move", "Rust", "Solidity", "Smart Contract Security", "Blockchain Architecture"]
+    skills: ["Sui Move", "Rust", "Solidity", "Smart Contract Security", "Blockchain Development", "DApp Integration", "DeFi Protocols"]
   },
   {
     title: "Frontend Engineering",
