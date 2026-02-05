@@ -1,203 +1,145 @@
 import React from 'react';
-import { motion } from 'framer-motion';
-import { ArrowRight, Github } from 'lucide-react';
+import { Github, Linkedin, MapPin, Clock, ArrowRight, Twitter } from 'lucide-react';
 import { SectionId } from '../types';
+import { OptimizedImage } from './ui/OptimizedImage';
+import { Hero3DBackground } from './effects/Hero3DBackground';
+import { TypeAnimation } from 'react-type-animation';
 
 export const Hero: React.FC = () => {
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.1,
-        delayChildren: 0.2
-      }
-    }
-  };
-
-  const itemVariants = {
-    hidden: { opacity: 0, y: 30 },
-    visible: { 
-      opacity: 1, 
-      y: 0,
-      transition: { duration: 0.8, ease: [0.215, 0.61, 0.355, 1] }
-    }
-  };
-
   return (
-    <section id={SectionId.HERO} className="relative min-h-screen flex items-center pt-20 overflow-hidden">
-      
-      {/* Background Elements */}
-      <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden">
-        {/* Animated Moving Grid */}
-        <motion.div 
-          initial={{ opacity: 0, backgroundPosition: "0px 0px" }}
-          animate={{ opacity: 1, backgroundPosition: ["0px 0px", "24px 24px"] }}
-          transition={{ 
-            opacity: { duration: 2 },
-            backgroundPosition: { duration: 4, repeat: Infinity, ease: "linear" }
-          }}
-          className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px]"
-        ></motion.div>
-        
-        {/* Rotating Abstract Glowing Shape - Top/Left */}
-        <motion.div 
-          animate={{ 
-            scale: [1, 1.2, 1],
-            rotate: [0, 90, 0],
-            opacity: [0.15, 0.25, 0.15]
-          }}
-          transition={{ 
-            duration: 20, 
-            repeat: Infinity, 
-            repeatType: "reverse",
-            ease: "easeInOut" 
-          }}
-          className="absolute -top-[10%] -left-[10%] w-[50vw] h-[50vw] rounded-full bg-gradient-to-tr from-primary/20 to-transparent blur-[120px]"
-        ></motion.div>
+    <section id={SectionId.HERO} className="relative pt-32 pb-20 px-4 md:px-6 min-h-[90vh] flex flex-col justify-center overflow-hidden">
 
-        {/* Rotating Abstract Glowing Shape - Bottom/Right */}
-        <motion.div 
-          animate={{ 
-            scale: [1, 1.1, 1],
-            rotate: [0, -60, 0],
-            x: [0, -30, 0],
-            opacity: [0.15, 0.2, 0.15]
-          }}
-          transition={{ 
-            duration: 25, 
-            repeat: Infinity, 
-            repeatType: "reverse",
-            ease: "easeInOut",
-            delay: 2
-          }}
-          className="absolute -bottom-[10%] -right-[10%] w-[60vw] h-[60vw] rounded-full bg-gradient-to-bl from-accent/15 to-transparent blur-[120px]"
-        ></motion.div>
-
-        <div className="absolute inset-0 bg-gradient-to-b from-background via-transparent to-background"></div>
+      {/* Background FX */}
+      <div className="absolute inset-0 z-0">
+        <div className="absolute top-0 left-0 w-full h-full bg-grid-pattern"></div>
+        <div className="absolute top-20 right-0 w-[500px] h-[500px] bg-primary/10 rounded-full blur-[120px] pointer-events-none animate-pulse-glow"></div>
+        <div className="absolute bottom-0 left-0 w-[300px] h-[300px] bg-secondary/10 rounded-full blur-[100px] pointer-events-none"></div>
+        <Hero3DBackground />
       </div>
 
-      <div className="max-w-7xl mx-auto px-6 w-full z-10 relative">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-          
-          {/* Text Content */}
-          <motion.div 
-            variants={containerVariants}
-            initial="hidden"
-            animate="visible"
-          >
-            <motion.div variants={itemVariants} className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-surfaceHighlight border border-border text-xs font-mono text-primary mb-6">
-              <span className="relative flex h-2 w-2">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
-                <span className="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
-              </span>
-              Available for new projects
-            </motion.div>
-            
-            <motion.h1 variants={itemVariants} className="text-5xl md:text-7xl font-bold tracking-tight text-white mb-6 leading-tight">
-              Building fast, cool, <br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-accent">and secure web apps.</span>
-            </motion.h1>
-            
-            <motion.p variants={itemVariants} className="text-lg md:text-xl text-text-muted mb-8 max-w-lg leading-relaxed">
-              Hi, I'm <strong className="text-white font-medium">Testimony Owolabi</strong>. 
-              I combine Full-Stack Engineering with Ethical Hacking to create digital experiences that perform flawlessly and stay secure.
-            </motion.p>
+      <div className="max-w-6xl mx-auto w-full relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
 
-            <motion.div variants={itemVariants} className="flex flex-col sm:flex-row gap-4">
-              <motion.a 
-                href={`#${SectionId.PROJECTS}`}
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="inline-flex items-center justify-center px-6 py-3 text-sm font-medium text-black bg-white rounded hover:bg-gray-100 transition-colors shadow-[0_0_20px_rgba(255,255,255,0.1)]"
-              >
-                View Projects
-                <ArrowRight size={16} className="ml-2" />
-              </motion.a>
-              <motion.a 
-                href={`#${SectionId.CONTACT}`}
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="inline-flex items-center justify-center px-6 py-3 text-sm font-medium text-white bg-surface border border-border rounded hover:bg-surfaceHighlight hover:border-primary/50 transition-colors"
-              >
-                Contact Me
-              </motion.a>
-            </motion.div>
+        {/* Left Column: Identity Data */}
+        <div className="lg:col-span-8 flex flex-col">
 
-            <motion.div variants={itemVariants} className="mt-10 flex items-center gap-6 text-text-muted">
-              <a href="https://github.com/buzzdotsui" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors hover:scale-110 transform duration-200">
-                <Github size={20} />
-              </a>
-              <a href="https://x.com/_buzzdotsui" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors hover:scale-110 transform duration-200" aria-label="X (formerly Twitter)">
-                <svg viewBox="0 0 24 24" aria-hidden="true" className="h-5 w-5 fill-current">
-                  <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
-                </svg>
-              </a>
-            </motion.div>
-          </motion.div>
-
-          {/* Visual Element / Profile Picture - Visible on all devices now */}
-          <motion.div 
-            initial={{ opacity: 0, scale: 0.9, rotate: -2 }}
-            animate={{ opacity: 1, scale: 1, rotate: 0 }}
-            transition={{ duration: 0.8, delay: 0.4, type: "spring" }}
-            className="relative mt-12 lg:mt-0"
-          >
-             {/* Abstract Glow Behind */}
-            <motion.div 
-              animate={{ scale: [1, 1.05, 1], opacity: [0.5, 0.7, 0.5] }}
-              transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
-              className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] h-[300px] md:w-[400px] md:h-[400px] bg-primary/20 rounded-full blur-[120px] -z-10"
-            ></motion.div>
-            
-            <motion.div 
-              whileHover={{ y: -5, rotate: 1 }}
-              transition={{ type: "spring", stiffness: 300 }}
-              className="relative mx-auto w-full max-w-[320px] md:max-w-[380px] aspect-[4/5] bg-surfaceHighlight/30 backdrop-blur-sm border border-white/10 rounded-2xl p-4 shadow-2xl overflow-hidden group"
-            >
-               <div className="absolute inset-0 bg-gradient-to-tr from-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
-               
-               <div className="relative w-full h-full rounded-xl overflow-hidden bg-surface">
-                 <img 
-                   src="https://github.com/buzzdotsui.png" 
-                   alt="Testimony Owolabi" 
-                   className="w-full h-full object-cover filter grayscale group-hover:grayscale-0 transition-all duration-700 ease-in-out scale-105 group-hover:scale-100"
-                 />
-                 
-                 {/* Overlay Text */}
-                 <div className="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-black/90 via-black/50 to-transparent">
-                   <div className="flex items-center gap-2 mb-2">
-                     <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
-                     <span className="text-xs font-mono text-green-400">Online & Coding</span>
-                   </div>
-                   <h3 className="text-xl font-bold text-white">Testimony Owolabi</h3>
-                   <p className="text-sm text-text-muted">@buzzdotsui</p>
-                 </div>
-               </div>
-            </motion.div>
-
-            {/* Floating Badge */}
-            <motion.div 
-              initial={{ x: 20, opacity: 0 }}
-              animate={{ x: 0, opacity: 1, y: [0, -10, 0] }}
-              transition={{ 
-                x: { delay: 0.8, duration: 0.5 },
-                y: { duration: 4, repeat: Infinity, ease: "easeInOut", delay: 1 } 
-              }}
-              className="absolute -right-4 top-10 md:top-20 bg-surface/90 backdrop-blur border border-border p-3 rounded-lg shadow-xl"
-            >
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded bg-blue-500/20 flex items-center justify-center text-blue-400">
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-                </div>
-                <div>
-                  <div className="text-xs text-text-muted">Security</div>
-                  <div className="text-sm font-bold text-white">Certified</div>
-                </div>
+          <div className="flex items-start gap-6 mb-8 animate-slide-up">
+            {/* Avatar */}
+            <div className="shrink-0 w-20 h-20 md:w-24 md:h-24 rounded-full p-[2px] bg-gradient-to-tr from-primary via-secondary to-accent animate-float shadow-lg shadow-primary/20">
+              <div className="w-full h-full rounded-full overflow-hidden border-2 border-background">
+                <OptimizedImage
+                  src="https://github.com/buzzdotsui.png"
+                  alt="Profile"
+                  className="w-full h-full object-cover grayscale contrast-125 hover:grayscale-0 transition-all duration-500"
+                />
               </div>
-            </motion.div>
-          </motion.div>
+            </div>
+
+            <div className="flex-1 pt-2">
+              <div className="flex flex-wrap items-center gap-3 mb-3">
+                <span className="px-2 py-0.5 text-[10px] font-mono rounded-full border border-primary/30 bg-primary/10 text-primary uppercase tracking-wider">Reliability Engineering</span>
+                <span className="px-2 py-0.5 text-[10px] font-mono rounded-full border border-secondary/30 bg-secondary/10 text-secondary uppercase tracking-wider">DevSecOps</span>
+              </div>
+              <h1 className="text-4xl md:text-6xl font-bold tracking-tight leading-tight">
+                <TypeAnimation
+                  sequence={[
+                    'Testimony Owolabi',
+                    3000,
+                    'DevSecOps Engineer',
+                    2000,
+                    'Systems Architect',
+                    2000,
+                  ]}
+                  wrapper="span"
+                  speed={50}
+                  className="text-gradient"
+                  repeat={Infinity}
+                />
+              </h1>
+            </div>
+          </div>
+
+          <p className="text-lg md:text-xl text-text-muted max-w-2xl mb-10 leading-relaxed font-light animate-slide-up-delay-1">
+            Designing <span className="text-text-main font-medium">deterministic infrastructure</span>. I bridge the gap between hardware constraints and cloud scalability, focusing on automated pipelines, security baselines, and
+            <span className="text-primary font-mono bg-primary/5 px-1 mx-1 rounded">99.99%</span>
+            system availability.
+          </p>
+
+          <div className="flex flex-wrap gap-4 animate-slide-up-delay-2">
+            <a
+              href={`#${SectionId.PROJECTS}`}
+              className="px-6 py-3 bg-primary text-white text-sm font-semibold rounded-lg hover:bg-primary-hover hover:shadow-[0_0_20px_rgba(139,92,246,0.4)] transition-all flex items-center gap-2 group"
+            >
+              View Operations
+              <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
+            </a>
+            <a
+              href={`#${SectionId.CONTACT}`}
+              className="px-6 py-3 bg-surfaceHighlight border border-border text-text-main text-sm font-medium rounded-lg hover:bg-surface hover:border-primary/50 transition-colors"
+            >
+              Initiate Contact
+            </a>
+          </div>
+
+          {/* Info Grid */}
+          <div className="mt-16 grid grid-cols-2 md:grid-cols-4 gap-6 pt-8 border-t border-border animate-slide-up-delay-3">
+            <div>
+              <div className="text-[10px] uppercase text-text-dim font-bold mb-2 tracking-widest">Location</div>
+              <div className="flex items-center gap-2 text-sm text-text-muted group">
+                <MapPin size={14} className="text-primary group-hover:animate-bounce" /> Akure, NG
+              </div>
+            </div>
+            <div>
+              <div className="text-[10px] uppercase text-text-dim font-bold mb-2 tracking-widest">Timezone</div>
+              <div className="flex items-center gap-2 text-sm text-text-muted">
+                <Clock size={14} className="text-secondary" /> GMT+1
+              </div>
+            </div>
+            <div>
+              <div className="text-[10px] uppercase text-text-dim font-bold mb-2 tracking-widest">Availability</div>
+              <div className="text-sm text-success font-medium flex items-center gap-2">
+                <span className="w-1.5 h-1.5 rounded-full bg-success animate-pulse"></span>
+                Open to Work
+              </div>
+            </div>
+            <div>
+              <div className="text-[10px] uppercase text-text-dim font-bold mb-2 tracking-widest">Links</div>
+              <div className="flex gap-4 text-text-muted">
+                <a href="https://github.com/buzzdotsui" target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors hover:scale-110 transform duration-200"><Github size={18} /></a>
+                <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors hover:scale-110 transform duration-200"><Linkedin size={18} /></a>
+                <a href="https://x.com/_buzzdotsui" target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors hover:scale-110 transform duration-200"><Twitter size={18} /></a>
+              </div>
+            </div>
+          </div>
         </div>
+
+        {/* Right Column: Tech Stack */}
+        <div className="lg:col-span-4 lg:pl-12 animate-slide-up-delay-3">
+          <div className="p-6 rounded-2xl border border-border bg-surface/30 backdrop-blur-sm relative overflow-hidden group">
+            {/* Glow effect on hover */}
+            <div className="absolute -inset-1 bg-gradient-to-r from-primary to-secondary opacity-0 group-hover:opacity-20 blur transition duration-1000 group-hover:duration-200"></div>
+
+            <div className="relative">
+              <div className="text-[10px] font-mono text-secondary uppercase mb-6 flex items-center gap-2">
+                <span className="w-1 h-1 bg-secondary rounded-full"></span>
+                Core Stack
+              </div>
+              <ul className="space-y-4">
+                {[
+                  { label: 'Orchestration', value: 'K8s / Ansible' },
+                  { label: 'Scripting', value: 'Python / Bash' },
+                  { label: 'Cloud', value: 'AWS / GCP' },
+                  { label: 'OS', value: 'Linux (RHEL)' }
+                ].map((item) => (
+                  <li key={item.label} className="flex justify-between items-center text-sm font-mono border-b border-border pb-2 last:border-0">
+                    <span className="text-text-dim">{item.label}</span>
+                    <span className="text-text-main font-semibold">{item.value}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        </div>
+
       </div>
     </section>
   );

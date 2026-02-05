@@ -1,131 +1,136 @@
 import React, { useState, useEffect } from 'react';
-import { motion, AnimatePresence, useScroll, useSpring } from 'framer-motion';
-import { Menu, X, Terminal } from 'lucide-react';
 import { NavItem, SectionId } from '../types';
+import { Terminal, Menu, X } from 'lucide-react';
+import { ThemeToggle } from './ui/ThemeToggle';
 
 const navItems: NavItem[] = [
-  { label: 'About', href: `#${SectionId.ABOUT}` },
-  { label: 'Skills', href: `#${SectionId.SKILLS}` },
-  { label: 'Projects', href: `#${SectionId.PROJECTS}` },
+  { label: 'Overview', href: `#${SectionId.HERO}` },
+  { label: 'Expertise', href: `#${SectionId.SKILLS}` },
+  { label: 'Work', href: `#${SectionId.PROJECTS}` },
+  { label: 'Documentation', href: `#${SectionId.ABOUT}` },
   { label: 'Contact', href: `#${SectionId.CONTACT}` },
 ];
 
 export const Navbar: React.FC = () => {
-  const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  
-  // Scroll Progress Animation
-  const { scrollYProgress } = useScroll();
-  const scaleX = useSpring(scrollYProgress, {
-    stiffness: 100,
-    damping: 30,
-    restDelta: 0.001
-  });
+  const [scrolled, setScrolled] = useState(false);
+  const [scrollProgress, setScrollProgress] = useState(0);
 
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 20);
+      setScrolled(window.scrollY > 20);
+
+      // Calculate scroll progress
+      const windowHeight = window.innerHeight;
+      const documentHeight = document.documentElement.scrollHeight;
+      const scrollTop = window.scrollY;
+      const progress = (scrollTop / (documentHeight - windowHeight)) * 100;
+      setScrollProgress(progress);
     };
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const scrollToSection = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+  const handleScroll = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
     e.preventDefault();
-    const element = document.querySelector(href);
+    setIsMobileMenuOpen(false);
+
+    const targetId = href.replace('#', '');
+    const element = document.getElementById(targetId);
+
     if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
-      setIsMobileMenuOpen(false);
+      const headerOffset = 80;
+      const elementPosition = element.getBoundingClientRect().top;
+      const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: "smooth"
+      });
+      window.history.pushState(null, '', href);
     }
   };
 
   return (
-    <header 
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 border-b ${
-        isScrolled ? 'glass-nav border-border/50 py-3' : 'bg-transparent border-transparent py-6'
-      }`}
-    >
-      <div className="max-w-7xl mx-auto px-6 flex items-center justify-between">
-        <a 
-          href="#" 
-          onClick={(e) => scrollToSection(e, '#hero')}
-          className="flex items-center gap-2 font-mono text-xl font-bold tracking-tighter text-white group"
-        >
-          <div className="p-1.5 bg-white text-black rounded-md group-hover:shadow-[0_0_15px_rgba(255,255,255,0.5)] transition-shadow duration-300">
-            <Terminal size={18} />
-          </div>
-          <span>buzzdotsui</span>
-        </a>
+    <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled ? 'bg-background/80 backdrop-blur-md border-b border-primary/20 shadow-lg shadow-primary/5' : 'bg-transparent border-transparent'}`}>
+      <div className="w-full px-4 md:px-6 h-16 flex items-center justify-between max-w-7xl mx-auto">
 
-        {/* Desktop Nav */}
-        <nav className="hidden md:flex items-center gap-8">
+        {/* Left: Identity */}
+        <div className="flex items-center gap-4 animate-fade-in">
+          <a
+            href={`#${SectionId.HERO}`}
+            onClick={(e) => handleScroll(e, `#${SectionId.HERO}`)}
+            className="flex items-center gap-2 text-text-main hover:text-primary transition-colors cursor-pointer group"
+          >
+            <div className="p-1.5 rounded-md bg-surfaceHighlight border border-border group-hover:border-primary/50 group-hover:shadow-[0_0_15px_rgba(139,92,246,0.3)] transition-all duration-300">
+              <Terminal size={18} className="text-primary" />
+            </div>
+            <span className="font-mono text-sm font-bold tracking-tight">buzzdotsui</span>
+          </a>
+        </div>
+
+        {/* Right: Desktop Navigation */}
+        <nav className="hidden md:flex items-center gap-1 p-1 bg-surface/50 backdrop-blur-sm border border-border rounded-full px-4 animate-fade-in">
           {navItems.map((item) => (
             <a
               key={item.label}
               href={item.href}
-              onClick={(e) => scrollToSection(e, item.href)}
-              className="text-sm font-medium text-text-muted hover:text-white transition-colors duration-200 relative group"
+              onClick={(e) => handleScroll(e, item.href)}
+              className="text-xs font-medium text-text-muted hover:text-primary transition-colors px-4 py-1.5 rounded-full hover:bg-white/5"
             >
               {item.label}
-              <span className="absolute -bottom-1 left-0 w-0 h-px bg-primary transition-all duration-300 group-hover:w-full" />
             </a>
           ))}
-          <a
-            href="#contact"
-            onClick={(e) => scrollToSection(e, '#contact')}
-            className="px-4 py-2 text-sm font-medium text-black bg-white rounded hover:bg-gray-200 transition-colors duration-200"
-          >
-            Hire Me
-          </a>
         </nav>
 
-        {/* Mobile Toggle */}
-        <button 
-          className="md:hidden text-white"
-          onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-          aria-label="Toggle menu"
-        >
-          {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
-        </button>
+        {/* Status Indicator & Theme Toggle */}
+        <div className="hidden md:flex items-center gap-3 pl-4 border-l border-border animate-fade-in">
+          <span className="relative flex h-2.5 w-2.5">
+            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-success opacity-75"></span>
+            <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-success"></span>
+          </span>
+          <span className="text-xs font-mono text-primary font-medium tracking-wide">v2.0 Online</span>
+          <ThemeToggle />
+        </div>
+
+        {/* Mobile Toggle & Theme */}
+        <div className="md:hidden flex items-center gap-2">
+          <ThemeToggle />
+          <button
+            className="text-text-muted hover:text-primary transition-colors p-2"
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            aria-label="Toggle Menu"
+          >
+            {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+          </button>
+        </div>
+
       </div>
 
-      {/* Scroll Progress Bar */}
-      <motion.div
-        className="absolute bottom-0 left-0 right-0 h-[2px] bg-gradient-to-r from-primary to-accent origin-left"
-        style={{ scaleX }}
-      />
+      {/* Mobile Dropdown */}
+      {isMobileMenuOpen && (
+        <div className="absolute top-16 left-0 right-0 bg-background/95 backdrop-blur-xl border-b border-border p-4 flex flex-col gap-2 shadow-2xl md:hidden animate-slide-up origin-top">
+          {navItems.map((item) => (
+            <a
+              key={item.label}
+              href={item.href}
+              onClick={(e) => handleScroll(e, item.href)}
+              className="text-sm font-medium text-text-muted hover:text-primary hover:bg-white/5 transition-all p-3 rounded-lg flex items-center gap-3"
+            >
+              <span className="w-1.5 h-1.5 rounded-full bg-primary/50"></span>
+              {item.label}
+            </a>
+          ))}
+        </div>
+      )}
 
-      {/* Mobile Nav */}
-      <AnimatePresence>
-        {isMobileMenuOpen && (
-          <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: 'auto' }}
-            exit={{ opacity: 0, height: 0 }}
-            className="md:hidden glass-nav border-b border-border/50 overflow-hidden"
-          >
-            <nav className="flex flex-col p-6 space-y-4">
-              {navItems.map((item) => (
-                <a
-                  key={item.label}
-                  href={item.href}
-                  onClick={(e) => scrollToSection(e, item.href)}
-                  className="text-lg font-medium text-text-muted hover:text-white transition-colors"
-                >
-                  {item.label}
-                </a>
-              ))}
-              <a
-                href="#contact"
-                onClick={(e) => scrollToSection(e, '#contact')}
-                className="inline-block text-center px-4 py-3 text-sm font-medium text-black bg-white rounded mt-4"
-              >
-                Hire Me
-              </a>
-            </nav>
-          </motion.div>
-        )}
-      </AnimatePresence>
+      {/* Scroll Progress Bar */}
+      <div className="absolute bottom-0 left-0 right-0 h-[2px] bg-border">
+        <div
+          className="h-full bg-gradient-to-r from-primary via-secondary to-accent transition-all duration-100"
+          style={{ width: `${scrollProgress}%` }}
+        />
+      </div>
     </header>
   );
 };

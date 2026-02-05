@@ -1,42 +1,25 @@
 import React from 'react';
-import { motion } from 'framer-motion';
 
 interface SectionHeadingProps {
   title: string;
   subtitle?: string;
-  centered?: boolean;
+  number?: string;
 }
 
-export const SectionHeading: React.FC<SectionHeadingProps> = ({ title, subtitle, centered = false }) => {
+export const SectionHeading: React.FC<SectionHeadingProps> = ({ title, subtitle, number }) => {
   return (
-    <div className={`mb-12 ${centered ? 'text-center' : 'text-left'}`}>
-      <motion.h2 
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.5 }}
-        className="text-3xl md:text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-white to-white/60"
-      >
-        {title}
-      </motion.h2>
+    <div className="flex flex-col gap-2 pb-6 border-b border-border mb-8">
+      <div className="flex items-baseline gap-3">
+        {number && <span className="text-xs font-mono text-text-dim">{number}</span>}
+        <h2 className="text-xl font-semibold text-text-main tracking-tight">
+          {title}
+        </h2>
+      </div>
       {subtitle && (
-        <motion.p 
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5, delay: 0.1 }}
-          className="mt-4 text-text-muted text-lg max-w-2xl mx-auto"
-        >
+        <p className="text-sm text-text-muted max-w-2xl font-normal pl-[2rem]">
           {subtitle}
-        </motion.p>
+        </p>
       )}
-      <motion.div 
-        initial={{ scaleX: 0 }}
-        whileInView={{ scaleX: 1 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.8, delay: 0.2 }}
-        className={`h-px bg-gradient-to-r from-primary/50 to-transparent mt-6 ${centered ? 'mx-auto w-24' : 'w-24'}`} 
-      />
     </div>
   );
 };

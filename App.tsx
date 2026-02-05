@@ -1,6 +1,4 @@
-import React, { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { ArrowUp } from 'lucide-react';
+import React, { useState } from 'react';
 import { Navbar } from './components/Navbar';
 import { Hero } from './components/Hero';
 import { About } from './components/About';
@@ -8,48 +6,49 @@ import { Skills } from './components/Skills';
 import { Projects } from './components/Projects';
 import { Contact } from './components/Contact';
 import { Footer } from './components/Footer';
+import { ProjectDetail } from './components/ProjectDetail';
+import { Project } from './types';
+import { ThemeProvider } from './contexts/ThemeContext';
+import { ParticleBackground } from './components/effects/ParticleBackground';
+import { SplashScreen } from './components/effects/SplashScreen';
+import { MagneticCursor } from './components/effects/MagneticCursor';
 
 function App() {
-  const [showScrollTop, setShowScrollTop] = useState(false);
+  const [selectedProject, setSelectedProject] = useState<Project | null>(null);
+  const [showSplash, setShowSplash] = useState(true);
 
-  useEffect(() => {
-    const handleScroll = () => {
-      setShowScrollTop(window.scrollY > 400);
-    };
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
-  const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
+  if (selectedProject) {
+    return (
+      <ThemeProvider>
+        <ProjectDetail
+          project={selectedProject}
+          onBack={() => setSelectedProject(null)}
+        />
+      </ThemeProvider>
+    );
+  }
 
   return (
-    <main className="bg-background min-h-screen text-text-main font-sans selection:bg-primary/30 selection:text-white">
-      <Navbar />
-      <Hero />
-      <About />
-      <Skills />
-      <Projects />
-      <Contact />
-      <Footer />
+    <ThemeProvider>
+      {showSplash && <SplashScreen onComplete={() => setShowSplash(false)} />}
 
-      {/* Scroll To Top Button */}
-      <AnimatePresence>
-        {showScrollTop && (
-          <motion.button
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: 20 }}
-            onClick={scrollToTop}
-            className="fixed bottom-8 right-8 z-40 p-3 bg-surface border border-border rounded-full text-primary hover:bg-primary hover:text-white transition-colors duration-300 shadow-lg"
-            aria-label="Scroll to top"
-          >
-            <ArrowUp size={24} />
-          </motion.button>
-        )}
-      </AnimatePresence>
-    </main>
+      {!showSplash && (
+        <>
+          <ParticleBackground />
+          <MagneticCursor />
+
+          <main className="bg-background min-h-screen text-text-main font-sans">
+            <Navbar />
+            <Hero />
+            <Skills />
+            <Projects onProjectSelect={setSelectedProject} />
+            <About />
+            <Contact />
+            <Footer />
+          </main>
+        </>
+      )}
+    </ThemeProvider>
   );
 }
 

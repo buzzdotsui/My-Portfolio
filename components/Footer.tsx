@@ -1,33 +1,25 @@
 import React from 'react';
-import { Terminal, Github, Linkedin } from 'lucide-react';
+import { Terminal } from 'lucide-react';
 
 export const Footer: React.FC = () => {
   return (
-    <footer className="py-8 border-t border-border/50 bg-background">
-      <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-4">
-        <div className="flex items-center gap-2 text-white">
-          <Terminal size={16} />
-          <span className="font-mono font-bold tracking-tighter">buzzdotsui</span>
+    <footer className="py-8 border-t border-border bg-background relative z-10">
+      <div className="max-w-6xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-4">
+        
+        <div className="flex items-center gap-2 text-text-dim hover:text-primary transition-colors cursor-default">
+          <Terminal size={14} />
+          <span className="font-mono text-xs">buzzdotsui_sys_v2.4.0</span>
         </div>
         
-        <p className="text-sm text-text-muted">
-          © {new Date().getFullYear()} Testimony Owolabi. All rights reserved.
-        </p>
-        
-        <div className="flex items-center gap-6 text-sm text-text-muted">
-           <a href="https://github.com/buzzdotsui" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors flex items-center gap-2">
-             <Github size={16} />
-             <span>GitHub</span>
+        <div className="flex gap-6 text-xs text-text-muted font-medium uppercase tracking-wider">
+           <a href="https://github.com/buzzdotsui" target="_blank" rel="noopener noreferrer" className="hover:text-primary hover:underline underline-offset-4 transition-all">
+             GitHub
            </a>
-           <a href="https://www.linkedin.com/in/testimony-owolabi/" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors flex items-center gap-2">
-             <Linkedin size={16} />
-             <span>LinkedIn</span>
+           <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="hover:text-primary hover:underline underline-offset-4 transition-all">
+             LinkedIn
            </a>
-           <a href="https://x.com/_buzzdotsui" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors flex items-center gap-2">
-             <svg viewBox="0 0 24 24" aria-hidden="true" className="h-4 w-4 fill-current">
-               <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
-             </svg>
-             <span>X</span>
+           <a href="https://x.com/_buzzdotsui" target="_blank" rel="noopener noreferrer" className="hover:text-primary hover:underline underline-offset-4 transition-all">
+             X / Twitter
            </a>
         </div>
       </div>
