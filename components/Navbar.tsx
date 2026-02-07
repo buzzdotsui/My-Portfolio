@@ -11,6 +11,7 @@ const navItems: NavItem[] = [
   { label: 'Contact', href: `#${SectionId.CONTACT}` },
 ];
 
+
 export const Navbar: React.FC = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
