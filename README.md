@@ -198,3 +198,4 @@ I build **unbreakable, secure-by-default** infrastructure. I bridge the gap betw
 </div>
 
 <img width="100%" src="https://capsule-render.vercel.app/api?type=waving&color=0:8B5CF6,50:06b6d4,100:8B5CF6&height=100&section=footer"/>
+  
