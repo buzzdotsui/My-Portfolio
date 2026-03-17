@@ -32,34 +32,77 @@
     <meta name="twitter:description" content="DevSecOps &amp; Systems Reliability Engineer specialising in Kubernetes, AWS, GCP, infrastructure automation, and zero-trust security." />
     <meta name="twitter:image" content="https://github.com/buzzdotsui.png" />
 
-    <!-- Schema.org Person -->
+    <!-- Schema.org @graph: Person + WebSite + ProfilePage -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
-      "@type": "Person",
-      "name": "Testimony Owolabi",
-      "url": "https://testimonyowolabi.pages.dev/",
-      "image": "https://github.com/buzzdotsui.png",
-      "jobTitle": "DevSecOps & Systems Reliability Engineer",
-      "description": "DevSecOps & SRE engineer specialising in infrastructure automation, Kubernetes, AWS, GCP, zero-trust security, and high-availability systems.",
-      "address": {
-        "@type": "PostalAddress",
-        "addressLocality": "Akure",
-        "addressCountry": "NG"
-      },
-      "sameAs": [
-        "https://github.com/buzzdotsui",
-        "https://x.com/testytech_pr",
-        "https://instagram.com/testytech_pr",
-        "https://facebook.com/TESTYPR",
-        "https://medium.com/@owolabitestimony"
+      "@graph": [
+        {
+          "@type": "Person",
+          "@id": "https://testimonyowolabi.pages.dev/#person",
+          "name": "Testimony Owolabi",
+          "url": "https://testimonyowolabi.pages.dev/",
+          "image": "https://github.com/buzzdotsui.png",
+          "jobTitle": "DevSecOps & Systems Reliability Engineer",
+          "description": "DevSecOps & SRE engineer with 3+ years specialising in infrastructure automation, Kubernetes, AWS, GCP, zero-trust security, and high-availability systems.",
+          "knowsAbout": ["DevSecOps", "Site Reliability Engineering", "Kubernetes", "Ansible", "AWS", "GCP", "Linux", "Python", "Infrastructure as Code", "CI/CD", "Zero Trust Security"],
+          "address": {
+            "@type": "PostalAddress",
+            "addressLocality": "Akure",
+            "addressCountry": "NG"
+          },
+          "contactPoint": {
+            "@type": "ContactPoint",
+            "email": "owolabitestimony7724@gmail.com",
+            "contactType": "professional",
+            "availableLanguage": "English",
+            "hoursAvailable": {
+              "@type": "OpeningHoursSpecification",
+              "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday"]
+            }
+          },
+          "sameAs": [
+            "https://github.com/buzzdotsui",
+            "https://x.com/testytech_pr",
+            "https://instagram.com/testytech_pr",
+            "https://facebook.com/TESTYPR",
+            "https://medium.com/@owolabitestimony"
+          ]
+        },
+        {
+          "@type": "WebSite",
+          "@id": "https://testimonyowolabi.pages.dev/#website",
+          "url": "https://testimonyowolabi.pages.dev/",
+          "name": "Testimony Owolabi — DevSecOps & SRE Portfolio",
+          "description": "Portfolio of Testimony Owolabi, a DevSecOps & SRE engineer specialising in infrastructure automation and high-availability systems.",
+          "author": { "@id": "https://testimonyowolabi.pages.dev/#person" },
+          "inLanguage": "en-US"
+        },
+        {
+          "@type": "ProfilePage",
+          "@id": "https://testimonyowolabi.pages.dev/#profilepage",
+          "url": "https://testimonyowolabi.pages.dev/",
+          "name": "Testimony Owolabi | DevSecOps & SRE Engineer",
+          "isPartOf": { "@id": "https://testimonyowolabi.pages.dev/#website" },
+          "about": { "@id": "https://testimonyowolabi.pages.dev/#person" },
+          "datePublished": "2024-01-01",
+          "dateModified": "2026-03-17",
+          "inLanguage": "en-US"
+        }
       ]
     }
     </script>
 
+    <!-- Performance: DNS prefetch & resource hints -->
+    <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
+    <link rel="dns-prefetch" href="https://fonts.gstatic.com" />
+    <link rel="dns-prefetch" href="https://images.unsplash.com" />
+    <link rel="dns-prefetch" href="https://github.com" />
+
     <!-- Fonts: Inter for UI, JetBrains Mono for Data -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
   </head>
   <body>

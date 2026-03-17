@@ -133,7 +133,7 @@ export const Contact: React.FC = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
 
           {/* Direct Info */}
-          <div className="space-y-8">
+          <address className="not-italic space-y-8" aria-label="Contact information">
             <p className="text-base text-text-muted leading-relaxed">
               Available for contract work and full-time positions focusing on infrastructure reliability and security. I typically respond within 24 hours.
             </p>
@@ -180,7 +180,7 @@ export const Contact: React.FC = () => {
                 </div>
               </div>
             )}
-          </div>
+          </address>
 
           {/* Form */}
           <form onSubmit={handleSubmit} className="space-y-6">

@@ -83,6 +83,21 @@ export const Hero: React.FC = () => {
             </a>
           </div>
 
+          {/* Trust Bar — E-E-A-T Experience signals */}
+          <div className="mt-8 flex flex-wrap gap-4 animate-slide-up-delay-2">
+            {[
+              { value: '3+', label: 'Years in Ops' },
+              { value: '4', label: 'Open-source Tools' },
+              { value: '99.95%', label: 'Uptime SLO' },
+              { value: '24h', label: 'Response Time' },
+            ].map(({ value, label }) => (
+              <div key={label} className="flex items-center gap-3 px-4 py-2.5 rounded-lg border border-border bg-surface/40 backdrop-blur-sm hover:border-primary/40 hover:bg-surface/70 transition-all">
+                <span className="text-lg font-bold font-mono text-primary leading-none">{value}</span>
+                <span className="text-[11px] text-text-dim uppercase tracking-wider leading-tight">{label}</span>
+              </div>
+            ))}
+          </div>
+
           {/* Info Grid */}
           <div className="mt-16 grid grid-cols-2 md:grid-cols-4 gap-6 pt-8 border-t border-border animate-slide-up-delay-3">
             <div>
