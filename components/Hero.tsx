@@ -1,5 +1,5 @@
 import React from 'react';
-import { Github, Linkedin, MapPin, Clock, ArrowRight, Twitter } from 'lucide-react';
+import { Github, Linkedin, MapPin, Clock, ArrowRight, Twitter, Instagram } from 'lucide-react';
 import { SectionId } from '../types';
 import { OptimizedImage } from './ui/OptimizedImage';
 import { Hero3DBackground } from './effects/Hero3DBackground';
@@ -40,6 +40,8 @@ export const Hero: React.FC = () => {
                 <span className="px-2 py-0.5 text-[10px] font-mono rounded-full border border-secondary/30 bg-secondary/10 text-secondary uppercase tracking-wider">DevSecOps</span>
               </div>
               <h1 className="text-4xl md:text-6xl font-bold tracking-tight leading-tight">
+                {/* sr-only static text keeps a stable H1 for SEO crawlers */}
+                <span className="sr-only">Testimony Owolabi — DevSecOps &amp; SRE Engineer</span>
                 <TypeAnimation
                   sequence={[
                     'Testimony Owolabi',
@@ -52,6 +54,7 @@ export const Hero: React.FC = () => {
                   wrapper="span"
                   speed={50}
                   className="text-gradient"
+                  aria-hidden="true"
                   repeat={Infinity}
                 />
               </h1>
@@ -104,9 +107,10 @@ export const Hero: React.FC = () => {
             <div>
               <div className="text-[10px] uppercase text-text-dim font-bold mb-2 tracking-widest">Links</div>
               <div className="flex gap-4 text-text-muted">
-                <a href="https://github.com/buzzdotsui" target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors hover:scale-110 transform duration-200"><Github size={18} /></a>
-                <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors hover:scale-110 transform duration-200"><Linkedin size={18} /></a>
-                <a href="https://x.com/_buzzdotsui" target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors hover:scale-110 transform duration-200"><Twitter size={18} /></a>
+                <a href="https://github.com/buzzdotsui" target="_blank" rel="noopener noreferrer" aria-label="GitHub" className="hover:text-primary transition-colors hover:scale-110 transform duration-200"><Github size={18} /></a>
+                <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" className="hover:text-primary transition-colors hover:scale-110 transform duration-200"><Linkedin size={18} /></a>
+                <a href="https://x.com/testytech_pr" target="_blank" rel="noopener noreferrer" aria-label="X / Twitter" className="hover:text-primary transition-colors hover:scale-110 transform duration-200"><Twitter size={18} /></a>
+                <a href="https://instagram.com/testytech_pr" target="_blank" rel="noopener noreferrer" aria-label="Instagram" className="hover:text-primary transition-colors hover:scale-110 transform duration-200"><Instagram size={18} /></a>
               </div>
             </div>
           </div>
