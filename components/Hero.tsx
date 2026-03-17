@@ -27,9 +27,9 @@ export const Hero: React.FC = () => {
             <div className="shrink-0 w-20 h-20 md:w-24 md:h-24 rounded-full p-[2px] bg-gradient-to-tr from-primary via-secondary to-accent animate-float shadow-lg shadow-primary/20">
               <div className="w-full h-full rounded-full overflow-hidden border-2 border-background">
                 <OptimizedImage
-                  src="https://github.com/buzzdotsui.png"
-                  alt="Profile"
-                  className="w-full h-full object-cover grayscale contrast-125 hover:grayscale-0 transition-all duration-500"
+                  src="/profile.jpg"
+                  alt="Testimony Owolabi — DevSecOps & SRE Engineer"
+                  className="w-full h-full object-cover object-top hover:grayscale-0 transition-all duration-500"
                 />
               </div>
             </div>
