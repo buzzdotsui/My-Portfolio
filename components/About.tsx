@@ -8,10 +8,20 @@ const credentials = [
   { label: 'CIS Benchmark Practitioner', status: 'Active', color: 'text-success border-success/30 bg-success/5' },
   { label: 'AWS Cloud Practitioner', status: 'In Progress', color: 'text-secondary border-secondary/30 bg-secondary/5' },
   { label: 'CompTIA Security+', status: 'Studying', color: 'text-primary border-primary/30 bg-primary/5' },
-  { label: 'B.Eng. Metallurgical Engineering', status: 'Completed', color: 'text-success border-success/30 bg-success/5' },
+  { label: 'B.Eng. Metallurgical Engineering', status: 'In Progress', color: 'text-success border-success/30 bg-success/5' },
 ];
 
 const writings = [
+  {
+    title: 'Engineering the Future of Intelligent Industry in Africa',
+    url: 'https://owolabitestimony.medium.com/engineering-the-future-of-intelligent-industry-in-africa-9984c5f2885f',
+    desc: 'Industrial progress has always been driven by people who look at existing systems and ask a simple question: Can this be done better?.',
+  },
+  {
+    title: 'Inside Metabotics: Engineering the Brain of Smart Factories',
+    url: 'https://owolabitestimony.medium.com/inside-metabotics-engineering-the-brain-of-smart-factories-2ad030054f79',
+    desc: 'Metabotics designs intelligent monitoring and automation systems that transform industrial processes into self-optimizing, data-driven assets.',
+  },
   {
     title: 'Infrastructure Automation with Ansible',
     url: 'https://medium.com/@owolabitestimony',
