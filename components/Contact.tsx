@@ -86,10 +86,18 @@ export const Contact: React.FC = () => {
 
         setTimeout(() => setFormState('idle'), 3000);
       }
-    } catch (error) {
-      console.error('EmailJS Error:', error);
+    } catch (error: any) {
+      console.error('EmailJS Error Details:', {
+        error,
+        message: error?.text || error?.message,
+        status: error?.status,
+        config: {
+          serviceId: EMAILJS_CONFIG.SERVICE_ID,
+          templateId: EMAILJS_CONFIG.TEMPLATE_ID,
+        }
+      });
       setFormState('error');
-      toast.error('Failed to send message. Please try emailing me directly.', {
+      toast.error(`Failed: ${error?.text || error?.message || 'Unknown error'}. Try emailing directly.`, {
         duration: 4000,
         icon: '❌',
         style: {

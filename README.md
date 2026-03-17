@@ -105,8 +105,7 @@ I build **unbreakable, secure-by-default** infrastructure. I bridge the gap betw
 <br/>
 
 <div align="center">
-  <!-- Building Streak -->
-  <img src="https://github-readme-streak-stats.herokuapp.com/?user=buzzdotsui&theme=dark&hide_border=true&background=0d1117&ring=8B5CF6&fire=06b6d4&currStreakLabel=8B5CF6" alt="GitHub Streak" />
+  <img src="https://streak-stats.demolab.com/?user=buzzdotsui&theme=dark&hide_border=true&background=0d1117&ring=8B5CF6&fire=06b6d4&currStreakLabel=8B5CF6" alt="GitHub Streak" />
 </div>
 
 <br/>
