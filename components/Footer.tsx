@@ -1,5 +1,5 @@
 import React from 'react';
-import { Terminal, Github, Twitter, Instagram, Facebook, BookOpen } from 'lucide-react';
+import { Terminal, Github, Linkedin, Twitter, Instagram, Facebook, BookOpen } from 'lucide-react';
 import { SectionId } from '../types';
 
 export const Footer: React.FC = () => {
@@ -12,6 +12,7 @@ export const Footer: React.FC = () => {
 
   const socials = [
     { label: 'GitHub',    href: 'https://github.com/buzzdotsui',          icon: <Github size={15} /> },
+    { label: 'LinkedIn',  href: 'https://www.linkedin.com/in/testimony-owolabi', icon: <Linkedin size={15} /> },
     { label: 'X',         href: 'https://x.com/testytech_pr',             icon: <Twitter size={15} /> },
     { label: 'Instagram', href: 'https://instagram.com/testytech_pr',     icon: <Instagram size={15} /> },
     { label: 'Facebook',  href: 'https://facebook.com/TESTYPR',           icon: <Facebook size={15} /> },

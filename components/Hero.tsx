@@ -123,7 +123,7 @@ export const Hero: React.FC = () => {
               <div className="text-[10px] uppercase text-text-dim font-bold mb-2 tracking-widest">Links</div>
               <div className="flex gap-4 text-text-muted">
                 <a href="https://github.com/buzzdotsui" target="_blank" rel="noopener noreferrer" aria-label="GitHub" className="hover:text-primary transition-colors hover:scale-110 transform duration-200"><Github size={18} /></a>
-                <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" className="hover:text-primary transition-colors hover:scale-110 transform duration-200"><Linkedin size={18} /></a>
+                <a href="https://www.linkedin.com/in/testimony-owolabi" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" className="hover:text-primary transition-colors hover:scale-110 transform duration-200"><Linkedin size={18} /></a>
                 <a href="https://x.com/testytech_pr" target="_blank" rel="noopener noreferrer" aria-label="X / Twitter" className="hover:text-primary transition-colors hover:scale-110 transform duration-200"><Twitter size={18} /></a>
                 <a href="https://instagram.com/testytech_pr" target="_blank" rel="noopener noreferrer" aria-label="Instagram" className="hover:text-primary transition-colors hover:scale-110 transform duration-200"><Instagram size={18} /></a>
               </div>
