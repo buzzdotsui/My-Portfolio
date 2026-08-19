@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { SectionId } from '../types';
-import { SectionHeading } from './ui/SectionHeading';
-import { Mail, Copy, Check, Send, AlertCircle, CheckCircle } from 'lucide-react';
+import { Mail, Copy, Check, Send, AlertCircle, ArrowRight } from 'lucide-react';
 import { MotionWrapper } from './ui/MotionWrapper';
 import emailjs from 'emailjs-com';
 import toast, { Toaster } from 'react-hot-toast';
@@ -9,18 +8,11 @@ import toast, { Toaster } from 'react-hot-toast';
 // ========================================
 // EMAILJS CONFIGURATION
 // ========================================
-// Your EmailJS credentials from https://www.emailjs.com/
 const EMAILJS_CONFIG = {
-  SERVICE_ID: 'service_dd5v77m',           // ✅ Configured
-  TEMPLATE_ID: 'template_eehdjv3',         // ✅ Configured
-  PUBLIC_KEY: 'Ios-Y4WNV37Naxn8W',         // ✅ Configured
+  SERVICE_ID: 'service_dd5v77m',
+  TEMPLATE_ID: 'template_eehdjv3',
+  PUBLIC_KEY: 'Ios-Y4WNV37Naxn8W',
 };
-
-// Template variables to use in your EmailJS template:
-// {{from_name}}   - The sender's name
-// {{from_email}}  - The sender's email
-// {{message}}     - The message content
-// {{to_email}}    - Your email (optional, can be set in EmailJS dashboard)
 
 export const Contact: React.FC = () => {
   const [formState, setFormState] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle');
@@ -28,7 +20,6 @@ export const Contact: React.FC = () => {
   const [copied, setCopied] = useState(false);
   const [isConfigured, setIsConfigured] = useState(false);
 
-  // Check if EmailJS is configured
   useEffect(() => {
     const configured =
       EMAILJS_CONFIG.SERVICE_ID !== 'YOUR_SERVICE_ID' &&
@@ -48,7 +39,7 @@ export const Contact: React.FC = () => {
     if (!isConfigured) {
       toast.error('Contact form not configured. Please set up EmailJS credentials.', {
         duration: 4000,
-        icon: '⚠️',
+        style: { background: '#1c2936', color: '#f59e0b', border: '1px solid #f59e0b30' },
       });
       return;
     }
@@ -56,10 +47,8 @@ export const Contact: React.FC = () => {
     setFormState('submitting');
 
     try {
-      // Initialize EmailJS with public key
       emailjs.init(EMAILJS_CONFIG.PUBLIC_KEY);
 
-      // Send email using EmailJS
       const result = await emailjs.send(
         EMAILJS_CONFIG.SERVICE_ID,
         EMAILJS_CONFIG.TEMPLATE_ID,
@@ -67,7 +56,7 @@ export const Contact: React.FC = () => {
           from_name: formData.name,
           from_email: formData.email,
           message: formData.message,
-          to_email: 'owolabitestimony7724@gmail.com', // Your email
+          to_email: 'owolabitestimony7724@gmail.com',
         },
         EMAILJS_CONFIG.PUBLIC_KEY
       );
@@ -75,35 +64,19 @@ export const Contact: React.FC = () => {
       if (result.status === 200) {
         setFormState('success');
         setFormData({ name: '', email: '', message: '' });
-        toast.success('Message sent successfully! I\'ll get back to you soon.', {
+        toast.success('Message sent successfully. I\'ll get back to you soon.', {
           duration: 4000,
-          icon: '✉️',
-          style: {
-            background: '#10b981',
-            color: '#ffffff',
-          },
+          style: { background: '#1c2936', color: '#10b981', border: '1px solid #10b98130' },
         });
 
         setTimeout(() => setFormState('idle'), 3000);
       }
     } catch (error: any) {
-      console.error('EmailJS Error Details:', {
-        error,
-        message: error?.text || error?.message,
-        status: error?.status,
-        config: {
-          serviceId: EMAILJS_CONFIG.SERVICE_ID,
-          templateId: EMAILJS_CONFIG.TEMPLATE_ID,
-        }
-      });
+      console.error('EmailJS Error Details:', error);
       setFormState('error');
-      toast.error(`Failed: ${error?.text || error?.message || 'Unknown error'}. Try emailing directly.`, {
+      toast.error(`Transmission failed. Try emailing directly.`, {
         duration: 4000,
-        icon: '❌',
-        style: {
-          background: '#ef4444',
-          color: '#ffffff',
-        },
+        style: { background: '#1c2936', color: '#ef4444', border: '1px solid #ef444430' },
       });
 
       setTimeout(() => setFormState('idle'), 3000);
@@ -113,159 +86,170 @@ export const Contact: React.FC = () => {
   const copyEmail = () => {
     navigator.clipboard.writeText('owolabitestimony7724@gmail.com');
     setCopied(true);
-    toast.success('Email copied to clipboard!', {
+    toast.success('Address copied to clipboard', {
       duration: 2000,
-      icon: '📋',
+      style: { background: '#1c2936', color: '#0ea5e9', border: '1px solid #0ea5e930' },
     });
     setTimeout(() => setCopied(false), 2000);
   };
 
   return (
-    <section id={SectionId.CONTACT} className="py-20 px-4 md:px-6 bg-background relative overflow-hidden">
+    <section id={SectionId.CONTACT} className="py-28 px-5 md:px-8 border-t border-border/40 bg-surface/20 relative overflow-hidden">
       <Toaster position="bottom-right" />
 
-      {/* Background glow */}
-      <div className="absolute bottom-0 right-0 w-[500px] h-[500px] bg-primary/5 rounded-full blur-[100px] pointer-events-none"></div>
+      {/* Subtle background element */}
+      <div className="absolute bottom-0 right-0 w-[500px] h-[500px] bg-primary/5 rounded-full blur-[140px] pointer-events-none" />
 
       <MotionWrapper className="max-w-6xl mx-auto relative z-10">
-        <SectionHeading title="Communication Interface" number="04" />
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+        {/* Header */}
+        <div className="mb-14 reveal">
+          <div className="mono-label mb-5 flex items-center gap-2">
+            <span className="w-4 h-px bg-primary/50" />
+            07 — Contact
+          </div>
+          <h2 className="text-3xl md:text-5xl font-bold text-text-main mb-4" style={{ fontFamily: 'Space Grotesk, Inter, sans-serif' }}>
+            Let's build something<br />meaningful.
+          </h2>
+          <p className="text-base text-text-muted max-w-xl">
+            I'm interested in software engineering roles, intelligent industrial systems, materials technology research, and ambitious technical projects.
+          </p>
+        </div>
 
-          {/* Direct Info */}
-          <address className="not-italic space-y-8" aria-label="Contact information">
-            <p className="text-base text-text-muted leading-relaxed">
-              Available for contract work and full-time positions focusing on infrastructure reliability and security. I typically respond within 24 hours.
-            </p>
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-12 lg:gap-16">
 
-            <div className="p-6 border border-border bg-surface/30 rounded-xl hover:border-primary/30 transition-colors group">
-              <div className="text-xs font-mono text-text-dim uppercase mb-3 flex items-center gap-2">
-                <Mail size={12} /> Primary Channel
+          {/* Form */}
+          <div className="md:col-span-7 reveal-left">
+            <form onSubmit={handleSubmit} className="p-6 md:p-8 rounded-lg border border-border bg-surface/60 corner-marks">
+              <div className="mono-label mb-6">Initialize Connection</div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mb-5">
+                <div className="relative">
+                  <input
+                    type="text"
+                    id="name"
+                    required
+                    value={formData.name}
+                    onChange={handleChange}
+                    className="w-full bg-background/50 border border-border/60 p-3.5 text-sm text-text-main focus:border-primary focus:ring-1 focus:ring-primary/40 focus:bg-background outline-none rounded transition-all peer"
+                    placeholder=" "
+                  />
+                  <label htmlFor="name" className="absolute left-3.5 top-3.5 text-sm font-mono text-text-dim transition-all peer-focus:-top-2 peer-focus:text-[10px] peer-focus:bg-surface peer-focus:px-1 peer-focus:text-primary peer-valid:-top-2 peer-valid:text-[10px] peer-valid:bg-surface peer-valid:px-1">
+                    Identifier (Name)
+                  </label>
+                </div>
+                <div className="relative">
+                  <input
+                    type="email"
+                    id="email"
+                    required
+                    value={formData.email}
+                    onChange={handleChange}
+                    className="w-full bg-background/50 border border-border/60 p-3.5 text-sm text-text-main focus:border-primary focus:ring-1 focus:ring-primary/40 focus:bg-background outline-none rounded transition-all peer"
+                    placeholder=" "
+                  />
+                  <label htmlFor="email" className="absolute left-3.5 top-3.5 text-sm font-mono text-text-dim transition-all peer-focus:-top-2 peer-focus:text-[10px] peer-focus:bg-surface peer-focus:px-1 peer-focus:text-primary peer-valid:-top-2 peer-valid:text-[10px] peer-valid:bg-surface peer-valid:px-1">
+                    Return Address (Email)
+                  </label>
+                </div>
               </div>
-              <div className="flex items-center gap-3 bg-background p-3 rounded-lg border border-border">
-                <span className="text-sm font-mono text-text-main break-all flex-1">owolabitestimony7724@gmail.com</span>
-                <button
-                  onClick={copyEmail}
-                  className="text-text-muted hover:text-primary p-2 hover:bg-surfaceHighlight rounded-md transition-all"
-                  title="Copy to clipboard"
-                  aria-label="Copy email to clipboard"
-                >
-                  {copied ? <Check size={16} /> : <Copy size={16} />}
-                </button>
-              </div>
-            </div>
 
-            {/* Configuration Status */}
-            {!isConfigured ? (
-              <div className="p-4 border border-warning/30 bg-warning/5 rounded-lg">
-                <div className="flex items-start gap-3">
-                  <AlertCircle size={18} className="text-warning mt-0.5 flex-shrink-0" />
-                  <div className="text-xs text-text-muted space-y-2">
-                    <p className="font-bold text-warning">EmailJS Setup Required</p>
-                    <p>To enable the contact form, follow these steps:</p>
-                    <ol className="list-decimal list-inside space-y-1 pl-2">
-                      <li>Sign up at <a href="https://www.emailjs.com/" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">emailjs.com</a></li>
-                      <li>Add an email service (Gmail, Outlook, etc.)</li>
-                      <li>Create an email template with variables: <code className="px-1 py-0.5 bg-background rounded text-primary">from_name</code>, <code className="px-1 py-0.5 bg-background rounded text-primary">from_email</code>, <code className="px-1 py-0.5 bg-background rounded text-primary">message</code></li>
-                      <li>Replace the config values at the top of <code className="px-1 py-0.5 bg-background rounded text-primary">Contact.tsx</code></li>
-                    </ol>
+              <div className="relative mb-6">
+                <textarea
+                  id="message"
+                  rows={5}
+                  required
+                  value={formData.message}
+                  onChange={handleChange}
+                  className="w-full bg-background/50 border border-border/60 p-3.5 text-sm text-text-main focus:border-primary focus:ring-1 focus:ring-primary/40 focus:bg-background outline-none rounded resize-none transition-all peer"
+                  placeholder=" "
+                ></textarea>
+                <label htmlFor="message" className="absolute left-3.5 top-3.5 text-sm font-mono text-text-dim transition-all peer-focus:-top-2 peer-focus:text-[10px] peer-focus:bg-surface peer-focus:px-1 peer-focus:text-primary peer-valid:-top-2 peer-valid:text-[10px] peer-valid:bg-surface peer-valid:px-1">
+                  Payload (Message)
+                </label>
+              </div>
+
+              <button
+                type="submit"
+                disabled={formState === 'submitting'}
+                className={`w-full flex items-center justify-center gap-2 px-6 py-3.5 rounded text-sm font-bold font-mono tracking-wider transition-all
+                  ${formState === 'success' ? 'bg-secondary/10 border-secondary/40 text-secondary'
+                  : formState === 'error' ? 'bg-error/10 border-error/40 text-error'
+                  : 'bg-primary/10 border border-primary/30 text-primary hover:bg-primary hover:text-white'
+                  } disabled:opacity-50 disabled:cursor-not-allowed`}
+              >
+                {formState === 'submitting' && (
+                  <>
+                    <div className="w-4 h-4 border-2 border-current border-t-transparent rounded-full animate-spin"></div>
+                    TRANSMITTING
+                  </>
+                )}
+                {formState === 'success' && (
+                  <>
+                    <Check size={16} /> TRANSMISSION SUCCESSFUL
+                  </>
+                )}
+                {formState === 'error' && (
+                  <>
+                    <AlertCircle size={16} /> TRANSMISSION FAILED
+                  </>
+                )}
+                {formState === 'idle' && (
+                  <>
+                    TRANSMIT MESSAGE <Send size={14} className="ml-1" />
+                  </>
+                )}
+              </button>
+            </form>
+          </div>
+
+          {/* Direct contact info */}
+          <div className="md:col-span-5 reveal-right">
+            <div className="sticky top-28 space-y-6">
+              
+              <div className="p-6 border border-border bg-surface/40 rounded-lg">
+                <div className="mono-label mb-4 flex items-center gap-2">
+                  <Mail size={12} className="text-text-dim" /> Direct Channel
+                </div>
+                
+                <div className="flex flex-col gap-3">
+                  <p className="text-sm text-text-muted">For direct inquiries, you can reach me at:</p>
+                  
+                  <div className="flex items-center gap-2 p-3 bg-background border border-border/60 rounded">
+                    <span className="text-xs font-mono text-text-main truncate flex-1">owolabitestimony7724@gmail.com</span>
+                    <button
+                      onClick={copyEmail}
+                      className="text-text-dim hover:text-primary p-1.5 hover:bg-surface rounded transition-all shrink-0"
+                      title="Copy to clipboard"
+                      aria-label="Copy email address"
+                    >
+                      {copied ? <Check size={14} className="text-secondary" /> : <Copy size={14} />}
+                    </button>
                   </div>
                 </div>
               </div>
-            ) : (
-              <div className="p-4 border border-success/30 bg-success/5 rounded-lg">
-                <div className="flex items-center gap-2">
-                  <CheckCircle size={18} className="text-success" />
-                  <p className="text-sm text-success font-medium">Contact form is configured and ready!</p>
+
+              {/* Status block */}
+              <div className="p-5 border border-border bg-surface/30 rounded-lg flex items-start gap-3">
+                <div className="w-8 h-8 rounded flex items-center justify-center bg-primary/10 border border-primary/20 shrink-0 mt-0.5">
+                  <ArrowRight size={14} className="text-primary" />
+                </div>
+                <div>
+                  <h4 className="text-sm font-bold text-text-main mb-1" style={{ fontFamily: 'Space Grotesk, Inter, sans-serif' }}>Open for Opportunities</h4>
+                  <p className="text-xs text-text-muted leading-relaxed">
+                    Currently open to discussing software engineering roles and collaborations on industrial tech/Metabotics initiatives.
+                  </p>
                 </div>
               </div>
-            )}
-          </address>
 
-          {/* Form */}
-          <form onSubmit={handleSubmit} className="space-y-6">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div className="space-y-2">
-                <label htmlFor="name" className="text-xs font-bold text-text-muted uppercase tracking-wider">
-                  Name
-                </label>
-                <input
-                  type="text"
-                  id="name"
-                  required
-                  value={formData.name}
-                  onChange={handleChange}
-                  className="w-full bg-surfaceHighlight/50 border border-border p-3 text-sm text-text-main focus:border-primary focus:ring-1 focus:ring-primary/50 outline-none rounded-lg placeholder:text-text-dim transition-all"
-                  placeholder="Identify yourself"
-                />
-              </div>
-              <div className="space-y-2">
-                <label htmlFor="email" className="text-xs font-bold text-text-muted uppercase tracking-wider">
-                  Email
-                </label>
-                <input
-                  type="email"
-                  id="email"
-                  required
-                  value={formData.email}
-                  onChange={handleChange}
-                  className="w-full bg-surfaceHighlight/50 border border-border p-3 text-sm text-text-main focus:border-primary focus:ring-1 focus:ring-primary/50 outline-none rounded-lg placeholder:text-text-dim transition-all"
-                  placeholder="return_path@domain.com"
-                />
-              </div>
+              {!isConfigured && (
+                 <div className="p-3 border border-warning/20 bg-warning/5 rounded text-[11px] font-mono text-warning flex items-center gap-2">
+                   <AlertCircle size={12} /> EmailJS configuration missing.
+                 </div>
+              )}
+
             </div>
-
-            <div className="space-y-2">
-              <label htmlFor="message" className="text-xs font-bold text-text-muted uppercase tracking-wider">
-                Message
-              </label>
-              <textarea
-                id="message"
-                rows={5}
-                required
-                value={formData.message}
-                onChange={handleChange}
-                className="w-full bg-surfaceHighlight/50 border border-border p-3 text-sm text-text-main focus:border-primary focus:ring-1 focus:ring-primary/50 outline-none rounded-lg resize-none placeholder:text-text-dim transition-all"
-                placeholder="Payload..."
-              ></textarea>
-            </div>
-
-            <button
-              type="submit"
-              disabled={formState === 'submitting'}
-              className={`w-full md:w-auto flex items-center justify-center gap-2 px-8 py-3 rounded-lg text-sm font-bold uppercase transition-all ${formState === 'success'
-                ? 'bg-success text-white'
-                : formState === 'error'
-                  ? 'bg-error text-white'
-                  : 'bg-gradient-to-r from-primary to-primary/80 text-white hover:shadow-[0_0_20px_rgba(139,92,246,0.4)] hover:scale-[1.02]'
-                } disabled:opacity-50 disabled:hover:scale-100 disabled:cursor-not-allowed`}
-            >
-              {formState === 'submitting' && (
-                <>
-                  <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
-                  Processing...
-                </>
-              )}
-              {formState === 'success' && (
-                <>
-                  <Check size={16} />
-                  Message Sent!
-                </>
-              )}
-              {formState === 'error' && (
-                <>
-                  <AlertCircle size={16} />
-                  Failed - Retry
-                </>
-              )}
-              {formState === 'idle' && (
-                <>
-                  Transmit
-                  <Send size={14} />
-                </>
-              )}
-            </button>
-          </form>
+          </div>
 
         </div>
       </MotionWrapper>

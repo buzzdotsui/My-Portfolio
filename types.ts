@@ -4,6 +4,9 @@ export interface Project {
   id: string;
   title: string;
   description: string;
+  problem?: string;
+  outcome?: string;
+  category?: string;
   tags: string[];
   imageUrl: string;
   githubUrl?: string;
@@ -15,6 +18,7 @@ export interface SkillCategory {
   title: string;
   skills: string[];
   icon: LucideIcon;
+  note?: string;
 }
 
 export interface NavItem {
@@ -22,10 +26,31 @@ export interface NavItem {
   href: string;
 }
 
+export interface WritingPost {
+  title: string;
+  url: string;
+  desc: string;
+  tag: string;
+  date?: string;
+}
+
+export interface TimelineItem {
+  period: string;
+  title: string;
+  subtitle: string;
+  description: string;
+  tags: string[];
+  highlight?: boolean;
+}
+
 export enum SectionId {
   HERO = 'hero',
   ABOUT = 'about',
-  SKILLS = 'skills',
+  METABOTICS = 'metabotics',
   PROJECTS = 'projects',
-  CONTACT = 'contact'
+  SKILLS = 'skills',
+  EXPERIENCE = 'experience',
+  WRITING = 'writing',
+  LEADERSHIP = 'leadership',
+  CONTACT = 'contact',
 }

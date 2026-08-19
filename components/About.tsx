@@ -1,138 +1,150 @@
 import React from 'react';
 import { SectionId } from '../types';
-import { SectionHeading } from './ui/SectionHeading';
 import { MotionWrapper } from './ui/MotionWrapper';
-import { Award, BookOpen, ExternalLink, CalendarCheck } from 'lucide-react';
-
-const credentials = [
-  { label: 'CIS Benchmark Practitioner', status: 'Active', color: 'text-success border-success/30 bg-success/5' },
-  { label: 'AWS Cloud Practitioner', status: 'In Progress', color: 'text-secondary border-secondary/30 bg-secondary/5' },
-  { label: 'CompTIA Security+', status: 'Studying', color: 'text-primary border-primary/30 bg-primary/5' },
-  { label: 'B.Eng. Metallurgical Engineering', status: 'In Progress', color: 'text-success border-success/30 bg-success/5' },
-];
-
-const writings = [
-  {
-    title: 'Engineering the Future of Intelligent Industry in Africa',
-    url: 'https://owolabitestimony.medium.com/engineering-the-future-of-intelligent-industry-in-africa-9984c5f2885f',
-    desc: 'Industrial progress has always been driven by people who look at existing systems and ask a simple question: Can this be done better?.',
-  },
-  {
-    title: 'Inside Metabotics: Engineering the Brain of Smart Factories',
-    url: 'https://owolabitestimony.medium.com/inside-metabotics-engineering-the-brain-of-smart-factories-2ad030054f79',
-    desc: 'Metabotics designs intelligent monitoring and automation systems that transform industrial processes into self-optimizing, data-driven assets.',
-  },
-  {
-    title: 'Infrastructure Automation with Ansible',
-    url: 'https://medium.com/@owolabitestimony',
-    desc: 'A deep-dive into idempotent playbook design for production systems.',
-  },
-  {
-    title: 'Zero Trust Security: A Practitioner\'s Perspective',
-    url: 'https://medium.com/@owolabitestimony',
-    desc: 'Applying zero-trust principles to bare-metal and cloud hybrid environments.',
-  },
-];
+import { Cpu, Combine, Zap } from 'lucide-react';
 
 export const About: React.FC = () => {
   return (
-    <section id={SectionId.ABOUT} className="py-20 px-4 md:px-6 bg-surface/20 border-y border-border">
-      <MotionWrapper className="max-w-6xl mx-auto">
-        {/* Last updated — content freshness signal */}
-        <div className="flex items-center gap-2 text-xs text-text-dim font-mono mb-6">
-          <CalendarCheck size={13} className="text-primary/60" />
-          <span>Last updated: <time dateTime="2026-03-17">March 2026</time></span>
-        </div>
+    <section id={SectionId.ABOUT} className="py-28 px-5 md:px-8 relative overflow-hidden border-t border-border/40">
+      {/* Subtle gradient */}
+      <div className="absolute inset-0 gradient-mesh opacity-30 pointer-events-none" />
 
-        <SectionHeading title="System Documentation" number="03" />
+      <MotionWrapper className="max-w-6xl mx-auto relative z-10">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-14 lg:gap-20 items-start">
 
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-12">
-          {/* Narrative */}
-          <div className="md:col-span-7 space-y-10">
-            <div>
-              <h3 className="text-lg font-medium text-text-main mb-6 flex items-center gap-2">
-                <span className="w-1 h-6 bg-secondary rounded-full"></span>
-                Background
-              </h3>
-              <div className="prose prose-invert prose-sm text-text-muted space-y-4">
-                <p className="leading-7">
-                  My engineering philosophy is derived from Metallurgical Engineering: materials have failure points, and so does software. I approach infrastructure with the same rigor used in physical stress testing.
-                </p>
-                <p className="leading-7">
-                  Currently operating as a Systems Reliability Engineer, I focus on removing "hope" from deployment strategies. If a process relies on manual intervention, it is a bug. My work involves designing self-healing architectures, enforcing security compliance at the kernel level, and ensuring data integrity across distributed systems.
+          {/* ── LEFT: Narrative ── */}
+          <div className="lg:col-span-7">
+            {/* Section label */}
+            <div className="mono-label mb-5 flex items-center gap-2 reveal">
+              <span className="w-4 h-px bg-primary/50" />
+              01 — About
+            </div>
+
+            <h2 className="text-3xl md:text-4xl font-bold text-text-main mb-8 leading-tight reveal" style={{ fontFamily: 'Space Grotesk, Inter, sans-serif' }}>
+              Engineering across<br />
+              <span
+                style={{
+                  background: 'linear-gradient(135deg, #60b8f0 0%, #10b981 100%)',
+                  WebkitBackgroundClip: 'text',
+                  WebkitTextFillColor: 'transparent',
+                  backgroundClip: 'text',
+                }}
+              >
+                two worlds.
+              </span>
+            </h2>
+
+            <div className="space-y-5 text-text-muted leading-relaxed reveal-left">
+              <p>
+                I started with technology out of curiosity, became a software builder, and eventually found myself asking how the same computational systems could be applied to the physical processes that shape the world around us.
+              </p>
+
+              <div className="border-l-2 border-primary/35 pl-5 py-1">
+                <p className="text-text-main font-medium">
+                  This intersection is where I want to build.
                 </p>
               </div>
+
+              <p>
+                As a Materials and Metallurgical Engineering student at the Federal University of Technology Akure, I study the physical constraints and behaviours that govern real industrial systems — materials science, thermal processes, manufacturing, metallurgy, and corrosion.
+              </p>
+
+              <p>
+                As a full-stack software engineer, I build applications, APIs, automation systems, and data infrastructure. I understand how software can be structured to handle complexity at scale.
+              </p>
+
+              <p>
+                The question I keep returning to: what happens when you apply the rigour of software engineering to physical engineering problems? I don't just want to consume technology. I want to build infrastructure that others can build on.
+              </p>
             </div>
 
-            {/* Credentials — Expertise signal */}
-            <div>
-              <h3 className="text-lg font-medium text-text-main mb-5 flex items-center gap-2">
-                <Award size={18} className="text-primary" />
-                Credentials
-              </h3>
-              <ul className="space-y-2" aria-label="Certifications and qualifications">
-                {credentials.map(({ label, status, color }) => (
-                  <li key={label} className="flex items-center justify-between p-3 rounded-lg border border-border bg-background hover:border-primary/30 transition-colors">
-                    <span className="text-sm text-text-main font-medium">{label}</span>
-                    <span className={`text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full border ${color}`}>{status}</span>
-                  </li>
-                ))}
-              </ul>
+            {/* Traits */}
+            <div className="mt-10 grid grid-cols-2 gap-3 reveal">
+              {[
+                'Curious by default',
+                'Builds to understand',
+                'Combines disciplines',
+                'Thinks in systems',
+                'Cares about Africa\'s industrial future',
+                'Builds infrastructure, not just features',
+              ].map((trait) => (
+                <div key={trait} className="flex items-start gap-2 text-xs text-text-muted font-mono">
+                  <span className="text-primary/50 mt-0.5">›</span>
+                  {trait}
+                </div>
+              ))}
             </div>
+          </div>
 
-            {/* Published Writing — Authoritativeness signal */}
-            <div>
-              <h3 className="text-lg font-medium text-text-main mb-5 flex items-center gap-2">
-                <BookOpen size={18} className="text-secondary" />
-                Published Writing
-              </h3>
-              <ul className="space-y-3" aria-label="Published articles">
-                {writings.map(({ title, url, desc }) => (
-                  <li key={title}>
-                    <a
-                      href={url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="block p-4 rounded-xl border border-border bg-background hover:border-secondary/40 hover:bg-surface/50 transition-all group"
-                    >
-                      <div className="flex items-start justify-between gap-3 mb-1">
-                        <span className="text-sm font-semibold text-text-main group-hover:text-secondary transition-colors">{title}</span>
-                        <ExternalLink size={13} className="text-text-dim group-hover:text-secondary transition-colors shrink-0 mt-0.5" />
+          {/* ── RIGHT: Synthesis diagram ── */}
+          <div className="lg:col-span-5 reveal-right">
+            <div className="p-6 rounded-lg border border-border bg-surface/40 relative overflow-hidden corner-marks">
+              <div className="absolute inset-0 bg-schematic" />
+
+              <div className="relative z-10">
+                <div className="mono-label mb-8 flex items-center gap-2">
+                  <Combine size={12} className="text-primary" />
+                  The Synthesis
+                </div>
+
+                {/* Software block */}
+                <div className="mb-2">
+                  <div className="p-4 rounded border border-primary/20 bg-primary/5">
+                    <div className="flex items-center gap-2 mb-3">
+                      <div className="w-5 h-5 rounded-sm bg-primary/15 border border-primary/25 flex items-center justify-center">
+                        <Cpu size={11} className="text-primary" />
                       </div>
-                      <p className="text-xs text-text-muted leading-relaxed">{desc}</p>
-                      <span className="text-[10px] font-mono text-text-dim mt-2 inline-block">medium.com/@owolabitestimony</span>
-                    </a>
-                  </li>
-                ))}
-              </ul>
+                      <span className="text-xs font-bold text-primary font-mono uppercase tracking-wider">Software Engineering</span>
+                    </div>
+                    <div className="flex flex-wrap gap-1.5">
+                      {['Applications', 'APIs', 'Automation', 'Data Infrastructure', 'Intelligent Interfaces'].map((t) => (
+                        <span key={t} className="text-[10px] font-mono px-1.5 py-0.5 rounded bg-background border border-border/60 text-text-dim">{t}</span>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+
+                {/* Connector arrow */}
+                <div className="flex items-center justify-center py-2 my-1 opacity-40">
+                  <div className="flex flex-col items-center gap-0.5">
+                    <div className="w-px h-4 bg-gradient-to-b from-primary to-secondary" />
+                    <div className="w-0 h-0 border-l-[4px] border-r-[4px] border-t-[5px] border-l-transparent border-r-transparent border-t-secondary" />
+                  </div>
+                  <div className="mx-4 text-[9px] font-mono text-text-dim tracking-widest">APPLIED TO</div>
+                  <div className="flex flex-col items-center gap-0.5">
+                    <div className="w-px h-4 bg-gradient-to-b from-primary to-secondary" />
+                    <div className="w-0 h-0 border-l-[4px] border-r-[4px] border-t-[5px] border-l-transparent border-r-transparent border-t-secondary" />
+                  </div>
+                </div>
+
+                {/* Materials block */}
+                <div className="mb-6">
+                  <div className="p-4 rounded border border-accent/20 bg-accent/5">
+                    <div className="flex items-center gap-2 mb-3">
+                      <div className="w-5 h-5 rounded-sm bg-accent/15 border border-accent/25 flex items-center justify-center">
+                        <Zap size={11} className="text-accent" />
+                      </div>
+                      <span className="text-xs font-bold text-accent font-mono uppercase tracking-wider">Materials Engineering</span>
+                    </div>
+                    <div className="flex flex-wrap gap-1.5">
+                      {['Metallurgy', 'Thermal Processes', 'Manufacturing', 'Corrosion', 'Industrial Systems'].map((t) => (
+                        <span key={t} className="text-[10px] font-mono px-1.5 py-0.5 rounded bg-background border border-border/60 text-text-dim">{t}</span>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+
+                {/* Result */}
+                <div className="p-4 rounded border border-secondary/25 bg-secondary/5">
+                  <div className="mono-label mb-2 text-secondary">Result</div>
+                  <p className="text-xs text-text-muted leading-relaxed">
+                    <strong className="text-text-main font-medium">Intelligent industrial systems</strong> — software infrastructure that makes physical engineering processes more observable, efficient, and adaptive.
+                  </p>
+                </div>
+              </div>
             </div>
           </div>
 
-          {/* Specs List */}
-          <div className="md:col-span-5">
-            <h3 className="text-lg font-medium text-text-main mb-6 flex items-center gap-2">
-              <span className="w-1 h-6 bg-primary rounded-full"></span>
-              Operational Standards
-            </h3>
-            <dl className="border border-border rounded-xl bg-background p-1">
-              <div className="p-4 border-b border-border grid grid-cols-3 gap-4">
-                <dt className="text-xs font-mono text-text-dim uppercase pt-0.5">Uptime Goal</dt>
-                <dd className="col-span-2 text-sm text-text-main font-mono text-right">99.95% (HA)</dd>
-              </div>
-              <div className="p-4 border-b border-border grid grid-cols-3 gap-4">
-                <dt className="text-xs font-mono text-text-dim uppercase pt-0.5">Security</dt>
-                <dd className="col-span-2 text-sm text-text-main font-mono text-right">Zero Trust</dd>
-              </div>
-              <div className="p-4 border-b border-border grid grid-cols-3 gap-4">
-                <dt className="text-xs font-mono text-text-dim uppercase pt-0.5">IaC</dt>
-                <dd className="col-span-2 text-sm text-text-main font-mono text-right">Immutable</dd>
-              </div>
-              <div className="p-4 grid grid-cols-3 gap-4">
-                <dt className="text-xs font-mono text-text-dim uppercase pt-0.5">Tooling</dt>
-                <dd className="col-span-2 text-sm text-text-main font-mono text-right">Open Source First</dd>
-              </div>
-            </dl>
-          </div>
         </div>
       </MotionWrapper>
     </section>

@@ -1,164 +1,259 @@
 import React from 'react';
-import { Github, Linkedin, MapPin, Clock, ArrowRight, Twitter, Instagram } from 'lucide-react';
+import { Github, Linkedin, MapPin, Clock, ArrowRight, Twitter, ExternalLink } from 'lucide-react';
 import { SectionId } from '../types';
 import { OptimizedImage } from './ui/OptimizedImage';
-import { Hero3DBackground } from './effects/Hero3DBackground';
 import { TypeAnimation } from 'react-type-animation';
+
+/* ─────────────────────────────────────────────────────────────
+   SchematicBackground — sparse SVG engineering schematic
+───────────────────────────────────────────────────────────── */
+const SchematicBackground: React.FC = () => (
+  <svg
+    className="absolute inset-0 w-full h-full pointer-events-none"
+    xmlns="http://www.w3.org/2000/svg"
+    aria-hidden="true"
+  >
+    <defs>
+      <linearGradient id="sg1" x1="0%" y1="0%" x2="100%" y2="0%">
+        <stop offset="0%" stopColor="rgba(14,165,233,0)" />
+        <stop offset="40%" stopColor="rgba(14,165,233,0.3)" />
+        <stop offset="100%" stopColor="rgba(16,185,129,0.1)" />
+      </linearGradient>
+      <linearGradient id="sg2" x1="0%" y1="0%" x2="0%" y2="100%">
+        <stop offset="0%" stopColor="rgba(14,165,233,0)" />
+        <stop offset="50%" stopColor="rgba(14,165,233,0.2)" />
+        <stop offset="100%" stopColor="rgba(14,165,233,0)" />
+      </linearGradient>
+    </defs>
+
+    {/* Horizontal signal lines */}
+    <line x1="0" y1="28%" x2="38%" y2="28%" stroke="url(#sg1)" strokeWidth="1" strokeDasharray="8 5">
+      <animate attributeName="stroke-dashoffset" from="26" to="0" dur="4s" repeatCount="indefinite" />
+    </line>
+    <line x1="62%" y1="65%" x2="100%" y2="65%" stroke="url(#sg1)" strokeWidth="1" strokeDasharray="6 6">
+      <animate attributeName="stroke-dashoffset" from="0" to="24" dur="5s" repeatCount="indefinite" />
+    </line>
+
+    {/* Vertical signal line */}
+    <line x1="72%" y1="0" x2="72%" y2="45%" stroke="url(#sg2)" strokeWidth="1" strokeDasharray="5 7">
+      <animate attributeName="stroke-dashoffset" from="24" to="0" dur="3.5s" repeatCount="indefinite" />
+    </line>
+
+    {/* Node dots */}
+    {[
+      { cx: '38%', cy: '28%', r: 3, color: 'rgba(14,165,233,0.6)', dur: '2.2s' },
+      { cx: '62%', cy: '65%', r: 2.5, color: 'rgba(16,185,129,0.5)', dur: '3s' },
+      { cx: '72%', cy: '45%', r: 3, color: 'rgba(14,165,233,0.4)', dur: '2.7s' },
+      { cx: '15%', cy: '75%', r: 2, color: 'rgba(245,158,11,0.35)', dur: '3.5s' },
+    ].map((dot, i) => (
+      <circle key={i} cx={dot.cx} cy={dot.cy} r={dot.r} fill={dot.color}>
+        <animate attributeName="opacity" values="0.3;0.85;0.3" dur={dot.dur} repeatCount="indefinite" />
+      </circle>
+    ))}
+
+    {/* Connection lines between nodes */}
+    <line x1="38%" y1="28%" x2="62%" y2="65%" stroke="rgba(14,165,233,0.08)" strokeWidth="1" />
+    <line x1="62%" y1="65%" x2="72%" y2="45%" stroke="rgba(16,185,129,0.08)" strokeWidth="1" />
+
+    {/* Minimal bracket marks */}
+    <path d="M 5% 12% L 5% 8% L 9% 8%" stroke="rgba(14,165,233,0.15)" strokeWidth="1" fill="none" />
+    <path d="M 91% 88% L 91% 92% L 87% 92%" stroke="rgba(14,165,233,0.15)" strokeWidth="1" fill="none" />
+  </svg>
+);
 
 export const Hero: React.FC = () => {
   return (
-    <section id={SectionId.HERO} className="relative pt-32 pb-20 px-4 md:px-6 min-h-[90vh] flex flex-col justify-center overflow-hidden">
-
-      {/* Background FX */}
+    <section
+      id={SectionId.HERO}
+      className="relative pt-28 pb-24 px-5 md:px-8 min-h-[96vh] flex flex-col justify-center overflow-hidden"
+    >
+      {/* Background layers */}
       <div className="absolute inset-0 z-0">
-        <div className="absolute top-0 left-0 w-full h-full bg-grid-pattern"></div>
-        <div className="absolute top-20 right-0 w-[500px] h-[500px] bg-primary/10 rounded-full blur-[120px] pointer-events-none animate-pulse-glow"></div>
-        <div className="absolute bottom-0 left-0 w-[300px] h-[300px] bg-secondary/10 rounded-full blur-[100px] pointer-events-none"></div>
-        <Hero3DBackground />
+        <div className="absolute top-0 left-0 w-full h-full bg-grid-pattern" />
+        <SchematicBackground />
+        {/* Orbs — restrained */}
+        <div className="absolute top-0 right-[-5%] w-[480px] h-[480px] bg-primary/5 rounded-full blur-[140px] pointer-events-none orb-animate" />
+        <div className="absolute bottom-0 left-[-5%] w-[360px] h-[360px] bg-secondary/4 rounded-full blur-[120px] pointer-events-none orb-animate-reverse" />
       </div>
 
-      <div className="max-w-6xl mx-auto w-full relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+      <div className="max-w-6xl mx-auto w-full relative z-10">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
 
-        {/* Left Column: Identity Data */}
-        <div className="lg:col-span-8 flex flex-col">
+          {/* ── LEFT: Primary content ── */}
+          <div className="lg:col-span-7 flex flex-col">
 
-          <div className="flex items-start gap-6 mb-8 animate-slide-up">
-            {/* Avatar */}
-            <div className="shrink-0 w-20 h-20 md:w-24 md:h-24 rounded-full p-[2px] bg-gradient-to-tr from-primary via-secondary to-accent animate-float shadow-lg shadow-primary/20">
-              <div className="w-full h-full rounded-full overflow-hidden border-2 border-background">
-                <OptimizedImage
-                  src="/profile.jpg"
-                  alt="Testimony Owolabi — DevSecOps & SRE Engineer"
-                  className="w-full h-full object-cover object-top hover:grayscale-0 transition-all duration-500"
-                />
+            {/* Identity row */}
+            <div className="flex items-center gap-4 mb-10 anim-fade-up">
+              {/* Profile avatar */}
+              <div className="shrink-0 w-14 h-14 rounded-sm p-[1.5px] bg-gradient-to-br from-primary/60 via-secondary/40 to-transparent">
+                <div className="w-full h-full rounded-sm overflow-hidden border border-border bg-surface">
+                  <OptimizedImage
+                    src="/profile.jpg"
+                    alt="Testimony Owolabi"
+                    className="w-full h-full object-cover object-top"
+                  />
+                </div>
+              </div>
+
+              <div>
+                <div className="flex flex-wrap items-center gap-2 mb-1.5">
+                  <span className="eng-badge">Full-Stack Engineer</span>
+                  <span className="eng-badge" style={{ borderColor: 'rgba(16,185,129,0.25)', background: 'rgba(16,185,129,0.08)', color: '#10b981' }}>Materials Eng. Student</span>
+                  <span className="eng-badge" style={{ borderColor: 'rgba(245,158,11,0.25)', background: 'rgba(245,158,11,0.08)', color: '#f59e0b' }}>Metabotics</span>
+                </div>
+                <p className="text-xs font-mono text-text-dim">Akure, Nigeria · FUTA · GMT+1</p>
               </div>
             </div>
 
-            <div className="flex-1 pt-2">
-              <div className="flex flex-wrap items-center gap-3 mb-3">
-                <span className="px-2 py-0.5 text-[10px] font-mono rounded-full border border-primary/30 bg-primary/10 text-primary uppercase tracking-wider">Reliability Engineering</span>
-                <span className="px-2 py-0.5 text-[10px] font-mono rounded-full border border-secondary/30 bg-secondary/10 text-secondary uppercase tracking-wider">DevSecOps</span>
-              </div>
-              <h1 className="text-4xl md:text-6xl font-bold tracking-tight leading-tight">
-                {/* sr-only static text keeps a stable H1 for SEO crawlers */}
-                <span className="sr-only">Testimony Owolabi — DevSecOps &amp; SRE Engineer</span>
-                <TypeAnimation
-                  sequence={[
-                    'Testimony Owolabi',
-                    3000,
-                    'DevSecOps Engineer',
-                    2000,
-                    'Systems Architect',
-                    2000,
-                  ]}
-                  wrapper="span"
-                  speed={50}
-                  className="text-gradient"
-                  aria-hidden="true"
-                  repeat={Infinity}
-                />
-              </h1>
+            {/* Primary H1 */}
+            <h1 className="text-[2.6rem] md:text-[3.8rem] font-bold leading-[1.06] tracking-tight mb-6 anim-fade-up-1" style={{ fontFamily: 'Space Grotesk, Inter, sans-serif' }}>
+              <span className="text-text-main">I build software</span>
+              <br />
+              <span
+                style={{
+                  background: 'linear-gradient(135deg, #dde6f0 0%, #60b8f0 50%, #0ea5e9 100%)',
+                  WebkitBackgroundClip: 'text',
+                  WebkitTextFillColor: 'transparent',
+                  backgroundClip: 'text',
+                }}
+              >
+                for the physical world.
+              </span>
+            </h1>
+
+            {/* Supporting description */}
+            <p className="text-base md:text-lg text-text-muted max-w-xl mb-3 leading-relaxed font-light anim-fade-up-2">
+              I'm a full-stack software engineer and materials &amp; metallurgical engineering student exploring the intersection of{' '}
+              <span className="text-text-main font-medium">software, intelligent systems, automation, and industrial technology.</span>
+            </p>
+
+            {/* Secondary statement */}
+            <p className="text-sm text-text-dim max-w-lg mb-10 leading-relaxed font-mono border-l border-primary/30 pl-4 anim-fade-up-3">
+              Building toward a future where industrial systems can sense, understand, and optimize themselves.
+            </p>
+
+            {/* CTAs */}
+            <div className="flex flex-wrap gap-4 mb-12 anim-fade-up-4">
+              <a
+                href={`#${SectionId.PROJECTS}`}
+                className="inline-flex items-center gap-2 px-6 py-3 bg-primary text-white text-sm font-semibold rounded hover:bg-primary-hover transition-all hover:shadow-glow-sm group"
+              >
+                View My Work
+                <ArrowRight size={15} className="group-hover:translate-x-1 transition-transform" />
+              </a>
+              <a
+                href={`#${SectionId.METABOTICS}`}
+                className="inline-flex items-center gap-2 px-6 py-3 bg-surface/60 border border-border text-text-main text-sm font-medium rounded hover:border-primary/40 hover:bg-surface transition-all group"
+              >
+                Explore Metabotics
+                <ExternalLink size={14} className="text-text-dim group-hover:text-primary transition-colors" />
+              </a>
             </div>
-          </div>
 
-          <p className="text-lg md:text-xl text-text-muted max-w-2xl mb-10 leading-relaxed font-light animate-slide-up-delay-1">
-            Designing <span className="text-text-main font-medium">deterministic infrastructure</span>. I bridge the gap between hardware constraints and cloud scalability, focusing on automated pipelines, security baselines, and
-            <span className="text-primary font-mono bg-primary/5 px-1 mx-1 rounded">99.99%</span>
-            system availability.
-          </p>
-
-          <div className="flex flex-wrap gap-4 animate-slide-up-delay-2">
-            <a
-              href={`#${SectionId.PROJECTS}`}
-              className="px-6 py-3 bg-primary text-white text-sm font-semibold rounded-lg hover:bg-primary-hover hover:shadow-[0_0_20px_rgba(139,92,246,0.4)] transition-all flex items-center gap-2 group"
-            >
-              View Operations
-              <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
-            </a>
-            <a
-              href={`#${SectionId.CONTACT}`}
-              className="px-6 py-3 bg-surfaceHighlight border border-border text-text-main text-sm font-medium rounded-lg hover:bg-surface hover:border-primary/50 transition-colors"
-            >
-              Initiate Contact
-            </a>
-          </div>
-
-          {/* Trust Bar — E-E-A-T Experience signals */}
-          <div className="mt-8 flex flex-wrap gap-4 animate-slide-up-delay-2">
-            {[
-              { value: '3+', label: 'Years in Ops' },
-              { value: '4', label: 'Open-source Tools' },
-              { value: '99.95%', label: 'Uptime SLO' },
-              { value: '24h', label: 'Response Time' },
-            ].map(({ value, label }) => (
-              <div key={label} className="flex items-center gap-3 px-4 py-2.5 rounded-lg border border-border bg-surface/40 backdrop-blur-sm hover:border-primary/40 hover:bg-surface/70 transition-all">
-                <span className="text-lg font-bold font-mono text-primary leading-none">{value}</span>
-                <span className="text-[11px] text-text-dim uppercase tracking-wider leading-tight">{label}</span>
-              </div>
-            ))}
-          </div>
-
-          {/* Info Grid */}
-          <div className="mt-16 grid grid-cols-2 md:grid-cols-4 gap-6 pt-8 border-t border-border animate-slide-up-delay-3">
-            <div>
-              <div className="text-[10px] uppercase text-text-dim font-bold mb-2 tracking-widest">Location</div>
-              <div className="flex items-center gap-2 text-sm text-text-muted group">
-                <MapPin size={14} className="text-primary group-hover:animate-bounce" /> Akure, NG
-              </div>
-            </div>
-            <div>
-              <div className="text-[10px] uppercase text-text-dim font-bold mb-2 tracking-widest">Timezone</div>
-              <div className="flex items-center gap-2 text-sm text-text-muted">
-                <Clock size={14} className="text-secondary" /> GMT+1
-              </div>
-            </div>
-            <div>
-              <div className="text-[10px] uppercase text-text-dim font-bold mb-2 tracking-widest">Availability</div>
-              <div className="text-sm text-success font-medium flex items-center gap-2">
-                <span className="w-1.5 h-1.5 rounded-full bg-success animate-pulse"></span>
-                Open to Work
-              </div>
-            </div>
-            <div>
-              <div className="text-[10px] uppercase text-text-dim font-bold mb-2 tracking-widest">Links</div>
-              <div className="flex gap-4 text-text-muted">
-                <a href="https://github.com/buzzdotsui" target="_blank" rel="noopener noreferrer" aria-label="GitHub" className="hover:text-primary transition-colors hover:scale-110 transform duration-200"><Github size={18} /></a>
-                <a href="https://www.linkedin.com/in/testimony-owolabi" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" className="hover:text-primary transition-colors hover:scale-110 transform duration-200"><Linkedin size={18} /></a>
-                <a href="https://x.com/testytech_pr" target="_blank" rel="noopener noreferrer" aria-label="X / Twitter" className="hover:text-primary transition-colors hover:scale-110 transform duration-200"><Twitter size={18} /></a>
-                <a href="https://instagram.com/testytech_pr" target="_blank" rel="noopener noreferrer" aria-label="Instagram" className="hover:text-primary transition-colors hover:scale-110 transform duration-200"><Instagram size={18} /></a>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Right Column: Tech Stack */}
-        <div className="lg:col-span-4 lg:pl-12 animate-slide-up-delay-3">
-          <div className="p-6 rounded-2xl border border-border bg-surface/30 backdrop-blur-sm relative overflow-hidden group">
-            {/* Glow effect on hover */}
-            <div className="absolute -inset-1 bg-gradient-to-r from-primary to-secondary opacity-0 group-hover:opacity-20 blur transition duration-1000 group-hover:duration-200"></div>
-
-            <div className="relative">
-              <div className="text-[10px] font-mono text-secondary uppercase mb-6 flex items-center gap-2">
-                <span className="w-1 h-1 bg-secondary rounded-full"></span>
-                Core Stack
-              </div>
-              <ul className="space-y-4">
+            {/* Social / info bar */}
+            <div className="flex flex-wrap items-center gap-6 pt-6 border-t border-border/60 anim-fade-up-5">
+              <div className="flex gap-5">
                 {[
-                  { label: 'Orchestration', value: 'K8s / Ansible' },
-                  { label: 'Scripting', value: 'Python / Bash' },
-                  { label: 'Cloud', value: 'AWS / GCP' },
-                  { label: 'OS', value: 'Linux (RHEL)' }
-                ].map((item) => (
-                  <li key={item.label} className="flex justify-between items-center text-sm font-mono border-b border-border pb-2 last:border-0">
-                    <span className="text-text-dim">{item.label}</span>
-                    <span className="text-text-main font-semibold">{item.value}</span>
-                  </li>
+                  { href: 'https://github.com/buzzdotsui', label: 'GitHub', icon: <Github size={17} /> },
+                  { href: 'https://www.linkedin.com/in/testimony-owolabi', label: 'LinkedIn', icon: <Linkedin size={17} /> },
+                  { href: 'https://x.com/testytech_pr', label: 'X/Twitter', icon: <Twitter size={17} /> },
+                ].map(({ href, label, icon }) => (
+                  <a
+                    key={label}
+                    href={href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={label}
+                    className="text-text-muted hover:text-primary transition-colors"
+                  >
+                    {icon}
+                  </a>
                 ))}
-              </ul>
+              </div>
+
+              <div className="h-4 w-px bg-border/60" />
+
+              <div className="flex items-center gap-2">
+                <span className="w-1.5 h-1.5 rounded-full bg-secondary animate-pulse" />
+                <span className="text-xs font-mono text-secondary tracking-wider">Building</span>
+              </div>
+
+              <div className="flex items-center gap-1.5 text-xs text-text-dim font-mono">
+                <MapPin size={11} className="text-primary/50" />
+                Akure, Nigeria
+              </div>
+
+              <div className="flex items-center gap-1.5 text-xs text-text-dim font-mono">
+                <Clock size={11} />
+                GMT+1
+              </div>
             </div>
           </div>
-        </div>
 
+          {/* ── RIGHT: Stack panel ── */}
+          <div className="lg:col-span-5 reveal-right">
+            <div className="relative p-6 rounded-lg border border-border bg-surface/40 backdrop-blur-sm overflow-hidden corner-marks">
+              {/* Schematic background */}
+              <div className="absolute inset-0 bg-schematic opacity-60" />
+
+              <div className="relative z-10">
+                <div className="mono-label mb-5 flex items-center gap-2">
+                  <span className="w-1 h-1 bg-primary rounded-full signal-pulse" />
+                  Current Stack
+                </div>
+
+                <ul className="space-y-3.5 mb-6">
+                  {[
+                    { label: 'Frontend', value: 'React / Next.js' },
+                    { label: 'Backend',  value: 'Node.js / Express' },
+                    { label: 'Language', value: 'TypeScript' },
+                    { label: 'Database', value: 'PostgreSQL · Prisma' },
+                    { label: 'Deploy',   value: 'Cloud · Vercel · CF' },
+                    { label: 'Exploring', value: 'Industrial IoT' },
+                  ].map((item) => (
+                    <li key={item.label} className="flex justify-between items-baseline text-xs font-mono border-b border-border/40 pb-2.5 last:border-0 last:pb-0">
+                      <span className="text-text-dim">{item.label}</span>
+                      <span className="text-text-main font-medium">{item.value}</span>
+                    </li>
+                  ))}
+                </ul>
+
+                <div className="pt-4 border-t border-border/40">
+                  <div className="mono-label mb-2">Studying</div>
+                  <p className="text-xs text-text-muted leading-relaxed">
+                    B.Eng. Metallurgical Engineering<br />
+                    <span className="text-text-dim">Federal University of Technology Akure</span>
+                  </p>
+                </div>
+
+                {/* Type animation at bottom */}
+                <div className="mt-5 pt-4 border-t border-border/40">
+                  <div className="mono-label mb-2">Role</div>
+                  <div className="text-xs font-mono text-primary/80">
+                    <TypeAnimation
+                      sequence={[
+                        'Full-Stack Engineer',
+                        2000,
+                        'Systems Builder',
+                        2000,
+                        'Metabotics Founder',
+                        2000,
+                        'Industrial Tech Explorer',
+                        2000,
+                      ]}
+                      wrapper="span"
+                      speed={55}
+                      repeat={Infinity}
+                      aria-hidden="true"
+                    />
+                    <span className="animate-pulse">_</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
       </div>
     </section>
   );

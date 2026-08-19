@@ -1,16 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { NavItem, SectionId } from '../types';
-import { Terminal, Menu, X } from 'lucide-react';
+import { Menu, X, ArrowRight } from 'lucide-react';
 import { ThemeToggle } from './ui/ThemeToggle';
 
 const navItems: NavItem[] = [
-  { label: 'Overview', href: `#${SectionId.HERO}` },
-  { label: 'Expertise', href: `#${SectionId.SKILLS}` },
   { label: 'Work', href: `#${SectionId.PROJECTS}` },
-  { label: 'Documentation', href: `#${SectionId.ABOUT}` },
+  { label: 'Metabotics', href: `#${SectionId.METABOTICS}` },
+  { label: 'About', href: `#${SectionId.ABOUT}` },
+  { label: 'Writing', href: `#${SectionId.WRITING}` },
   { label: 'Contact', href: `#${SectionId.CONTACT}` },
 ];
-
 
 export const Navbar: React.FC = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -19,9 +18,7 @@ export const Navbar: React.FC = () => {
 
   useEffect(() => {
     const handleScroll = () => {
-      setScrolled(window.scrollY > 20);
-
-      // Calculate scroll progress
+      setScrolled(window.scrollY > 40);
       const windowHeight = window.innerHeight;
       const documentHeight = document.documentElement.scrollHeight;
       const scrollTop = window.scrollY;
@@ -32,103 +29,132 @@ export const Navbar: React.FC = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const handleScroll = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
     e.preventDefault();
     setIsMobileMenuOpen(false);
-
     const targetId = href.replace('#', '');
     const element = document.getElementById(targetId);
-
     if (element) {
       const headerOffset = 80;
       const elementPosition = element.getBoundingClientRect().top;
       const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
-
-      window.scrollTo({
-        top: offsetPosition,
-        behavior: "smooth"
-      });
+      window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
       window.history.pushState(null, '', href);
     }
   };
 
   return (
-    <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled ? 'bg-background/80 backdrop-blur-md border-b border-primary/20 shadow-lg shadow-primary/5' : 'bg-transparent border-transparent'}`}>
-      <div className="w-full px-4 md:px-6 h-16 flex items-center justify-between max-w-7xl mx-auto">
+    <header
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
+        scrolled
+          ? 'bg-background/90 backdrop-blur-xl border-b border-border/60'
+          : 'bg-transparent border-transparent'
+      }`}
+    >
+      <div className="w-full px-5 md:px-8 h-[60px] flex items-center justify-between max-w-7xl mx-auto">
 
-        {/* Left: Identity */}
-        <div className="flex items-center gap-4 animate-fade-in">
-          <a
-            href={`#${SectionId.HERO}`}
-            onClick={(e) => handleScroll(e, `#${SectionId.HERO}`)}
-            className="flex items-center gap-2 text-text-main hover:text-primary transition-colors cursor-pointer group"
-          >
-            <div className="p-1.5 rounded-md bg-surfaceHighlight border border-border group-hover:border-primary/50 group-hover:shadow-[0_0_15px_rgba(139,92,246,0.3)] transition-all duration-300">
-              <Terminal size={18} className="text-primary" />
+        {/* Brand */}
+        <a
+          href={`#${SectionId.HERO}`}
+          onClick={(e) => handleNavClick(e, `#${SectionId.HERO}`)}
+          className="flex items-center gap-2.5 group"
+          aria-label="Testimony Owolabi – Home"
+        >
+          <div className="w-7 h-7 relative shrink-0">
+            <div className="absolute inset-0 border border-primary/40 bg-primary/8 rounded-sm" />
+            <div className="absolute -top-px -left-px w-1.5 h-1.5 border-t border-l border-primary/60" />
+            <div className="absolute -bottom-px -right-px w-1.5 h-1.5 border-b border-r border-primary/60" />
+            <div className="absolute inset-0 flex items-center justify-center">
+              <span className="text-[10px] font-bold font-mono text-primary">TO</span>
             </div>
-            <span className="font-mono text-sm font-bold tracking-tight">buzzdotsui</span>
-          </a>
-        </div>
+          </div>
+          <span className="font-mono text-[13px] font-semibold text-text-main tracking-tight group-hover:text-primary transition-colors duration-300">
+            testimony.dev
+          </span>
+        </a>
 
-        {/* Right: Desktop Navigation */}
-        <nav className="hidden md:flex items-center gap-1 p-1 bg-surface/50 backdrop-blur-sm border border-border rounded-full px-4 animate-fade-in">
+        {/* Desktop Nav */}
+        <nav
+          className="hidden md:flex items-center gap-0.5"
+          aria-label="Main navigation"
+        >
           {navItems.map((item) => (
             <a
               key={item.label}
               href={item.href}
-              onClick={(e) => handleScroll(e, item.href)}
-              className="text-xs font-medium text-text-muted hover:text-primary transition-colors px-4 py-1.5 rounded-full hover:bg-white/5"
+              onClick={(e) => handleNavClick(e, item.href)}
+              className="text-[13px] font-medium text-text-muted hover:text-text-main transition-colors px-4 py-1.5 rounded relative group"
             >
               {item.label}
+              <span className="absolute bottom-0 left-4 right-4 h-px bg-primary scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left" />
             </a>
           ))}
         </nav>
 
-        {/* Status Indicator & Theme Toggle */}
-        <div className="hidden md:flex items-center gap-3 pl-4 border-l border-border animate-fade-in">
-          <span className="relative flex h-2.5 w-2.5">
-            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-success opacity-75"></span>
-            <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-success"></span>
-          </span>
-          <span className="text-xs font-mono text-primary font-medium tracking-wide">v2.0 Online</span>
+        {/* Right */}
+        <div className="hidden md:flex items-center gap-3">
+          <div className="flex items-center gap-2 mr-1">
+            <span className="relative flex h-1.5 w-1.5">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-secondary opacity-75" />
+              <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-secondary" />
+            </span>
+            <span className="text-[11px] font-mono text-secondary tracking-wider">Building</span>
+          </div>
           <ThemeToggle />
+          <a
+            href={`#${SectionId.CONTACT}`}
+            onClick={(e) => handleNavClick(e, `#${SectionId.CONTACT}`)}
+            className="flex items-center gap-1.5 px-4 py-1.5 text-[12px] font-semibold bg-primary text-white rounded hover:bg-primary-hover transition-all hover:shadow-glow-sm group"
+          >
+            Let's Connect
+            <ArrowRight size={12} className="group-hover:translate-x-0.5 transition-transform" />
+          </a>
         </div>
 
-        {/* Mobile Toggle & Theme */}
+        {/* Mobile */}
         <div className="md:hidden flex items-center gap-2">
           <ThemeToggle />
           <button
             className="text-text-muted hover:text-primary transition-colors p-2"
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             aria-label="Toggle Menu"
+            aria-expanded={isMobileMenuOpen}
           >
-            {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+            {isMobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
           </button>
         </div>
-
       </div>
 
-      {/* Mobile Dropdown */}
+      {/* Mobile Menu */}
       {isMobileMenuOpen && (
-        <div className="absolute top-16 left-0 right-0 bg-background/95 backdrop-blur-xl border-b border-border p-4 flex flex-col gap-2 shadow-2xl md:hidden animate-slide-up origin-top">
+        <div className="absolute top-[60px] left-0 right-0 bg-background/97 backdrop-blur-xl border-b border-border p-4 flex flex-col gap-1 shadow-card md:hidden">
           {navItems.map((item) => (
             <a
               key={item.label}
               href={item.href}
-              onClick={(e) => handleScroll(e, item.href)}
-              className="text-sm font-medium text-text-muted hover:text-primary hover:bg-white/5 transition-all p-3 rounded-lg flex items-center gap-3"
+              onClick={(e) => handleNavClick(e, item.href)}
+              className="text-sm font-medium text-text-muted hover:text-primary hover:bg-surface transition-all p-3 rounded flex items-center gap-3"
             >
-              <span className="w-1.5 h-1.5 rounded-full bg-primary/50"></span>
+              <span className="w-1 h-1 rounded-full bg-primary/50" />
               {item.label}
             </a>
           ))}
+          <div className="pt-2 border-t border-border mt-1">
+            <a
+              href={`#${SectionId.CONTACT}`}
+              onClick={(e) => handleNavClick(e, `#${SectionId.CONTACT}`)}
+              className="flex items-center justify-center gap-2 w-full py-2.5 rounded text-sm font-semibold bg-primary text-white"
+            >
+              Let's Connect <ArrowRight size={14} />
+            </a>
+          </div>
         </div>
       )}
 
       {/* Scroll Progress Bar */}
-      <div className="absolute bottom-0 left-0 right-0 h-[2px] bg-border">
+      <div className="absolute bottom-0 left-0 right-0 h-px bg-transparent">
         <div
-          className="h-full bg-gradient-to-r from-primary via-secondary to-accent transition-all duration-100"
+          className="h-full bg-gradient-to-r from-primary via-secondary to-primary transition-all duration-100"
           style={{ width: `${scrollProgress}%` }}
         />
       </div>
