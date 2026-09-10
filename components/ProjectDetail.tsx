@@ -1,292 +1,198 @@
-import React, { useEffect } from 'react';
-import { ArrowLeft, Terminal, ExternalLink, FileCode, BarChart, Layers, Cpu } from 'lucide-react';
+﻿import React, { useState } from 'react';
+import { ArrowLeft, ExternalLink, Github, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Project } from '../types';
 import { Footer } from './Footer';
+import { OptimizedImage } from './ui/OptimizedImage';
 
 interface ProjectDetailProps {
   project: Project;
   onBack: () => void;
 }
 
-// Mock Data for the Technical Deep Dive
-const CASE_STUDY_DATA = {
-  metadata: {
-    cloud: 'AWS',
-    orchestration: 'Kubernetes 1.28',
-    iac: 'Terraform'
-  },
-  diffs: {
-    before: [
-      "Manual Security Group Updates",
-      "Publicly Exposed Bastion Hosts",
-      "Mean Time to Recovery: 4h",
-      "Config Drift: High"
-    ],
-    after: [
-      "Automated SG Rules via Terraform",
-      "SSM Session Manager Access",
-      "Mean Time to Recovery: <5m",
-      "Immutable Infrastructure"
-    ]
-  },
-  snippet: `resource "aws_security_group" "bastion" {
-  name        = "bastion-sg"
-  description = "Strict control for bastion access"
-  vpc_id      = module.vpc.vpc_id
-
-  ingress {
-    from_port   = 22
-    to_port     = 22
-    protocol    = "tcp"
-    cidr_blocks = [var.vpn_cidr] # LIMIT: VPN ONLY
-  }
-
-  egress {
-    from_port   = 0
-    to_port     = 0
-    protocol    = "-1"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-
-  tags = {
-    Environment = "Production"
-    ManagedBy   = "Terraform"
-  }
-}`,
-  artifacts: [
-    { label: 'Terraform Module', type: 'Gist', icon: FileCode, href: '#' },
-    { label: 'Lighthouse Performance Report', type: 'Audit', icon: BarChart, href: '#' },
-    { label: 'Architecture Diagram', type: 'Source', icon: Layers, href: '#' },
-  ]
+const statusStyle: Record<string, { border: string; bg: string; color: string }> = {
+  'LIVE':                   { border: 'rgba(16,185,129,0.3)',  bg: 'rgba(16,185,129,0.08)',  color: '#10b981' },
+  'CLIENT WORK':            { border: 'rgba(14,165,233,0.3)',  bg: 'rgba(14,165,233,0.08)',  color: '#0ea5e9' },
+  'RESEARCH / PROTOTYPING': { border: 'rgba(245,158,11,0.3)',  bg: 'rgba(245,158,11,0.08)',  color: '#f59e0b' },
 };
 
 export const ProjectDetail: React.FC<ProjectDetailProps> = ({ project, onBack }) => {
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
+  const [activeScreenshot, setActiveScreenshot] = useState(0);
+  const screenshots = project.screenshots ?? (project.imageUrl ? [project.imageUrl] : []);
+  const sStyle = statusStyle[project.status] ?? statusStyle['LIVE'];
 
-  const scrollToSection = (id: string) => {
-    const element = document.getElementById(id);
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
-    }
-  };
+  const prev = () => setActiveScreenshot((i) => (i === 0 ? screenshots.length - 1 : i - 1));
+  const next = () => setActiveScreenshot((i) => (i === screenshots.length - 1 ? 0 : i + 1));
 
   return (
-    <div className="min-h-screen bg-background text-text-main relative font-mono selection:bg-primary selection:text-white">
-
-      {/* Top Nav */}
-      <div className="sticky top-0 z-50 border-b border-border bg-background/80 backdrop-blur-md h-14 flex items-center px-4 md:px-6 justify-between rounded-none">
-        <button
-          onClick={onBack}
-          className="flex items-center gap-2 text-xs font-bold text-text-muted hover:text-primary uppercase tracking-wider group transition-colors"
-        >
-          <ArrowLeft size={14} className="group-hover:-translate-x-1 transition-transform" />
-          ./cd ..
-        </button>
-        <div className="text-[10px] text-text-dim uppercase tracking-widest flex items-center gap-2">
-          <span className="w-1.5 h-1.5 rounded-full bg-success animate-pulse"></span>
-          MODE: DEEP_DIVE
+    <div className="min-h-screen bg-background">
+      {/* Back button bar */}
+      <div className="sticky top-0 z-40 border-b border-border/60 bg-background/95 backdrop-blur-xl">
+        <div className="max-w-6xl mx-auto px-5 md:px-8 h-14 flex items-center gap-4">
+          <button
+            onClick={onBack}
+            className="flex items-center gap-2 text-sm font-medium text-text-muted hover:text-primary transition-colors group"
+            aria-label="Back to projects"
+          >
+            <ArrowLeft size={16} className="group-hover:-translate-x-0.5 transition-transform" />
+            Back to work
+          </button>
+          <div className="h-4 w-px bg-border/60" />
+          <span className="text-sm font-mono text-text-dim truncate">{project.title}</span>
+          <div className="ml-auto">
+            <span
+              className="text-[9px] font-mono font-bold tracking-widest uppercase px-2 py-1 rounded-sm border"
+              style={{ borderColor: sStyle.border, background: sStyle.bg, color: sStyle.color }}
+            >
+              {project.status}
+            </span>
+          </div>
         </div>
       </div>
 
-      {/* Main Container */}
-      <main className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 border-x border-border min-h-screen">
-
-        {/* Sidebar TOC - Hidden on Mobile */}
-        <aside className="hidden lg:block lg:col-span-3 border-r border-border bg-background">
-          <div className="sticky top-16 p-6">
-            <div className="text-xs font-bold text-text-dim mb-6 uppercase tracking-widest">Index</div>
-            <nav className="space-y-1">
-              {['Overview', 'Legacy vs Modern', 'Implementation', 'Results', 'Artifacts'].map((item) => (
-                <button
-                  key={item}
-                  onClick={() => scrollToSection(item.toLowerCase().replace(/\s+/g, '-'))}
-                  className="block w-full text-left text-xs py-2 px-3 text-text-muted hover:text-primary hover:bg-surfaceHighlight border-l-2 border-transparent hover:border-primary transition-all rounded-r-md"
-                >
-                  {item}
-                </button>
-              ))}
-            </nav>
+      <main className="max-w-6xl mx-auto px-5 md:px-8 py-16">
+        {/* Header */}
+        <div className="mb-12">
+          <div className="text-[11px] font-mono text-text-dim mb-3 tracking-wider uppercase">{project.category}</div>
+          <h1
+            className="text-3xl md:text-5xl font-bold text-text-main mb-4 leading-tight"
+            style={{ fontFamily: 'Space Grotesk, Inter, sans-serif' }}
+          >
+            {project.title}
+          </h1>
+          <p className="text-lg text-text-muted max-w-2xl leading-relaxed font-light">
+            {project.description}
+          </p>
+          <div className="flex flex-wrap gap-3 mt-6">
+            {project.liveUrl && (
+              <a
+                href={project.liveUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 px-5 py-2.5 bg-primary text-white text-sm font-semibold rounded hover:bg-primary-hover transition-all"
+              >
+                <ExternalLink size={14} /> View live
+              </a>
+            )}
           </div>
-        </aside>
+        </div>
 
-        {/* Content Column */}
-        <div className="lg:col-span-9 bg-background">
-
-          {/* Console Header */}
-          <header className="p-8 md:p-12 border-b border-border bg-background relative overflow-hidden">
-            {/* Background glow for header */}
-            <div className="absolute top-0 right-0 w-[300px] h-[300px] bg-primary/5 rounded-full blur-[80px] pointer-events-none"></div>
-
-            <div className="mb-6 inline-flex items-center px-2 py-1 border border-border bg-surfaceHighlight text-[10px] text-text-muted rounded">
-              CASE_STUDY_ID: {project.id.toUpperCase()}
-            </div>
-            <h1 className="text-3xl md:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary mb-6 tracking-tighter">
-              {project.title}_
-            </h1>
-            <p className="text-sm md:text-base text-text-muted leading-relaxed max-w-3xl font-sans">
-              {project.description} This technical case study explores the transition from manual infrastructure management to a fully automated, immutable infrastructure stack.
-            </p>
-          </header>
-
-          {/* System Metadata Bar - Stack on mobile */}
-          <div id="overview" className="grid grid-cols-1 md:grid-cols-3 border-b border-border text-xs text-text-dim uppercase tracking-widest bg-surface/30">
-            <div className="p-4 border-b md:border-b-0 md:border-r border-border flex items-center gap-2">
-              <Cpu size={14} className="text-secondary" /> Cloud: {CASE_STUDY_DATA.metadata.cloud}
-            </div>
-            <div className="p-4 border-b md:border-b-0 md:border-r border-border flex items-center gap-2">
-              <Layers size={14} className="text-primary" /> Orchestration: {CASE_STUDY_DATA.metadata.orchestration}
-            </div>
-            <div className="p-4 flex items-center gap-2">
-              <Terminal size={14} className="text-accent" /> IaC: {CASE_STUDY_DATA.metadata.iac}
-            </div>
-          </div>
-
-          {/* Diff View */}
-          <section id="legacy-vs-modern" className="p-8 md:p-12 border-b border-border">
-            <h2 className="text-lg font-bold text-text-main mb-8 flex items-center gap-2">
-              <span className="text-primary">//</span> SYSTEM EVOLUTION: DIFF VIEW
-            </h2>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 border border-border rounded-lg overflow-hidden">
-              {/* Legacy - Red */}
-              <div className="bg-error/5 border-b md:border-b-0 md:border-r border-border p-6">
-                <div className="text-error text-xs font-bold mb-6 flex items-center gap-2">
-                  <span className="w-2 h-2 bg-error rounded-full"></span> LEGACY STATE
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16">
+          {/* Left: Screenshots + Case study */}
+          <div className="lg:col-span-8 space-y-10">
+            {/* Screenshot gallery */}
+            {screenshots.length > 0 && (
+              <div>
+                <div className="mono-label mb-4 flex items-center gap-2">
+                  <span className="w-4 h-px bg-border" /> Screenshots
+                  {screenshots.length > 1 && (
+                    <span className="text-text-dim ml-2">{activeScreenshot + 1} / {screenshots.length}</span>
+                  )}
                 </div>
-                <ul className="space-y-3">
-                  {CASE_STUDY_DATA.diffs.before.map((item, i) => (
-                    <li key={i} className="flex items-start gap-3 text-xs text-text-muted">
-                      <span className="text-error font-bold shrink-0">-</span> {item}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-              {/* Modern - Green */}
-              <div className="bg-success/5 p-6">
-                <div className="text-success text-xs font-bold mb-6 flex items-center gap-2">
-                  <span className="w-2 h-2 bg-success rounded-full"></span> MODERN STATE
-                </div>
-                <ul className="space-y-3">
-                  {CASE_STUDY_DATA.diffs.after.map((item, i) => (
-                    <li key={i} className="flex items-start gap-3 text-xs text-text-muted">
-                      <span className="text-success font-bold shrink-0">+</span> {item}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </div>
-          </section>
-
-          {/* Terminal Component */}
-          <section id="implementation" className="p-8 md:p-12 border-b border-border">
-            <h2 className="text-lg font-bold text-text-main mb-8 flex items-center gap-2">
-              <span className="text-primary">//</span> INFRASTRUCTURE_AS_CODE
-            </h2>
-
-            <div className="border border-border bg-surfaceHighlight/30 rounded-lg overflow-hidden">
-              {/* VS Code Tab Bar */}
-              <div className="flex items-center bg-background/50 border-b border-border overflow-x-auto">
-                <div className="px-4 py-2 text-xs text-text-main bg-surfaceHighlight/30 border-t-2 border-primary border-r border-border flex items-center gap-2 shrink-0">
-                  <FileCode size={12} className="text-secondary" /> main.tf
-                </div>
-                <div className="px-4 py-2 text-xs text-text-dim border-r border-border flex items-center gap-2 shrink-0">
-                  <FileCode size={12} /> variables.tf
-                </div>
-                <div className="px-4 py-2 text-xs text-text-dim border-r border-border flex items-center gap-2 shrink-0">
-                  <FileCode size={12} /> outputs.tf
-                </div>
-              </div>
-
-              {/* Code Area */}
-              <div className="p-4 overflow-x-auto">
-                <pre className="text-xs font-mono leading-relaxed text-text-muted">
-                  <code className="block">
-                    {CASE_STUDY_DATA.snippet.split('\n').map((line, i) => (
-                      <div key={i} className="table-row hover:bg-white/5 transition-colors">
-                        <span className="table-cell select-none text-text-dim text-right pr-4 border-r border-border/50 mr-4">{i + 1}</span>
-                        <span className="table-cell pl-4 whitespace-pre">{line}</span>
+                <div className="relative rounded-lg overflow-hidden border border-border bg-surface aspect-video group">
+                  <OptimizedImage
+                    src={screenshots[activeScreenshot]}
+                    alt={`${project.title} screenshot ${activeScreenshot + 1}`}
+                    className="w-full h-full object-cover object-top"
+                  />
+                  {screenshots.length > 1 && (
+                    <>
+                      <button onClick={prev} className="absolute left-3 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-background/80 border border-border text-text-muted hover:text-primary flex items-center justify-center transition-all opacity-0 group-hover:opacity-100" aria-label="Previous">
+                        <ChevronLeft size={16} />
+                      </button>
+                      <button onClick={next} className="absolute right-3 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-background/80 border border-border text-text-muted hover:text-primary flex items-center justify-center transition-all opacity-0 group-hover:opacity-100" aria-label="Next">
+                        <ChevronRight size={16} />
+                      </button>
+                      <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex gap-1.5">
+                        {screenshots.map((_, i) => (
+                          <button key={i} onClick={() => setActiveScreenshot(i)} className={`w-1.5 h-1.5 rounded-full transition-all ${i === activeScreenshot ? 'bg-primary' : 'bg-border'}`} aria-label={`Screenshot ${i + 1}`} />
+                        ))}
                       </div>
+                    </>
+                  )}
+                </div>
+                {screenshots.length > 1 && (
+                  <div className="flex gap-2 mt-3 overflow-x-auto pb-1">
+                    {screenshots.map((src, i) => (
+                      <button key={i} onClick={() => setActiveScreenshot(i)} className={`shrink-0 w-20 h-14 rounded overflow-hidden border transition-all ${i === activeScreenshot ? 'border-primary' : 'border-border opacity-50 hover:opacity-80'}`} aria-label={`Thumbnail ${i + 1}`}>
+                        <OptimizedImage src={src} alt={`Thumb ${i + 1}`} className="w-full h-full object-cover object-top" />
+                      </button>
                     ))}
-                  </code>
-                </pre>
-              </div>
-            </div>
-          </section>
-
-          {/* Results Section */}
-          <section id="results" className="p-8 md:p-12 border-b border-border">
-            <h2 className="text-lg font-bold text-text-main mb-8 flex items-center gap-2">
-              <span className="text-primary">//</span> PERFORMANCE_METRICS
-            </h2>
-
-            {/* Wrapper for responsive table */}
-            <div className="border border-border rounded-lg overflow-hidden">
-              <table className="w-full text-left text-xs min-w-[600px]">
-                <thead className="bg-surfaceHighlight/50 text-text-dim uppercase tracking-widest border-b border-border">
-                  <tr>
-                    <th className="p-4 font-normal">Metric</th>
-                    <th className="p-4 font-normal">Before</th>
-                    <th className="p-4 font-normal">After</th>
-                    <th className="p-4 font-normal text-right">Delta</th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-border bg-background">
-                  <tr className="hover:bg-surfaceHighlight/20 transition-colors">
-                    <td className="p-4 font-mono text-text-main">Deployment Time</td>
-                    <td className="p-4 text-text-muted">45 mins</td>
-                    <td className="p-4 text-text-main">3.5 mins</td>
-                    <td className="p-4 text-right text-success font-bold">-92%</td>
-                  </tr>
-                  <tr className="hover:bg-surfaceHighlight/20 transition-colors">
-                    <td className="p-4 font-mono text-text-main">Attack Surface</td>
-                    <td className="p-4 text-text-muted">All Ports</td>
-                    <td className="p-4 text-text-main">Port 443</td>
-                    <td className="p-4 text-right text-success font-bold">-99%</td>
-                  </tr>
-                  <tr className="hover:bg-surfaceHighlight/20 transition-colors">
-                    <td className="p-4 font-mono text-text-main">Recovery Time</td>
-                    <td className="p-4 text-text-muted">4 hours</td>
-                    <td className="p-4 text-text-main">2 mins</td>
-                    <td className="p-4 text-right text-success font-bold">-99%</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </section>
-
-          {/* Artifacts Section */}
-          <section id="artifacts" className="p-8 md:p-12 bg-surfaceHighlight/10">
-            <h2 className="text-lg font-bold text-text-main mb-8 flex items-center gap-2">
-              <span className="text-primary">//</span> PROJECT_ARTIFACTS
-            </h2>
-
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              {CASE_STUDY_DATA.artifacts.map((artifact) => (
-                <a
-                  key={artifact.label}
-                  href={artifact.href}
-                  className="group block border border-border bg-background p-4 hover:border-primary hover:bg-surfaceHighlight/50 rounded-lg transition-all hover:shadow-lg"
-                >
-                  <div className="flex items-center justify-between mb-3">
-                    <artifact.icon size={20} className="text-text-dim group-hover:text-primary transition-colors" />
-                    <ExternalLink size={12} className="text-text-muted group-hover:text-text-main" />
                   </div>
-                  <div className="text-[10px] text-text-dim uppercase mb-1">{artifact.type}</div>
-                  <div className="text-xs font-bold text-text-main group-hover:text-primary">{artifact.label}</div>
-                </a>
-              ))}
-            </div>
-          </section>
+                )}
+              </div>
+            )}
 
+            {screenshots.length === 0 && (
+              <div className="rounded-lg border border-border bg-surface/40 p-12 flex flex-col items-center justify-center text-center relative overflow-hidden">
+                <div className="absolute inset-0 bg-schematic opacity-60" />
+                <div className="relative z-10">
+                  <div className="text-4xl font-bold font-mono text-primary/15 mb-3">M</div>
+                  <div className="text-xs font-mono text-text-dim">Screenshots available as the prototype develops.</div>
+                </div>
+              </div>
+            )}
+
+            {project.problem && (
+              <div>
+                <div className="mono-label mb-4 flex items-center gap-2"><span className="w-4 h-px bg-border" /> The Problem</div>
+                <div className="p-6 rounded-lg border border-border bg-surface/30">
+                  <p className="text-base text-text-muted leading-relaxed">{project.problem}</p>
+                </div>
+              </div>
+            )}
+
+            {project.outcome && (
+              <div>
+                <div className="mono-label mb-4 flex items-center gap-2"><span className="w-4 h-px bg-secondary/50" /> What Was Built</div>
+                <div className="p-6 rounded-lg border border-secondary/20 bg-secondary/5">
+                  <p className="text-base text-text-muted leading-relaxed">{project.outcome}</p>
+                </div>
+              </div>
+            )}
+          </div>
+
+          {/* Right: Sidebar */}
+          <div className="lg:col-span-4 space-y-6">
+            {project.role && (
+              <div className="p-5 rounded-lg border border-border bg-surface/30">
+                <div className="mono-label mb-3">My Role</div>
+                <p className="text-sm text-text-muted leading-relaxed">{project.role}</p>
+              </div>
+            )}
+            {project.tags.length > 0 && (
+              <div className="p-5 rounded-lg border border-border bg-surface/30">
+                <div className="mono-label mb-4">Tech Stack</div>
+                <div className="flex flex-wrap gap-2">
+                  {project.tags.map((tag) => (
+                    <span key={tag} className="text-[10px] font-mono px-2.5 py-1 rounded-sm border border-border text-text-muted bg-background/60">{tag}</span>
+                  ))}
+                </div>
+              </div>
+            )}
+            <div className="p-5 rounded-lg border bg-surface/30" style={{ borderColor: sStyle.border }}>
+              <div className="mono-label mb-3">Status</div>
+              <span className="text-[10px] font-mono font-bold tracking-widest uppercase px-2.5 py-1.5 rounded-sm border inline-block" style={{ borderColor: sStyle.border, background: sStyle.bg, color: sStyle.color }}>
+                {project.status}
+              </span>
+              {project.status === 'RESEARCH / PROTOTYPING' && (
+                <p className="text-xs text-text-dim mt-3 leading-relaxed">This is an emerging initiative. Work is ongoing and in early-stage development.</p>
+              )}
+            </div>
+            {project.liveUrl && (
+              <div className="p-5 rounded-lg border border-border bg-surface/30 space-y-3">
+                <div className="mono-label mb-2">Links</div>
+                <a href={project.liveUrl} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-sm text-text-muted hover:text-primary transition-colors font-mono">
+                  <ExternalLink size={12} /> Live site
+                </a>
+                <a href="https://github.com/buzzdotsui" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-sm text-text-muted hover:text-primary transition-colors font-mono">
+                  <Github size={12} /> GitHub profile
+                </a>
+              </div>
+            )}
+          </div>
         </div>
       </main>
-
-      {/* Footer integration */}
-      <div className="border-t border-border">
-        <Footer />
-      </div>
+      <Footer />
     </div>
   );
 };

@@ -3,15 +3,35 @@ import { LucideIcon } from 'lucide-react';
 export interface Project {
   id: string;
   title: string;
+  shortDescription?: string;
   description: string;
   problem?: string;
+  context?: string;
   outcome?: string;
+  role?: string;
+  status: 'LIVE' | 'SHIPPED' | 'ACTIVE' | 'IN DEVELOPMENT' | 'PROTOTYPE' | 'RESEARCH / PROTOTYPING' | 'EXPLORATION' | 'ARCHIVED' | 'CLIENT WORK';
+  significance: 'signature' | 'supporting' | 'archive';
   category?: string;
   tags: string[];
-  imageUrl: string;
+  imageUrl?: string;
+  screenshots?: string[];
+  liveUrl?: string;
   githubUrl?: string;
   demoUrl?: string;
   featured: boolean;
+  techStack?: { label: string; value: string }[];
+  decisions?: string[];
+  challenges?: string[];
+  lessons?: string[];
+}
+
+export interface CertificationItem {
+  title: string;
+  issuer: string;
+  topic: string;
+  date?: string;
+  relevance: string;
+  imageUrl: string;
 }
 
 export interface SkillCategory {
@@ -32,6 +52,7 @@ export interface WritingPost {
   desc: string;
   tag: string;
   date?: string;
+  verified?: boolean;
 }
 
 export interface TimelineItem {

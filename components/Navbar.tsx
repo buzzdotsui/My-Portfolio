@@ -5,10 +5,9 @@ import { ThemeToggle } from './ui/ThemeToggle';
 
 const navItems: NavItem[] = [
   { label: 'Work', href: `#${SectionId.PROJECTS}` },
-  { label: 'Metabotics', href: `#${SectionId.METABOTICS}` },
-  { label: 'About', href: `#${SectionId.ABOUT}` },
+  { label: 'Journey', href: `#${SectionId.EXPERIENCE}` },
   { label: 'Writing', href: `#${SectionId.WRITING}` },
-  { label: 'Contact', href: `#${SectionId.CONTACT}` },
+  { label: 'About', href: `#${SectionId.ABOUT}` },
 ];
 
 export const Navbar: React.FC = () => {
@@ -106,7 +105,7 @@ export const Navbar: React.FC = () => {
             onClick={(e) => handleNavClick(e, `#${SectionId.CONTACT}`)}
             className="flex items-center gap-1.5 px-4 py-1.5 text-[12px] font-semibold bg-primary text-white rounded hover:bg-primary-hover transition-all hover:shadow-glow-sm group"
           >
-            Let's Connect
+            Let's talk
             <ArrowRight size={12} className="group-hover:translate-x-0.5 transition-transform" />
           </a>
         </div>
@@ -145,7 +144,7 @@ export const Navbar: React.FC = () => {
               onClick={(e) => handleNavClick(e, `#${SectionId.CONTACT}`)}
               className="flex items-center justify-center gap-2 w-full py-2.5 rounded text-sm font-semibold bg-primary text-white"
             >
-              Let's Connect <ArrowRight size={14} />
+              Let's talk <ArrowRight size={14} />
             </a>
           </div>
         </div>

@@ -10,33 +10,33 @@ const writings: WritingPost[] = [
     desc: 'Industrial progress has always been driven by people who look at existing systems and ask a simple question: Can this be done better? A look at what it means to build intelligent industrial systems in an African context.',
     tag: 'Industrial Technology',
     date: '2024',
+    verified: true,
   },
   {
     title: 'Inside Metabotics: Engineering the Brain of Smart Factories',
     url: 'https://owolabitestimony.medium.com/inside-metabotics-engineering-the-brain-of-smart-factories-2ad030054f79',
-    desc: 'Metabotics designs intelligent monitoring and automation systems that transform industrial processes into self-optimizing, data-driven assets. An inside view of the architecture.',
+    desc: 'Metabotics designs intelligent monitoring and automation systems that transform industrial processes into self-optimizing, data-driven assets. An inside view of the architecture and thinking.',
     tag: 'Metabotics',
     date: '2024',
+    verified: true,
   },
   {
-    title: 'Infrastructure Automation with Ansible',
-    url: 'https://medium.com/@owolabitestimony',
-    desc: 'A deep-dive into idempotent playbook design for production systems. How declarative infrastructure management changes the way teams think about environments.',
-    tag: 'Software Engineering',
-  },
-  {
-    title: "Zero Trust Security: A Practitioner's Perspective",
-    url: 'https://medium.com/@owolabitestimony',
-    desc: 'Applying zero-trust principles to bare-metal and cloud hybrid environments. Why perimeter security is no longer sufficient and what replacing it looks like in practice.',
-    tag: 'Security',
+    title: 'I Was Never Meant to Be Average',
+    url: 'https://owolabitestimony.medium.com/i-was-never-meant-to-be-average-e974007efee5',
+    desc: 'A personal essay on choosing to build at the intersection of software, engineering, and industry — and what it costs to resist the path of least resistance.',
+    tag: 'Personal',
+    date: '2024',
+    verified: true,
   },
 ];
+
 
 const tagColors: Record<string, string> = {
   'Industrial Technology': 'rgba(14,165,233,0.12)',
   'Metabotics': 'rgba(16,185,129,0.12)',
   'Software Engineering': 'rgba(245,158,11,0.12)',
   'Security': 'rgba(167,139,250,0.12)',
+  'Personal': 'rgba(244,114,182,0.12)',
 };
 
 const tagTextColors: Record<string, string> = {
@@ -44,6 +44,7 @@ const tagTextColors: Record<string, string> = {
   'Metabotics': '#10b981',
   'Software Engineering': '#f59e0b',
   'Security': '#a78bfa',
+  'Personal': '#f472b6',
 };
 
 export const Writing: React.FC = () => {

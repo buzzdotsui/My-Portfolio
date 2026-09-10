@@ -72,7 +72,9 @@ export const Metabotics: React.FC = () => {
 
           <div className="lg:col-span-4 flex lg:justify-end items-start">
             <a
-              href="#"
+              href="https://metabotics.vercel.app/"
+              target="_blank"
+              rel="noopener noreferrer"
               className="inline-flex items-center gap-2 px-5 py-2.5 border border-border bg-surface/60 text-text-muted text-sm font-medium rounded hover:border-primary/40 hover:text-text-main hover:bg-surface transition-all group"
             >
               Explore Metabotics

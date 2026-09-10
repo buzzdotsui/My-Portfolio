@@ -1,8 +1,7 @@
 import React from 'react';
-import { Github, Linkedin, MapPin, Clock, ArrowRight, Twitter, ExternalLink } from 'lucide-react';
+import { Github, Linkedin, MapPin, Clock, ArrowRight, Twitter, ExternalLink, FileText } from 'lucide-react';
 import { SectionId } from '../types';
 import { OptimizedImage } from './ui/OptimizedImage';
-import { TypeAnimation } from 'react-type-animation';
 
 /* ─────────────────────────────────────────────────────────────
    SchematicBackground — sparse SVG engineering schematic
@@ -123,8 +122,8 @@ export const Hero: React.FC = () => {
 
             {/* Supporting description */}
             <p className="text-base md:text-lg text-text-muted max-w-xl mb-3 leading-relaxed font-light anim-fade-up-2">
-              I'm a full-stack software engineer and materials &amp; metallurgical engineering student exploring the intersection of{' '}
-              <span className="text-text-main font-medium">software, intelligent systems, automation, and industrial technology.</span>
+              A multidisciplinary builder working across{' '}
+              <span className="text-text-main font-medium">software, intelligent technology, engineering and communities.</span>
             </p>
 
             {/* Secondary statement */}
@@ -138,15 +137,17 @@ export const Hero: React.FC = () => {
                 href={`#${SectionId.PROJECTS}`}
                 className="inline-flex items-center gap-2 px-6 py-3 bg-primary text-white text-sm font-semibold rounded hover:bg-primary-hover transition-all hover:shadow-glow-sm group"
               >
-                View My Work
+                Explore my work
                 <ArrowRight size={15} className="group-hover:translate-x-1 transition-transform" />
               </a>
               <a
-                href={`#${SectionId.METABOTICS}`}
+                href="/CV/Testimony_Owolabi_Claude_Campus_Ambassador_Resume-1.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 px-6 py-3 bg-surface/60 border border-border text-text-main text-sm font-medium rounded hover:border-primary/40 hover:bg-surface transition-all group"
               >
-                Explore Metabotics
-                <ExternalLink size={14} className="text-text-dim group-hover:text-primary transition-colors" />
+                <FileText size={14} className="text-text-dim group-hover:text-primary transition-colors" />
+                Get my CV
               </a>
             </div>
 
@@ -209,7 +210,7 @@ export const Hero: React.FC = () => {
                     { label: 'Language', value: 'TypeScript' },
                     { label: 'Database', value: 'PostgreSQL · Prisma' },
                     { label: 'Deploy',   value: 'Cloud · Vercel · CF' },
-                    { label: 'Exploring', value: 'Industrial IoT' },
+                    { label: 'Exploring', value: 'Industrial IoT · AI' },
                   ].map((item) => (
                     <li key={item.label} className="flex justify-between items-baseline text-xs font-mono border-b border-border/40 pb-2.5 last:border-0 last:pb-0">
                       <span className="text-text-dim">{item.label}</span>
@@ -226,27 +227,10 @@ export const Hero: React.FC = () => {
                   </p>
                 </div>
 
-                {/* Type animation at bottom */}
                 <div className="mt-5 pt-4 border-t border-border/40">
-                  <div className="mono-label mb-2">Role</div>
+                  <div className="mono-label mb-2">Focus</div>
                   <div className="text-xs font-mono text-primary/80">
-                    <TypeAnimation
-                      sequence={[
-                        'Full-Stack Engineer',
-                        2000,
-                        'Systems Builder',
-                        2000,
-                        'Metabotics Founder',
-                        2000,
-                        'Industrial Tech Explorer',
-                        2000,
-                      ]}
-                      wrapper="span"
-                      speed={55}
-                      repeat={Infinity}
-                      aria-hidden="true"
-                    />
-                    <span className="animate-pulse">_</span>
+                    Software × Engineering × People
                   </div>
                 </div>
               </div>

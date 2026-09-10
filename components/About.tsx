@@ -1,7 +1,32 @@
 import React from 'react';
 import { SectionId } from '../types';
 import { MotionWrapper } from './ui/MotionWrapper';
-import { Cpu, Combine, Zap } from 'lucide-react';
+import { Cpu, Combine, Zap, Award } from 'lucide-react';
+import { OptimizedImage } from './ui/OptimizedImage';
+
+// ──────────────────────────────────────────────────────────
+// Verified certifications — real files in /public/certifications
+// ──────────────────────────────────────────────────────────
+const certifications = [
+  {
+    title: 'Advancing Black Leadership',
+    file: '/certifications/Advancing Black leadership.jpeg',
+    issuer: 'Claude Campus Ambassador Program',
+    relevance: 'Leadership, community building, and representation in technology.',
+  },
+  {
+    title: 'Introducing Black Leadership',
+    file: '/certifications/Introducing Black leadership.jpeg',
+    issuer: 'Claude Campus Ambassador Program',
+    relevance: 'Foundation module on leadership principles and community impact.',
+  },
+  {
+    title: 'Mathematics for Science and Technology',
+    file: '/certifications/Mathematics for science and technology.jpeg',
+    issuer: 'Continuing Professional Development',
+    relevance: 'Quantitative methods applied to science and engineering disciplines.',
+  },
+];
 
 export const About: React.FC = () => {
   return (
@@ -65,7 +90,7 @@ export const About: React.FC = () => {
                 'Builds to understand',
                 'Combines disciplines',
                 'Thinks in systems',
-                'Cares about Africa\'s industrial future',
+                "Cares about Africa's industrial future",
                 'Builds infrastructure, not just features',
               ].map((trait) => (
                 <div key={trait} className="flex items-start gap-2 text-xs text-text-muted font-mono">
@@ -73,6 +98,38 @@ export const About: React.FC = () => {
                   {trait}
                 </div>
               ))}
+            </div>
+
+            {/* ── Certifications ── */}
+            <div className="mt-14 reveal">
+              <div className="mono-label mb-6 flex items-center gap-2">
+                <Award size={12} className="text-primary/60" />
+                Certifications
+              </div>
+              <div className="space-y-4">
+                {certifications.map((cert) => (
+                  <div
+                    key={cert.title}
+                    className="group flex gap-4 p-4 rounded-lg border border-border bg-surface/30 hover:border-primary/25 hover:bg-surface/60 transition-all duration-300"
+                  >
+                    {/* Certificate image thumbnail */}
+                    <div className="shrink-0 w-16 h-16 rounded overflow-hidden border border-border bg-background">
+                      <OptimizedImage
+                        src={cert.file}
+                        alt={cert.title}
+                        className="w-full h-full object-cover"
+                      />
+                    </div>
+                    <div className="min-w-0">
+                      <h4 className="text-sm font-bold text-text-main mb-1 leading-snug" style={{ fontFamily: 'Space Grotesk, Inter, sans-serif' }}>
+                        {cert.title}
+                      </h4>
+                      <p className="text-[10px] font-mono text-text-dim uppercase tracking-wider mb-2">{cert.issuer}</p>
+                      <p className="text-xs text-text-muted leading-relaxed">{cert.relevance}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
 
@@ -150,3 +207,4 @@ export const About: React.FC = () => {
     </section>
   );
 };
+

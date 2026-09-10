@@ -74,7 +74,7 @@ export const Contact: React.FC = () => {
     } catch (error: any) {
       console.error('EmailJS Error Details:', error);
       setFormState('error');
-      toast.error(`Transmission failed. Try emailing directly.`, {
+      toast.error(`Failed to send. You can email me directly.`, {
         duration: 4000,
         style: { background: '#1c2936', color: '#ef4444', border: '1px solid #ef444430' },
       });
@@ -121,7 +121,7 @@ export const Contact: React.FC = () => {
           {/* Form */}
           <div className="md:col-span-7 reveal-left">
             <form onSubmit={handleSubmit} className="p-6 md:p-8 rounded-lg border border-border bg-surface/60 corner-marks">
-              <div className="mono-label mb-6">Initialize Connection</div>
+              <div className="mono-label mb-6">Send a message</div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mb-5">
                 <div className="relative">
@@ -135,8 +135,8 @@ export const Contact: React.FC = () => {
                     placeholder=" "
                   />
                   <label htmlFor="name" className="absolute left-3.5 top-3.5 text-sm font-mono text-text-dim transition-all peer-focus:-top-2 peer-focus:text-[10px] peer-focus:bg-surface peer-focus:px-1 peer-focus:text-primary peer-valid:-top-2 peer-valid:text-[10px] peer-valid:bg-surface peer-valid:px-1">
-                    Identifier (Name)
-                  </label>
+                     Your name
+                   </label>
                 </div>
                 <div className="relative">
                   <input
@@ -149,8 +149,8 @@ export const Contact: React.FC = () => {
                     placeholder=" "
                   />
                   <label htmlFor="email" className="absolute left-3.5 top-3.5 text-sm font-mono text-text-dim transition-all peer-focus:-top-2 peer-focus:text-[10px] peer-focus:bg-surface peer-focus:px-1 peer-focus:text-primary peer-valid:-top-2 peer-valid:text-[10px] peer-valid:bg-surface peer-valid:px-1">
-                    Return Address (Email)
-                  </label>
+                     Your email
+                   </label>
                 </div>
               </div>
 
@@ -165,7 +165,7 @@ export const Contact: React.FC = () => {
                   placeholder=" "
                 ></textarea>
                 <label htmlFor="message" className="absolute left-3.5 top-3.5 text-sm font-mono text-text-dim transition-all peer-focus:-top-2 peer-focus:text-[10px] peer-focus:bg-surface peer-focus:px-1 peer-focus:text-primary peer-valid:-top-2 peer-valid:text-[10px] peer-valid:bg-surface peer-valid:px-1">
-                  Payload (Message)
+                  Your message
                 </label>
               </div>
 
@@ -181,22 +181,22 @@ export const Contact: React.FC = () => {
                 {formState === 'submitting' && (
                   <>
                     <div className="w-4 h-4 border-2 border-current border-t-transparent rounded-full animate-spin"></div>
-                    TRANSMITTING
+                    Sending...
                   </>
                 )}
                 {formState === 'success' && (
                   <>
-                    <Check size={16} /> TRANSMISSION SUCCESSFUL
+                    <Check size={16} /> Message sent
                   </>
                 )}
                 {formState === 'error' && (
                   <>
-                    <AlertCircle size={16} /> TRANSMISSION FAILED
+                    <AlertCircle size={16} /> Failed to send
                   </>
                 )}
                 {formState === 'idle' && (
                   <>
-                    TRANSMIT MESSAGE <Send size={14} className="ml-1" />
+                    Send message <Send size={14} className="ml-1" />
                   </>
                 )}
               </button>
