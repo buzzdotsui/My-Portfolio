@@ -1,2663 +1,1639 @@
-# ANTIGRAVITY — MASTER IMPLEMENTATION PROMPT
+# MASTER BUILD PROMPT
 
-You are rebuilding the personal portfolio website for **Testimony Owolabi**.
+## TESTIMONY OWOLABI — PERSONAL WEBSITE REBUILD
 
-You have access to the existing project folder/codebase and its assets.
+You have direct access to the existing Testimony Owolabi portfolio project folder.
 
-Your job is to transform the existing portfolio into a **credible, editorial, evidence-first multidisciplinary portfolio** based on the architecture below.
+You also have access to the existing assets and supporting materials inside the project.
 
-This is **not** a request to make another generic developer portfolio.
+The forensic investigation of the current site is COMPLETE.
 
-It is also **not** permission to invent content, projects, metrics, architecture, testimonials, photographs, experience, technical claims, or achievements.
+The architecture has now been decided.
 
-The existing codebase is your starting material.
+Your task is to **rebuild the portfolio from the ground up using the existing project as source material**, while preserving truthful evidence and replacing the current generic/vibe-coded presentation with a highly intentional professional portfolio.
 
----
+This is a BUILD task.
 
-# 01 — FIRST: INSPECT BEFORE MODIFYING
+Do not return to forensic-only mode.
 
-Before changing the website, perform a complete inspection of the existing project.
-
-Inspect:
-
-* project structure
-* routes
-* components
-* data/content files
-* images
-* videos
-* fonts
-* styles
-* animations
-* dependencies
-* configuration
-* metadata
-* SEO
-* existing links
-* project descriptions
-* timeline content
-* certificates
-* photographs
-* screenshots
-* external URLs
-* GitHub links
-* social links
-* current responsive behavior
-
-Also inspect the actual existing portfolio visually.
-
-Do not assume that the current implementation matches the strategic blueprint.
-
-Identify:
-
-1. what is worth preserving
-2. what should be rewritten
-3. what is misleading
-4. what is fabricated
-5. what is generic
-6. what is redundant
-7. what is technically unnecessary
-8. what real evidence already exists
-9. what content is missing
-
-Do not immediately redesign.
-
-First understand the material you have.
+Do not ask me to restate information already available in the project or this brief.
 
 ---
 
-# 02 — NON-NEGOTIABLE RULE
+# 01. THE PRIMARY OBJECTIVE
 
-## EVIDENCE > DESIGN
+The new portfolio must make a visitor think:
 
-The website must never claim something unless there is evidence for it.
+> **“This person knows what he is doing.”**
 
-If a claim is not supported by the existing material:
+Then:
 
-* remove it
-* soften it
-* mark it as exploration
-* mark it as future work
-* or leave it out
+> **“He has a lot of value to offer.”**
 
-Never manufacture evidence.
+Then:
 
-Never create:
+> **“There is real evidence behind what he says.”**
 
-* fake statistics
-* fake users
-* fake performance numbers
-* fake testimonials
-* fake clients
-* fake repositories
-* fake technical architecture
-* fake cloud infrastructure
-* fake Kubernetes deployments
-* fake Terraform work
-* fake AWS infrastructure
-* fake AI systems
-* fake engineering experience
-* fake outcomes
+The website must communicate:
 
-The previous portfolio contained fabricated AWS/Kubernetes/Terraform-style project details.
+* competence
+* technical depth
+* range
+* initiative
+* leadership
+* engineering perspective
+* curiosity
+* authenticity
+* professionalism
+* ambition
 
-**Those must never return.**
+without making Testimony look scattered or inflated.
 
 ---
 
-# 03 — CORE BRAND IDEA
+# 02. THE CORE IDENTITY
 
-The website must communicate one person:
+The website belongs to:
 
 # TESTIMONY OWOLABI
 
-The central identity is:
+The unifying identity is:
 
-> **A multidisciplinary builder.**
+## A multidisciplinary builder.
 
-Do NOT present him as:
-
-> Software Engineer + AI Engineer + Web3 Developer + Cybersecurity Specialist + Materials Engineer + Founder + Leader...
-
-That creates fragmentation.
-
-Instead communicate:
-
-> **One builder whose work spans technology, engineering and people.**
-
-The foundational statement is:
-
-> **I build software for the physical world.**
-
-Use it where appropriate.
-
-The broader conceptual framework is:
-
-**Technology × Engineering × People**
-
----
-
-# 04 — THE SIX UNDERLYING PILLARS
-
-Use these as the site's content taxonomy.
-
-## BUILD
-
-Things Testimony actually creates.
+Testimony's work sits across:
 
 * software
-* web applications
-* digital products
-* systems
-* AI-enabled products
-* automation
-* Web3
-* prototypes
-
-## ENGINEER
-
-The physical and analytical foundation.
-
-* Metallurgical & Materials Engineering
-* manufacturing
-* materials
-* physical systems
-* engineering education
-* engineering projects
-* research
-
-## EXPLORE
-
-Areas of active investigation.
-
 * AI
-* generative AI
 * automation
-* cybersecurity
 * Web3
-* emerging technology
-* experiments
-* R&D
+* cybersecurity
+* engineering
+* materials
+* leadership
+* community
+* learning
+* writing
+* entrepreneurship
 
-## LEAD
+These are NOT separate identities.
 
-Evidence of influence beyond code.
+They are different expressions of one person.
 
-* Sui On Campus
-* student leadership
-* engineering representation
-* community building
-* workshops
-* mentoring
-* organizing
-* ecosystem participation
+The website must therefore avoid:
 
-## THINK
+> “Software Engineer + AI Engineer + Web3 Developer + Materials Engineer + Cybersecurity Specialist + Founder + Leader...”
 
-How Testimony thinks.
+as a giant disconnected title.
 
-* technical writing
-* essays
-* engineering ideas
-* industrial development
-* lessons from building
-* research-oriented thinking
-
-## LEARN
-
-The continuously developing side.
-
-* FUTA
-* Metallurgical & Materials Engineering
-* courses
-* certifications
-* workshops
-* hackathons
-* current learning
-
-These pillars should function as **metadata/content relationships**, not six competing careers.
+Instead establish one coherent identity and let the body of work demonstrate the breadth.
 
 ---
 
-# 05 — INFORMATION ARCHITECTURE
+# 03. CORE MESSAGE
 
-Implement this primary architecture:
-
-```text
-/
-├── Home
-│
-├── Work
-│   ├── All Work
-│   ├── Accurate Medical Center HMS
-│   ├── Juphil Aluminum
-│   ├── Metabotics
-│   └── Future Projects
-│
-├── Journey
-│   ├── Timeline
-│   ├── Leadership
-│   └── Sui On Campus
-│
-├── Explore
-│   ├── AI
-│   ├── Automation
-│   ├── Web3
-│   ├── Cybersecurity
-│   ├── Engineering
-│   └── Experiments / R&D
-│
-├── Writing
-│   ├── All Writing
-│   └── Individual Articles
-│
-├── About
-│   ├── Story
-│   ├── Education
-│   ├── Capabilities
-│   ├── Certifications
-│   └── Currently
-│
-└── Contact
-```
-
-Do not expose every possible category as a top-level navigation item.
-
-The navigation should remain compact.
-
----
-
-# 06 — PRIMARY NAVIGATION
-
-Use:
-
-**Home**
-
-**Work**
-
-**Journey**
-
-**Explore**
-
-**Writing**
-
-**About**
-
-Primary CTA:
-
-**Let's talk**
-
-Useful secondary links:
-
-**CV**
-
-**GitHub**
-
-**LinkedIn**
-
-Do not create a giant navigation bar.
-
-Do not turn the site into a dashboard.
-
----
-
-# 07 — HOMEPAGE
-
-The homepage is the **argument**.
-
-It is not the complete archive.
-
-Its purpose is to communicate within approximately 30–60 seconds:
-
-1. who Testimony is
-2. what he builds
-3. what makes the combination unusual
-4. evidence of competence
-5. current direction
-6. how to explore deeper
-
-Implement the homepage around this narrative:
-
-```text
-INTRODUCE
-↓
-DIFFERENTIATE
-↓
-PROVE
-↓
-SHOW RANGE
-↓
-SHOW THE PERSON
-↓
-SHOW THE MIND
-↓
-SHOW THE DIRECTION
-↓
-INVITE
-```
-
----
-
-# 08 — HOMEPAGE SECTION: INTRODUCTION
-
-Primary identity:
-
-**Testimony Owolabi**
-
-Primary thesis:
+The strongest existing positioning is:
 
 > **I build software for the physical world.**
 
-Supporting description should communicate:
+Preserve this idea prominently unless a stronger equivalent naturally emerges during implementation.
 
-* multidisciplinary builder
-* software
-* intelligent technology
-* engineering
-* communities
+The broader narrative is:
 
-Keep it concise.
+> Testimony builds across technology, engineering and people.
 
-Do not write a huge AI-generated biography.
+Technology:
+software, AI, automation, Web3, security.
 
-Primary CTA:
+Engineering:
+Metallurgical & Materials Engineering, industrial systems and physical-world thinking.
 
-**Explore my work**
+People:
+leadership, community, mentoring, representation and ecosystem work.
 
-Secondary:
-
-**Get my CV**
-
-Also provide GitHub / LinkedIn where appropriate.
+Do not turn this into corporate marketing language.
 
 ---
 
-# 09 — HOMEPAGE SECTION: THE DIFFERENCE
+# 04. VERY IMPORTANT: USE THE EXISTING EVIDENCE
 
-Communicate:
+The existing forensic report identified a major weakness:
 
-# Technology × Engineering × People
+The previous site made strong claims but did not provide enough evidence.
 
-Three dimensions.
+The rebuild must reverse that.
 
-### TECHNOLOGY
+For every important claim ask:
 
-Software systems, digital products, AI, automation and Web3.
+> **What proves this?**
 
-### ENGINEERING
+Examples:
 
-Metallurgical & Materials Engineering and interest in physical-world systems.
+Software:
+live product + screenshots + technical explanation + repository where available.
 
-### PEOPLE
+Leadership:
+real photographs + actual role + actions + outcomes.
 
-Community building, leadership, representation and ecosystem work.
+Web3:
+real ecosystem work + profile + photographs + technical evidence where available.
 
-The point is to explain why these areas belong together.
+Engineering:
+education + academic material as it becomes available.
 
----
+Writing:
+actual article URLs.
 
-# 10 — HOMEPAGE SECTION: SELECTED WORK
+Credentials:
+actual certificate images.
 
-Show approximately three major pieces.
-
-Do NOT create a grid of 12 generic cards.
-
-Priority:
-
-## 1. Accurate Medical Center HMS
-
-Real URL:
-
-https://accurate-medical.vercel.app/
-
-Use actual screenshots/UI wherever available.
-
-Describe only features that genuinely exist.
-
-This is the primary technical case study.
+Do NOT invent evidence.
 
 ---
 
-## 2. Juphil Aluminum
+# 05. DO NOT RECREATE THE OLD VIBE-CODED AESTHETIC
 
-Real URL:
+The existing site has already been forensically diagnosed as AI/vibe-coded.
 
-https://juphil.vercel.app/
+The following patterns MUST NOT be carried into the new design merely because they already exist:
 
-Use actual website visuals.
+* generic gradients
+* glowing orbs
+* giant decorative grids
+* unnecessary schematic backgrounds
+* excessive glassmorphism
+* fake engineering UI
+* “INITIALIZING” splash screen
+* “TRANSMIT MESSAGE”
+* “Initialize Connection”
+* fake terminal language
+* generic typing animation
+* decorative particles
+* unnecessary 3D
+* generic rounded cards everywhere
+* excessive pills
+* repetitive section cards
+* meaningless motion
+* stock project photography
+* generic AI-generated imagery
 
-Position it around:
+Do not replace the current AI aesthetic with a different AI aesthetic.
 
-technology + client work + industrial context.
-
----
-
-## 3. Metabotics
-
-Real URL:
-
-https://metabotics.vercel.app/
-
-Treat this differently from completed software.
-
-Label honestly:
-
-**Research / Prototyping**
-
-Use:
-
-> Sense → Understand → Predict → Optimize
-
-Do not make Metabotics appear more mature than it currently is.
+The site must feel designed around the actual person and his actual evidence.
 
 ---
 
-# 11 — HOMEPAGE PROOF SECTION
+# 06. REFERENCE ARCHITECTURE PRINCIPLE
 
-Do NOT use fabricated statistics.
+Use the following page architecture and information density as the structural model:
 
-Do NOT write:
+NAVIGATION
 
-> 20+ projects
+HOME
+WORK
+SKILLS
+SERVICES
+AVAILABILITY
+CREDENTIALS
+EXPERIENCE
+CONTACT
 
-> 50K+ users
+The page should then progress through:
 
-> 99% uptime
+IDENTITY
+→ CRAFT
+→ MINDSET
+→ LOCATION / CONTEXT
+→ FEATURED WORK
+→ COMPLETE WORK INDEX
+→ TECHNICAL SKILLS
+→ SERVICES
+→ AVAILABILITY
+→ CREDENTIALS
+→ EXPERIENCE
+→ LEADERSHIP / COMMUNITY
+→ ENGINEERING / ACADEMICS
+→ WRITING / THINKING
+→ NOW
+→ CONTACT
+→ FOOTER
 
-unless verified.
+You are NOT being asked to inspect or copy another site's DOM, source code, components or implementation.
 
-Instead create an evidence-oriented section around:
-
-**SHIPPED**
-
-**BUILT**
-
-**LED**
-
-**STUDYING**
-
-**EXPLORING**
-
-This communicates range without fake metrics.
-
----
-
-# 12 — HOMEPAGE JOURNEY SECTION
-
-Create a condensed visual timeline.
-
-Core narrative:
-
-**Christ's School Cisco Lab**
-
-→
-
-**Technology**
-
-→
-
-**FUTA**
-
-→
-
-**Engineering × Software**
-
-→
-
-**Community**
-
-→
-
-**Building**
-
-→
-
-**Metabotics**
-
-→
-
-**What's next**
-
-The purpose is:
-
-> How did Testimony become this person?
-
-Not simply:
-
-> Here is my résumé.
-
-Link to:
-
-**See the full journey**
+Implement this architecture independently using Testimony's own content and assets.
 
 ---
 
-# 13 — HOMEPAGE REAL-WORLD SECTION
+# 07. HOME / HERO
 
-This is extremely important.
-
-Use real photographs from the existing project assets.
-
-Especially:
-
-* Sui On Campus
-* leadership
-* team interactions
-* community
-* events
-* engineering/academic environments
-
-Do NOT replace them with:
-
-* stock photography
-* AI portraits
-* fake laboratory imagery
-* generic coding photos
-* futuristic robots
-* random Unsplash imagery
-
-The photographs should tell a story.
-
----
-
-# 14 — SUI ON CAMPUS
-
-There are **17 real photographs**.
-
-Preserve all 17.
-
-Do not throw them into a meaningless masonry gallery.
-
-Organize them narratively.
-
-Possible groups:
-
-### THE TEAM
-
-Core Team.
-
-### THE PEOPLE
-
-Team Lead / Technical Lead / collaborators.
-
-### THE WORK
-
-Volunteer / Community Lead activities.
-
-### THE COMMUNITY
-
-Events and ecosystem moments.
-
-### THE PERSON
-
-Selected personal moments.
-
-Where context is verified, use captions such as:
-
-> Community Lead — Sui On Campus FUTA
-
-Do not invent event descriptions.
-
-The broader story should be:
-
-**Joined → Contributed → Took responsibility → Became Community Lead → Led → Built community → Participated in ecosystem**
-
-Only use chronology that can be verified.
-
----
-
-# 15 — HOMEPAGE CURRENTLY SECTION
-
-Create a living status section.
-
-Four/five dimensions:
-
-### BUILDING
-
-Current projects.
-
-### LEARNING
-
-Current academic / technical focus.
-
-### LEADING
-
-Current community responsibilities.
-
-### EXPLORING
-
-Current experiments.
-
-### WRITING
-
-Current ideas.
-
-This should be backed by structured content so it can be updated easily.
-
----
-
-# 16 — HOMEPAGE WRITING SECTION
-
-Heading concept:
-
-> **What I'm thinking about**
-
-Show selected genuine writing.
-
-Potential topics:
-
-* intelligent industry in Africa
-* smart factories
-* Metabotics
-* infrastructure automation
-* Zero Trust/security
-* lessons from building
-
-Do not create placeholder articles.
-
-Do not fabricate publication dates.
-
-Do not invent article content.
-
-Only show real writing.
-
----
-
-# 17 — HOMEPAGE FINAL CTA
-
-Use a human CTA.
-
-Possible direction:
-
-> **Have something worth building?**
-
-Supporting text:
-
-> I'm interested in meaningful technical work, collaborations, products, research and opportunities where technology meets the real world.
-
-CTA:
-
-**Let's talk**
-
-Do not use:
-
-* Initialize Connection
-* Transmit Message
-* Establish Uplink
-* Start Protocol
-* Initialize Session
-
-Avoid theatrical tech language.
-
----
-
-# 18 — WORK `/work`
-
-Purpose:
-
-> **What has Testimony actually built?**
-
-This is the main evidence repository.
-
-Header:
-
-> **Work**
-
-Supporting copy:
-
-> Things I've built, shipped, experimented with and contributed to.
-
-Provide filtering by:
-
-**All**
-
-**Software**
-
-**AI**
-
-**Web3**
-
-**Automation**
-
-**Engineering**
-
-**Research / R&D**
-
-Also support priority:
-
-**Signature**
-
-**Supporting**
-
-**Archive**
-
----
-
-# 19 — PROJECT CARD RULES
-
-Every project card should contain:
-
-**Name**
-
-**Short description**
-
-**Domain**
-
-**Status**
-
-**Evidence**
-
-Optional:
-
-technology tags.
-
-Do not use giant decorative cards.
-
-Do not repeat:
-
-* title
-* 15 technology badges
-* generic paragraph
-* “View Project”
-* fake GitHub
-
-The card should make the visitor want to inspect the evidence.
-
----
-
-# 20 — PROJECT STATUS SYSTEM
-
-Use explicit statuses:
-
-**LIVE**
-
-**SHIPPED**
-
-**ACTIVE**
-
-**IN DEVELOPMENT**
-
-**PROTOTYPE**
-
-**RESEARCH**
-
-**EXPLORATION**
-
-**ARCHIVED**
-
-This prevents unfinished work from looking finished.
-
----
-
-# 21 — ACCURATE MEDICAL CENTER CASE STUDY
-
-Route:
-
-`/work/accurate-medical-center`
-
-This should be one of the deepest pages on the website.
-
-Use the actual project:
-
-https://accurate-medical.vercel.app/
-
-Structure:
-
-### PROJECT HEADER
-
-Name.
-
-Description.
-
-Role.
-
-Status.
-
-Relevant dates if verified.
-
-Live link.
-
-Repository only if genuinely available.
-
----
-
-### THE PROBLEM
-
-What was being solved?
-
----
-
-### CONTEXT
-
-Who/what environment was involved?
-
----
-
-### WHAT I BUILT
-
-Only verified functionality.
-
-Potential actual areas include:
-
-* authentication
-* patient registration
-* patient management
-* appointments
-* reception
-* doctor workflows
-* nursing
-* billing
-* pharmacy
-* laboratory
-* administration
-* RBAC
-
-But verify against the actual codebase before displaying.
-
----
-
-### PRODUCT EVIDENCE
-
-Use actual screenshots.
-
-Potential screenshots:
-
-* dashboard
-* patient management
-* appointments
-* consultation
-* billing
-* pharmacy
-* laboratory
-
----
-
-### TECHNICAL ARCHITECTURE
-
-Only actual architecture.
+The hero must immediately establish identity.
 
 Show:
 
-* frontend
-* backend
-* database
-* authentication
-* infrastructure
-* deployment
+TESTIMONY OWOLABI
 
-Do not invent AWS/Kubernetes/Terraform infrastructure.
+Then a concise professional positioning.
 
----
+Primary conceptual direction:
 
-### TECHNICAL DECISIONS
+> **I build software for the physical world.**
 
-Explain real decisions.
+Supporting context should make the broader identity clear without becoming a keyword list.
 
----
+Possible supporting ideas:
 
-### CHALLENGES
-
-Real implementation/deployment/build problems.
-
----
-
-### OUTCOME
-
-What actually exists.
-
-No fabricated business metrics.
-
----
-
-### LESSONS
-
-What Testimony learned.
-
----
-
-### EVIDENCE
-
-Live application.
-
-Repository if public.
-
-Relevant links.
-
----
-
-# 22 — JUPHIL ALUMINUM
-
-Route:
-
-`/work/juphil-aluminum`
-
-Real URL:
-
-https://juphil.vercel.app/
-
-Structure:
-
-**Client**
-
-→ **Problem**
-
-→ **Approach**
-
-→ **What I built**
-
-→ **Visual evidence**
-
-→ **Technical decisions**
-
-→ **Outcome**
-
-→ **Reflection**
-
-Do not use generic metalworking stock imagery.
-
-Use actual project imagery.
-
----
-
-# 23 — METABOTICS
-
-Route:
-
-`/work/metabotics`
-
-Real URL:
-
-https://metabotics.vercel.app/
-
-Treat this as a research/prototyping dossier.
-
-Header:
-
-**Metabotics**
-
-> Exploring intelligent systems for the physical world.
-
-Status:
-
-**Research / Prototyping**
-
-Then:
-
-### WHY
-
-Why does the idea exist?
-
-### THESIS
-
-**Sense → Understand → Predict → Optimize**
-
-### CONNECTION
-
-Software
-
-*
-
+software
 AI
+automation
+Web3
+engineering
 
-*
+The exact final sentence should be natural and human.
 
-Engineering
+Do not write:
 
-*
+“I am a passionate visionary leveraging cutting-edge technologies...”
 
+---
+
+# 08. HERO PHOTOGRAPHY
+
+Use a REAL photograph of Testimony.
+
+The existing forensic report identified a high-resolution personal image at:
+
+`public/profile.jpg`
+
+and a duplicate:
+
+`IMG_20260316_054226_095.jpg`
+
+Use the actual photograph appropriately.
+
+Do not reduce an important portrait to a tiny 56px avatar.
+
+Do not generate a fake portrait.
+
+Do not use an AI portrait.
+
+Do not use generic developer stock photography.
+
+The visual impression should be:
+
+> **There is a real person behind this work.**
+
+---
+
+# 09. CRAFT
+
+Create a strong capability section answering:
+
+> **What does Testimony actually build/work with?**
+
+Organize into meaningful capability groups.
+
+At minimum investigate:
+
+## SOFTWARE
+
+Full-stack web applications
+Product development
+APIs
+Databases
+Authentication
+Dashboards
+Backend systems
+Deployment
+
+## AI & INTELLIGENT SYSTEMS
+
+AI-enabled software
+Generative AI
+Intelligent workflows
+AI experimentation
+AI integration
+
+Where evidence is exploratory, label it honestly as exploration/R&D rather than mastery.
+
+## AUTOMATION
+
+Workflow automation
+Integrations
+AI automation
+Infrastructure/process automation
+
+## WEB3
+
+Sui
+Move
+Blockchain
+Smart contracts
+Web3 applications
+Ecosystem work
+
+## SECURITY
+
+Cybersecurity
+Security-minded engineering
+Pentesting/security exploration
+Infrastructure/security knowledge
+
+## ENGINEERING
+
+Metallurgical & Materials Engineering
+Materials
+Metallurgy
+Manufacturing
 Industrial systems
 
-### AFRICAN INDUSTRIAL CONTEXT
-
-Only where genuinely supported.
-
-### WHAT EXISTS
-
-Explicitly separate:
-
-**Built**
-
-**Prototyped**
-
-**Explored**
-
-**Planned**
-
-### WHAT I'M LEARNING
-
-Show the exploratory nature.
-
-### COLLABORATION
-
-Human CTA.
-
-Do not manufacture evidence.
+Do not turn this into an enormous technology logo wall.
 
 ---
 
-# 24 — METABOTICS H-01
+# 10. MINDSET
 
-Do not include this.
+This section should reveal the person behind the technical work.
 
-Current decision:
+It should communicate:
 
-**EXCLUDE FOR NOW.**
+* how Testimony thinks
+* what he values
+* why he builds
+* what engineering means to him
+* what he believes technology should accomplish
+* leadership philosophy
+* curiosity
+* African industrial development perspective
 
-Do not mention it unless real evidence/documentation becomes available.
+Use concise, real language.
+
+No motivational-poster clichés.
+
+No corporate mission statement.
+
+No fabricated philosophy.
+
+Use actual themes present in the existing portfolio and writing.
 
 ---
 
-# 25 — JOURNEY `/journey`
+# 11. LOCATION / CONTEXT
 
-This is the development story.
+Establish context naturally.
 
-Header:
+Primary location:
 
-> **How I got here**
+**Akure, Nigeria**
 
-Timeline should preserve the strongest existing narrative.
+Academic context:
 
-Important milestone:
+**Metallurgical & Materials Engineering**
+**Federal University of Technology, Akure**
 
-**Christ's School Cisco Lab**
+Relevant ecosystems:
 
-Then:
-
-technology development
-
+technology
+engineering
+Web3
 FUTA
+Nigeria
 
-engineering + technology
-
-community leadership
-
-Metabotics
-
-current direction
-
-Each milestone should include:
-
-**When**
-
-**What happened**
-
-**What I was doing**
-
-**What changed**
-
-**Evidence**
-
-Do not make this look like a LinkedIn clone.
+Do not stereotype Nigeria or overuse geographic identity as decoration.
 
 ---
 
-# 26 — LEADERSHIP `/journey/leadership`
+# 12. FEATURED WORK
 
-Header:
+This is one of the most important sections.
 
-> **Building with people**
+Use actual project evidence.
 
-Feature Sui On Campus strongly.
+Do not use unrelated stock photos.
 
-For each leadership role:
+## FEATURE 01 — ACCURATE MEDICAL CENTER HMS
 
-**ROLE**
+Live:
+https://accurate-medical.vercel.app/
 
-**WHAT I DID**
+Use real screenshots from:
 
-**WHO IT AFFECTED**
+`public/Accurate medical screenshots`
 
-**OUTCOME**
+This should be a major case study.
 
-**EVIDENCE**
-
-Include:
-
-* Sui On Campus FUTA
-* student leadership
-* engineering representation
-* community work
-* workshops
-* mentoring
-* organizing
-* ecosystem participation
-
-Only use verified roles and outcomes.
-
----
-
-# 27 — SUI PAGE
-
-Route:
-
-`/journey/sui`
-
-Tell the story of Sui On Campus.
-
-Use the 17 real photographs.
-
-Potential narrative:
-
-**Joined**
-
-→
-
-**Contributed**
-
-→
-
-**Became Community Lead**
-
-→
-
-**Led**
-
-→
-
-**Built community**
-
-→
-
-**Participated in ecosystem**
-
-Use real evidence.
-
-Link to the relevant Sui/Web3 identity:
-
-https://x.com/_buzzdotsui
-
-Do not turn the page into a crypto-themed landing page.
-
-Substance first.
-
----
-
-# 28 — EXPLORE `/explore`
-
-This is where active interests live.
-
-Core distinction:
-
-# WHAT I'VE PROVEN
-
-versus
-
-# WHAT I'M EXPLORING
-
-Categories:
-
-**AI**
-
-**Automation**
-
-**Web3**
-
-**Cybersecurity**
-
-**Engineering**
-
-**Experiments / R&D**
-
-Every category must communicate its evidence level.
-
----
-
-# 29 — EXPLORE / AI
-
-Do not simply write:
-
-> AI Engineer
-
-unless the evidence justifies it.
-
-Instead show:
-
-* AI projects
-* AI workflows
-* experiments
-* writing
-* prototypes
-* repositories
-
-Use status:
-
-**Proven**
-
-**Working knowledge**
-
-**Exploring**
-
-as appropriate.
-
----
-
-# 30 — EXPLORE / AUTOMATION
-
-Show actual evidence such as:
-
-* infrastructure automation
-* workflow automation
-* AI automation
-* integrations
-* tooling
-* Ansible work
-
-The existing Ansible writing should be restored only if the direct article URL can be verified.
-
----
-
-# 31 — EXPLORE / WEB3
-
-Use actual evidence.
-
-Focus on:
-
-* Sui
-* Move
-* blockchain development
-* smart contracts
-* ecosystem participation
-* community leadership
-
-Do not use generic “crypto” visual language.
-
----
-
-# 32 — EXPLORE / CYBERSECURITY
-
-Use genuine work.
+Show only genuine functionality.
 
 Potential evidence:
 
-* security experimentation
-* Zero Trust writing
-* technical research
-* security-related development
+* system architecture
+* authentication
+* role-based access
+* patient workflows
+* appointments
+* clinical workflows
+* billing
+* pharmacy/laboratory where actually implemented
+* dashboards
+* infrastructure
+* deployment
+* technical decisions
 
-Do not overstate specialization.
-
----
-
-# 33 — ENGINEERING
-
-Route:
-
-`/explore/engineering`
-
-This should become a substantial destination over time.
-
-Current identity:
-
-**Metallurgical & Materials Engineering**
-
-at FUTA.
-
-Explain:
-
-* what the field is
-* why Testimony studies it
-* how it intersects with technology
-* current interests
-
-Do not fabricate engineering experience.
-
-Do not create fake laboratory projects.
-
-Do not create fake materials research.
+Do not claim completed functionality that is not actually present.
 
 ---
 
-# 34 — ENGINEERING FUTURE CONTENT
+## FEATURE 02 — METABOTICS
 
-Structure the page so these can be added later:
+Live:
+https://metabotics.vercel.app/
 
-**Coursework**
+Position as an initiative / technology direction according to its true current stage.
 
-**Laboratory Work**
+Use the authentic concept:
 
-**Engineering Projects**
+**Sense → Understand → Predict → Optimize**
 
-**Technical Reports**
+Discuss:
 
-**Simulation**
+* intelligent industrial systems
+* automation
+* physical-world computing
+* engineering
+* AI
+* industrial development
+* African context where genuinely relevant
 
-**Research**
+Clearly distinguish:
 
-**Materials Characterization**
+WHAT EXISTS
+vs
+WHAT IS BEING EXPLORED
+vs
+WHAT IS THE LONG-TERM VISION
 
-**Manufacturing**
-
-**Research Interests**
-
-The architecture must support future growth.
-
----
-
-# 35 — EXPERTISE LABELING
-
-Implement a reusable expertise/status system.
-
-Possible levels:
-
-### PROVEN
-
-Demonstrated through shipped/completed work.
-
-### EXPERIENCED
-
-Repeated practical use.
-
-### WORKING KNOWLEDGE
-
-Meaningful practical exposure.
-
-### EXPLORING
-
-Currently learning/researching/experimenting.
-
-Example:
-
-```text
-Next.js — PROVEN
-Prisma — PROVEN
-Sui / Move — WORKING KNOWLEDGE
-AI Agents — EXPLORING
-Materials Characterization — LEARNING
-```
-
-Do not assign labels without evidence.
+Never exaggerate maturity.
 
 ---
 
-# 36 — WRITING `/writing`
+## FEATURE 03 — JUPHIL ALUMINUM
 
-This is an intellectual archive.
+Live:
+https://juphil.vercel.app/
 
-Header:
+Use real screenshots from:
 
-> **Thinking in public**
+`public/Juphil screenshots`
 
-Supporting text:
+Show how software was applied to a real industrial/client context.
 
-> Notes, technical ideas and questions I'm exploring across technology, engineering and industry.
+This project is valuable because it sits near the intersection of:
 
-Categories:
-
-**Technology**
-
-**Engineering**
-
-**Industry**
-
-**Automation**
-
-**Security**
-
-**Building**
-
-Show real published material.
-
-Do not create placeholder posts.
-
-Do not fabricate publication dates.
+software
++
+industrial context
++
+engineering/materials
 
 ---
 
-# 37 — ARTICLE PAGES
+## OTHER WORK
 
-Each article should support:
+Include other substantial work as verified evidence becomes available.
 
-**Title**
+Possible categories:
 
-**Date**
+Software
+AI
+Automation
+Web3
+Security
+Engineering
+Academic
+Experiments
+Community
 
-**Category**
-
-**Reading time**
-
-**Content**
-
-**Related projects**
-
-**Related ideas**
-
-**External references**
-
-At the end:
-
-> **This connects to…**
-
-Then link to relevant Work / Explore / Engineering content.
+Do not fill the page with weak projects merely to make the portfolio look larger.
 
 ---
 
-# 38 — ABOUT `/about`
+# 13. PROJECT CASE STUDIES
 
-Header:
+Major projects need dedicated detail.
 
-> **I'm Testimony Owolabi.**
+Do NOT use a universal case study template populated with fake data.
 
-Explain the person without turning this into a CV dump.
+Each case study must be genuinely specific.
 
-Sections:
+Structure:
 
-### STORY
+PROBLEM
+→ CONTEXT
+→ ROLE
+→ WHAT WAS BUILT
+→ TECHNICAL APPROACH
+→ IMPORTANT DECISIONS
+→ CHALLENGES
+→ RESULT / CURRENT STATE
+→ EVIDENCE
+→ LINKS
+→ LESSONS
 
-Who he is and how he got here.
+Only include sections that have real information.
 
-### HOW I WORK
+An early-stage project can have a shorter case study.
 
-Real principles.
-
-### INTERESTS
-
-Current areas.
-
-### EDUCATION
-
-Metallurgical & Materials Engineering.
-
-### CAPABILITIES
-
-Evidence-backed capabilities.
-
-### CERTIFICATIONS
-
-Credential archive.
-
-### CURRENTLY
-
-Current direction.
+An established project can have a deep one.
 
 ---
 
-# 39 — CURRENTLY
+# 14. COMPLETE WORK INDEX
 
-Create structured content for:
+The portfolio must support the principle:
 
-**Building**
+> **Everything meaningful can have a place.**
 
-**Learning**
+Create a searchable/filterable work archive.
 
-**Leading**
+Suggested categories:
 
-**Exploring**
+ALL
+SOFTWARE
+AI
+AUTOMATION
+WEB3
+SECURITY
+ENGINEERING
+ACADEMIC
+EXPERIMENTS
+COMMUNITY
 
-**Writing**
+The archive is comprehensive.
 
-This should be easy to update later.
+The homepage is curated.
+
+Do NOT put every tiny activity into the hero.
 
 ---
 
-# 40 — CERTIFICATIONS
+# 15. TECHNICAL SKILLS
 
-Current known certificates include:
+Create grouped capabilities instead of a giant undifferentiated skills wall.
+
+Potential group structure:
+
+SOFTWARE ENGINEERING
+AI / INTELLIGENT SYSTEMS
+AUTOMATION
+WEB3
+SECURITY
+ENGINEERING
+
+Within each group list technologies only when there is a reasonable factual basis.
+
+Use an evidence/experience model where appropriate:
+
+CORE
+WORKING
+EXPLORING
+
+The distinction matters.
+
+Do not claim professional mastery simply because a technology appears in a project dependency list.
+
+---
+
+# 16. SERVICES
+
+Create a real value proposition section.
+
+Title direction:
+
+# WHAT I CAN BUILD
+
+Potential areas, subject to evidence:
+
+## Websites & Web Applications
+
+## Software Systems
+
+## AI & Automation
+
+## Web3 Development
+
+## Technical Product Development
+
+## Prototyping / Technical Experiments
+
+The visitor should understand:
+
+> **What can I actually ask Testimony to help me build?**
+
+Do not advertise services outside the genuine capability/evidence boundary.
+
+---
+
+# 17. AVAILABILITY
+
+Create an explicit availability section.
+
+Show suitable opportunity types such as:
+
+* software opportunities
+* AI / automation opportunities
+* Web3 opportunities
+* selected client work
+* technical collaborations
+* research / engineering collaborations
+
+Do not make availability claims without an actual truthful basis.
+
+Use a clear action:
+
+**Get in touch**
+
+and/or
+
+**Book a conversation**
+
+A real scheduling system may be implemented if an actual scheduling endpoint/service is available.
+
+Do not add fake booking functionality.
+
+---
+
+# 18. CREDENTIALS
+
+Use actual certificate images.
+
+Current known files are in:
+
+`public/certifications`
+
+Current known certificates:
 
 * Advancing Black Leadership
 * Introducing Black Leadership
 * Mathematics for Science and Technology
 
-Inspect the actual `public/certifications/` assets and use the real certificate files.
+Build this as an expandable credential archive.
 
-Each should display:
+More certificates may be added later.
 
-* certificate
-* issuer
-* topic
-* date if known
-* relevance
+Each credential should have:
 
-Certificates should not dominate the homepage.
+* image
+* title
+* issuer where known
+* date where known
+* view/open action
+
+No fake certificates.
+No fake issuers.
+No fake dates.
 
 ---
 
-# 41 — CONTACT
+# 19. EXPERIENCE
 
-Route:
+Use the actual CV and verified project evidence as the source of truth for professional history.
 
-`/contact`
+Available CV:
 
-Header:
+`public/CV/Testimony_Owolabi_Claude_Campus_Ambassador_Resume-1.pdf`
 
-> **Let's build something useful.**
+Build an experience timeline that communicates progression.
 
-Supporting text:
+Possible narrative dimensions include:
 
-> Whether you're hiring, building, researching, collaborating or simply want to discuss an idea, I'd be glad to hear from you.
-
-Form:
-
-**Name**
-
-**Email**
-
-**What are you reaching out about?**
-
-**Message**
-
-CTA:
-
-**Send message**
-
-Opportunity categories:
-
-* Work
-* Client project
-* Collaboration
-* Research
+* early technology exposure
+* Christ's School / Cisco Lab
+* FUTA / engineering
+* software development
 * Web3
-* Startup
-* Other
+* community leadership
+* student leadership
+* founder / Metabotics
+* client/product work
 
-Preserve working contact functionality if it already exists.
+Do not invent dates.
 
-Do not replace a working system unnecessarily.
+Do not invent employers.
 
----
+Do not invent achievements.
 
-# 42 — RECRUITER FAST PATH
-
-A recruiter with 30 seconds should be able to reach:
-
-**Work**
-
-**Journey**
-
-**CV**
-
-**GitHub**
-
-**LinkedIn**
-
-**Contact**
-
-without reading the whole website.
+When something is an ongoing project rather than employment, label it correctly.
 
 ---
 
-# 43 — CLIENT FAST PATH
+# 20. LEADERSHIP & COMMUNITY
 
-A potential client should quickly find:
+Leadership must have meaningful visibility.
 
-**What I build**
+Do not bury it under miscellaneous “activities.”
 
-→
+Major evidence:
 
-**Accurate Medical Center**
+## SUI ON CAMPUS FUTA
 
-→
+There are exactly 17 approved photographs inside:
 
-**Juphil Aluminum**
+`public/SUI ON CAMPUS`
 
-→
+with folders:
 
-**Capabilities**
+* core team
+* me and the team lead
+* me and the technical lead
+* Me as a volunteer
+* me as the community lead
+* personal pictures
 
-→
+### ALL 17 PHOTOGRAPHS MUST BE USED.
 
-**Contact**
+Do not omit them simply because the page is long.
 
----
+However, do NOT display them as a meaningless wall of 17 equal thumbnails.
 
-# 44 — COLLABORATOR FAST PATH
+Use the existing folder structure to tell a visual story:
 
-A founder/researcher/ecosystem builder should naturally discover:
+VOLUNTEER
+→ TEAM
+→ COLLABORATION
+→ COMMUNITY LEADERSHIP
 
-**Work**
+The images should demonstrate:
 
-→
+* participation
+* community
+* leadership
+* progression
+* real people
+* real events
 
-**Metabotics**
+Do not generate captions that invent things.
 
-→
-
-**Explore**
-
-→
-
-**Engineering**
-
-→
-
-**Writing**
-
-→
-
-**Leadership**
-
-→
-
-**Contact**
+Use short factual labels where supported.
 
 ---
 
-# 45 — ACADEMIC FAST PATH
+# 21. OTHER LEADERSHIP
 
-The architecture should support:
+Represent relevant leadership accurately:
 
-**Engineering**
+* NUESA / SIMME
+* class/student representation
+* FESSU
+* community building
+* mentoring
+* workshops
+* organizing
+* ecosystem work
 
-→
+Where outcomes are known, show them.
 
-**Metabotics**
-
-→
-
-**Writing**
-
-→
-
-**Academic work**
-
-→
-
-**Research interests**
-
-→
-
-**Contact**
-
-Do not artificially inflate this path before sufficient academic evidence exists.
+Where they are not known, do not invent statistics.
 
 ---
 
-# 46 — PHOTO PHILOSOPHY
+# 22. ENGINEERING / ACADEMICS
 
-The hierarchy is:
+Create an expandable section.
 
-## TIER 1
+Current confirmed identity:
 
-Actual project screenshots.
+**Metallurgical & Materials Engineering**
+**Federal University of Technology, Akure**
 
-## TIER 2
+Current portfolio evidence can include the degree/academic identity.
 
-Real photographs.
+Do not fabricate coursework, research, grades, laboratory outputs or engineering projects.
 
-## TIER 3
+Leave the section architecturally ready for future additions.
 
-Technical diagrams / architecture.
+When real academic evidence is later added, it should fit naturally into:
 
-## TIER 4
-
-Minimal decorative imagery.
-
-Avoid:
-
-* generic coder stock photography
-* fake laboratories
-* fake robot images
-* AI portraits
-* futuristic stock artwork
-* meaningless 3D objects
-* generic Unsplash project thumbnails
-
-The existing four generic Unsplash project images should be removed/replaced.
+* coursework
+* laboratory work
+* projects
+* research
+* simulations
+* engineering reports
+* academic achievements
+* materials science interests
 
 ---
 
-# 47 — VISUAL DIRECTION
+# 23. WRITING / THINKING
 
-IMPORTANT:
+Use real article links.
 
-Do NOT start with a generic “futuristic developer portfolio” template.
+## Engineering the Future of Intelligent Industry in Africa
 
-Do NOT automatically use:
+https://owolabitestimony.medium.com/engineering-the-future-of-intelligent-industry-in-africa-9984c5f2885f
 
-* glowing purple gradients
-* neon blue
-* floating orbs
-* glassmorphism everywhere
-* excessive rounded cards
-* animated grids
-* terminal theatrics
-* particle backgrounds
-* 3D objects
-* giant gradient text
-* fake system interfaces
-* “INITIALIZING”
-* “TRANSMIT MESSAGE”
-* “INITIALIZE CONNECTION”
-* excessive typing animations
+## Inside Metabotics: Engineering the Brain of Smart Factories
 
-The previous forensic analysis identified these patterns as making the site feel AI-generated and interchangeable.
+https://owolabitestimony.medium.com/inside-metabotics-engineering-the-brain-of-smart-factories-2ad030054f79
 
-The visual identity must emerge from the actual material:
+## I Was Never Meant to Be Average
 
-**real screenshots**
+https://owolabitestimony.medium.com/i-was-never-meant-to-be-average-e974007efee5
 
-**real photographs**
+Writing is evidence of thinking.
 
-**real writing**
+Do not bury it.
 
-**real chronology**
+Do not fabricate article descriptions.
 
-**real engineering**
-
-**real personality**
-
-The site should feel editorial, intentional and human.
+Use the actual article title and destination.
 
 ---
 
-# 48 — INTERACTION
+# 24. NOW
 
-Interaction should reveal information.
+Create a compact living snapshot.
 
-Good examples:
+## BUILDING
 
-* project story unfolding
-* technical depth being revealed
-* timeline progression
-* photograph exploration
-* project state comparison
-* evidence expansion
-* connected writing/projects
-* domain exploration
+Current active work.
 
-Bad interaction:
+## LEARNING
 
-* animation for animation's sake
-* excessive scroll effects
-* cursor gimmicks
-* floating particles
-* loading theatre
-* fake system status
+Current technical and academic development.
 
-Meaning comes first.
+## LEADING
 
----
+Current leadership/community responsibilities.
 
-# 49 — RESPONSIVE DESIGN
+## EXPLORING
 
-The site must work exceptionally well on:
+Emerging interests.
 
-* desktop
-* laptop
-* tablet
-* mobile
+This section must be easy to update.
 
-Do not simply shrink desktop layouts.
+Do not invent current activities.
 
-The mobile experience should preserve:
-
-**hierarchy**
-
-**evidence**
-
-**readability**
-
-**navigation**
-
-**CTA clarity**
+Use known current state and editable content structures.
 
 ---
 
-# 50 — CONTENT RELATIONSHIPS
+# 25. SOCIAL / EXTERNAL LINKS
 
-The site should behave like an interconnected body of work.
+Use the correct public profiles.
 
-Example:
-
-Accurate Medical Center connects to:
-
-**Software**
-
-**Systems**
-
-**Building**
-
-**Writing**
-
-**Technical decisions**
-
----
-
-Metabotics connects to:
-
-**Engineering**
-
-**AI**
-
-**Industry**
-
-**Africa**
-
-**Research**
-
-**Writing**
-
----
-
-Sui On Campus connects to:
-
-**Leadership**
-
-**Web3**
-
-**Journey**
-
-**Community**
-
-**Photos**
-
----
-
-Juphil connects to:
-
-**Client Work**
-
-**Software**
-
-**Industrial Context**
-
-**Engineering**
-
-Implement these relationships in the data/content architecture.
-
----
-
-# 51 — CONTENT MODEL
-
-Do not hardcode everything into giant JSX files.
-
-Create a maintainable content/data architecture.
-
-Projects should conceptually support:
-
-```text
-title
-slug
-shortDescription
-longDescription
-status
-significance
-category
-pillars[]
-expertiseLevel
-role
-date
-client
-technologies[]
-images[]
-screenshots[]
-problem
-context
-approach
-features[]
-architecture
-decisions[]
-challenges[]
-outcome
-lessons
-liveUrl
-repositoryUrl
-externalEvidence[]
-featured
-priority
-```
-
-Only populate fields where information actually exists.
-
----
-
-# 52 — ARTICLE MODEL
-
-Support:
-
-```text
-title
-slug
-excerpt
-date
-category
-tags[]
-status
-content
-cover
-relatedProjects[]
-relatedExperiments[]
-externalUrl
-```
-
----
-
-# 53 — LEADERSHIP MODEL
-
-Support:
-
-```text
-organization
-role
-period
-description
-responsibilities[]
-peopleAffected
-outcomes[]
-photographs[]
-events[]
-externalEvidence[]
-featured
-```
-
----
-
-# 54 — EVIDENCE MODEL
-
-Where possible, connect:
-
-```text
-CLAIM
-↓
-EVIDENCE
-↓
-SOURCE
-```
-
-Example:
-
-```text
-"Built an HMS"
-↓
-Live application
-Screenshots
-Case study
-Repository
-↓
-Accurate Medical Center
-```
-
-Another:
-
-```text
-"Community Lead"
-↓
-Photos
-Events
-Role
-Outcomes
-External evidence
-↓
-Sui On Campus
-```
-
-This should influence the content architecture.
-
----
-
-# 55 — EXTERNAL LINKS
-
-Known legitimate external identities:
-
-Web3 / Sui:
-
+Web3/Sui:
 https://x.com/_buzzdotsui
 
-Technology / broader:
-
+Student/leadership:
 https://x.com/testytech_pr
 
 GitHub:
-
 https://github.com/buzzdotsui
 
-LinkedIn:
+Use the CV for additional professional links where available.
 
-https://www.linkedin.com/in/testimony-owolabi
-
-Existing portfolio:
-
-https://testimonyowolabi.pages.dev
-
-Projects:
-
-https://accurate-medical.vercel.app/
-
-https://juphil.vercel.app/
-
-https://metabotics.vercel.app/
-
-Use the most specific evidence link available.
-
-Do not make every project point to GitHub merely because GitHub exists.
-
-Do not create fake repositories.
+Every important CTA must lead somewhere real.
 
 ---
 
-# 56 — SEO
+# 26. CV / RESUME
 
-Preserve and improve the existing SEO foundation.
+Make the CV accessible from the site.
 
-Every important page should have:
+Source file:
 
-* unique title
-* unique description
-* canonical URL
-* Open Graph metadata
-* relevant structured metadata where appropriate
-* proper heading hierarchy
-* descriptive image alt text
-* clean URLs
+`public/CV/Testimony_Owolabi_Claude_Campus_Ambassador_Resume-1.pdf`
 
-Examples:
+Provide an obvious:
 
-**Accurate Medical Center HMS — Testimony Owolabi**
+**Download CV**
 
-**Juphil Aluminum — Testimony Owolabi**
+or equivalent.
 
-**Metabotics — Intelligent Industrial Systems | Testimony Owolabi**
+Do not hide it.
 
-**Journey — Testimony Owolabi**
-
-**Writing & Ideas — Testimony Owolabi**
-
-Do not keyword-stuff.
+Do not alter factual content in the CV through guesswork.
 
 ---
 
-# 57 — ACCESSIBILITY
+# 27. CONTACT
 
-Implement properly:
+Replace the old technical-theater language.
 
-* semantic HTML
-* keyboard navigation
-* visible focus states
-* accessible buttons
-* accessible forms
-* meaningful alt text
-* sufficient contrast
-* reduced-motion support
-* correct heading hierarchy
-* accessible navigation
+Do NOT use:
 
-Do not sacrifice usability for visual effects.
+“TRANSMIT MESSAGE”
 
----
+“INITIALIZE CONNECTION”
 
-# 58 — PERFORMANCE
+“PAYLOAD”
 
-Remove unnecessary infrastructure.
+etc.
 
-Audit existing dependencies.
+The visitor should understand immediately that this is a normal professional contact channel.
 
-If Three.js / particles / animation libraries are not providing meaningful value, remove them.
+Use human language.
 
-Avoid shipping large JavaScript packages merely for decorative effects.
+Primary purpose:
 
-Images should be optimized.
+> **Start a conversation.**
 
-Videos should be lazy-loaded appropriately.
+Support different reasons for contact:
 
-Fonts should be intentional.
+* opportunity
+* client work
+* collaboration
+* Web3
+* AI/automation
+* engineering/research
+* community
 
----
-
-# 59 — CODE QUALITY
-
-Use the existing project's framework and conventions where reasonable.
-
-Do not rewrite the entire technical stack simply because you prefer another framework.
-
-Preserve working functionality unless there is a clear reason to change it.
-
-Create reusable components where they genuinely improve maintainability.
-
-Avoid both extremes:
-
-**one giant component**
-
-and
-
-**50 tiny meaningless components.**
+Keep the interface simple.
 
 ---
 
-# 60 — DO NOT OVERDESIGN
+# 28. PAGE STRUCTURE
 
-The website must not feel like:
+The final site should feel like a complete professional profile.
 
-> “Look how much frontend animation I can make.”
+Target sequence:
 
-The visual hierarchy should prioritize:
+```text
+GLOBAL NAV
+│
+├── HERO / IDENTITY
+│
+├── CRAFT
+│
+├── MINDSET
+│
+├── LOCATION / CONTEXT
+│
+├── FEATURED WORK
+│
+├── COMPLETE WORK INDEX
+│
+├── TECHNICAL SKILLS
+│
+├── SERVICES
+│
+├── AVAILABILITY
+│
+├── CREDENTIALS
+│
+├── EXPERIENCE
+│
+├── LEADERSHIP & COMMUNITY
+│
+├── ENGINEERING / ACADEMICS
+│
+├── WRITING / THINKING
+│
+├── NOW
+│
+├── CONTACT
+│
+└── FOOTER
+```
 
-1. evidence
-2. significance
-3. relevance
-4. story
-5. aesthetics
-
-In that order.
+The exact implementation can combine sections where that improves flow, but do not destroy this information hierarchy.
 
 ---
 
-# 61 — HOMEPAGE SHOULD NOT CONTAIN EVERYTHING
+# 29. VISUAL DIRECTION
 
-Do NOT place every:
+Do NOT use a preset visual trope.
 
-* certificate
-* technology
-* project
-* leadership role
-* experiment
-* article
-* achievement
+The design should emerge from:
 
-on the homepage.
+* the person
+* real photographs
+* actual project screenshots
+* writing
+* technical evidence
+* engineering context
+* community evidence
 
-The homepage is curated.
+The visual language should feel:
 
-The deeper site is the evidence archive.
+* editorial
+* professional
+* human
+* intelligent
+* technical
+* confident
+* restrained
+
+It must not feel:
+
+* generic SaaS
+* generic developer portfolio
+* crypto landing page
+* AI-generated portfolio
+* résumé template
 
 ---
 
-# 62 — ARCHIVE
+# 30. REAL PHOTOGRAPHY
 
-Build the architecture so an archive can eventually contain:
+Use real photography wherever possible.
 
-* old projects
-* small experiments
-* certificates
+Especially:
+
+* Testimony
+* Sui On Campus
+* leadership/community
 * events
-* minor milestones
-* technical experiments
-* photographs
-* learning milestones
+* actual project screenshots
+* actual engineering material when provided
 
-The archive should be discoverable without overwhelming the primary navigation.
+The 17 Sui photographs MUST all appear.
 
----
-
-# 63 — FUTURE-PROOFING
-
-The site must allow Testimony to continuously add:
-
-* projects
-* articles
-* experiments
-* leadership
-* certificates
-* engineering work
-* research
-* photographs
-* collaborations
-* achievements
-
-without redesigning the entire site.
-
-Identity stays stable.
-
-Evidence evolves.
+Project pages MUST prioritize actual screenshots over stock photos.
 
 ---
 
-# 64 — WHAT TO KEEP FROM THE EXISTING SITE
-
-Preserve/adapt where they remain truthful:
-
-* “I build software for the physical world.”
-* Software × Materials Engineering
-* Metabotics concept
-* Sense → Understand → Predict → Optimize
-* Experience/Journey narrative
-* Christ's School Cisco Lab origin
-* African industrial development thread
-* honest exploration/R&D framing
-* real published writing
-* SEO foundation
-* working contact functionality
-
-Do not preserve something merely because it already exists.
-
----
-
-# 65 — WHAT TO RETIRE
-
-Remove or replace:
-
-* generic Unsplash project images
-* fabricated case studies
-* fake AWS architecture
-* fake Kubernetes claims
-* fake Terraform claims
-* fake project metrics
-* fake testimonials
-* fake repository links
-* repeated generic technical cards
-* unnecessary schematic decoration
-* generic glow/orb effects
-* INITIALIZING theatre
-* TRANSMIT MESSAGE
-* INITIALIZE CONNECTION
-* dead Metabotics CTA
-* redundant animation architecture
-* unused Three.js/particle infrastructure
-* AI-generated visual motifs
-
----
-
-# 66 — PERSONALITY
-
-Voice:
-
-**confident**
-
-**intelligent**
-
-**direct**
-
-**curious**
-
-**technically serious**
-
-**young**
-
-**human**
+# 31. DO NOT OVER-DESIGN
 
 Avoid:
 
-* corporate buzzwords
-* “visionary entrepreneur”
-* “revolutionary”
-* “disrupting industries”
-* “passionate problem solver”
-* empty founder language
-* motivational clichés
-* unnecessary technical jargon
+* excessive cards
+* excessive rounded corners
+* excessive shadows
+* excessive gradients
+* glowing borders
+* giant floating UI elements
+* arbitrary 3D objects
+* particle systems
+* decorative code snippets
+* unnecessary terminal interfaces
 
-Specificity should create personality.
+Use layout, typography, imagery and content hierarchy to create quality.
+
+The site should feel expensive because it is **well considered**, not because it has 40 effects.
 
 ---
 
-# 67 — AFRICA THREAD
+# 32. MOTION
 
-African industrial development can be an important long-term narrative.
+Animation is allowed only when it improves understanding or the experience.
 
-Use it where it genuinely connects to:
+Use subtle:
 
-* engineering
-* industrial systems
-* software
+* reveals
+* transitions
+* image changes
+* navigation transitions
+* project interactions
+* gallery transitions
+
+Avoid:
+
+* bouncing
+* spinning
+* constant floating
+* excessive blur
+* cursor gimmicks
+* unnecessary scaling
+* animation everywhere
+
+Respect reduced-motion preferences.
+
+---
+
+# 33. RESPONSIVE DESIGN
+
+Design intentionally for:
+
+375px
+390px
+414px
+768px
+834px
+1024px
+1280px
+1440px
+1920px
+
+Do not merely shrink desktop.
+
+Test:
+
+* hero
+* navigation
+* project layouts
+* screenshots
+* 17-photo Sui story
+* credentials
+* experience
+* services
+* availability
+* contact
+* footer
+
+No horizontal overflow.
+
+No broken typography.
+
+No unusable mobile interactions.
+
+---
+
+# 34. ACCESSIBILITY
+
+Maintain:
+
+* semantic HTML
+* keyboard navigation
+* visible focus
+* accessible controls
+* descriptive alt text
+* accessible image galleries
+* accessible navigation
+* reduced-motion support
+* sufficient color contrast
+
+Do not rely on visual effects to convey meaning.
+
+---
+
+# 35. PERFORMANCE
+
+Do not bring back the abandoned heavy effect stack.
+
+Do not add Three.js, particles or similar libraries unless an actual future requirement makes them necessary.
+
+Prioritize:
+
+* optimized images
+* appropriate image sizing
+* lazy loading
+* efficient rendering
+* low client-side JavaScript
+* fast first load
+* stable layouts
+* minimal unnecessary dependencies
+
+Use actual local assets rather than unnecessary remote stock images.
+
+---
+
+# 36. SEO
+
+Implement a professional SEO foundation.
+
+Include:
+
+* accurate title
+* accurate description
+* canonical URL
+* Open Graph metadata
+* Twitter/X card metadata
+* sitemap
+* robots.txt
+* structured data where appropriate
+* accurate social links
+
+Do not use misleading SEO keywords.
+
+The site should naturally describe:
+
+Testimony Owolabi
+Software
+AI
+Automation
+Web3
+Sui
+Metallurgical & Materials Engineering
+FUTA
+Nigeria
+
+where genuinely relevant.
+
+---
+
+# 37. CONTENT MANAGEMENT
+
+Build the new portfolio so future content can be added without rewriting the site.
+
+Prefer structured data/content definitions for:
+
+* projects
+* skills
+* experience
+* credentials
+* leadership
+* writing
+* current focus
+
+Do not scatter critical content across dozens of hardcoded JSX blocks.
+
+The exact implementation is your decision, but the content model must remain maintainable.
+
+---
+
+# 38. TRUTH / CLAIM POLICY
+
+This is one of the most important rules.
+
+NEVER fabricate:
+
+* metrics
+* clients
+* awards
+* jobs
+* titles
+* technical architectures
+* users
+* revenue
+* funding
+* testimonials
+* project results
+* certifications
+* repositories
+* research
+* engineering experience
+
+When something is:
+
+### COMPLETED
+
+Say so.
+
+### CURRENTLY BEING BUILT
+
+Say so.
+
+### EXPLORATORY
+
+Say so.
+
+### VISION
+
+Say so.
+
+This distinction is part of the brand.
+
+---
+
+# 39. NO “SKILL COSPLAY”
+
+Never use technical terminology purely to make the site look impressive.
+
+For example, do not attach:
+
+AWS
+Kubernetes
+Terraform
+Docker
+microservices
+distributed systems
+
+to a project unless those technologies are actually part of that project.
+
+The old portfolio's fabricated AWS/Kubernetes/Terraform case study is explicitly forbidden from returning.
+
+---
+
+# 40. THE BODY-OF-WORK PRINCIPLE
+
+The website should communicate a growing career, not a frozen list of accomplishments.
+
+Make room for:
+
+* projects
+* experiments
+* writing
+* academic work
+* leadership
+* certificates
+* research
+* communities
+* future products
+
+The architecture should remain useful as Testimony's career evolves.
+
+---
+
+# 41. PERSONALIZATION
+
+The website must use everything relevant already available in the project and verified context.
+
+Do not make me look like a generic developer.
+
+Important identity signals to preserve where relevant:
+
+* Testimony Owolabi
+* Akure / Nigeria
+* FUTA
+* Metallurgical & Materials Engineering
+* software development
 * AI
 * automation
+* Web3
+* Sui
+* community leadership
+* student leadership
 * Metabotics
+* African industrial development
+* published writing
+* real software projects
+* real community photographs
+* certificates
+* technical experimentation
+* founder/product direction
 
-Do not insert “Africa” into unrelated sections simply for branding.
+The goal is not to mention all of these on the homepage.
 
----
-
-# 68 — FINAL BRAND TEST
-
-Before implementing any major section, ask:
-
-### TEST 1
-
-Does this make Testimony look more:
-
-* capable?
-* credible?
-* human?
-* memorable?
-
-If none:
-
-**remove it.**
-
-### TEST 2
-
-Could another developer replace Testimony's name and this section still work?
-
-If yes:
-
-**make it more personal.**
-
-### TEST 3
-
-Is there evidence behind this?
-
-If no:
-
-label it honestly as:
-
-**exploration**
-
-**vision**
-
-**aspiration**
-
-or remove it.
+The goal is to make the complete site unmistakably mine.
 
 ---
 
-# 69 — THE CORE VISITOR JOURNEY
+# 42. VISUAL EVIDENCE PRIORITY
 
-The finished website should produce this sequence:
+Use this hierarchy:
 
-```text
-WHO IS HE?
-↓
-I BUILD SOFTWARE FOR THE PHYSICAL WORLD.
-↓
-OH — SOFTWARE + ENGINEERING + PEOPLE.
-↓
-HE HAS ACTUALLY BUILT THESE THINGS.
-↓
-HE HAS REAL COMMUNITY/LEADERSHIP EXPERIENCE.
-↓
-HE'S STUDYING ENGINEERING TOO.
-↓
-HE'S EXPLORING AI / AUTOMATION / WEB3.
-↓
-HE ACTUALLY THINKS ABOUT THESE PROBLEMS.
-↓
-HE'S BUILDING TOWARD SOMETHING.
-↓
-I WANT TO TALK TO HIM.
-```
+1. Real project screenshots
+2. Real personal photography
+3. Real event/community photographs
+4. Real diagrams/technical visuals
+5. Real certificates
+6. Typography/layout
+7. Decorative elements
+
+Never reverse this hierarchy.
 
 ---
 
-# 70 — SUCCESS CRITERIA
+# 43. EXPERIENCE OF DIFFERENT VISITORS
 
-After approximately:
+A software recruiter should quickly reach:
 
-## 10 SECONDS
+Work → Skills → Experience → CV
 
-Visitor understands:
+An AI recruiter:
 
-**who Testimony is + what he builds + what makes him different.**
+Craft → AI → Work → Experiments
 
-## 30 SECONDS
+A Web3 recruiter:
 
-Visitor has seen:
+Web3 → Sui → Leadership → Evidence
 
-**real evidence.**
+An engineering recruiter:
 
-## 2 MINUTES
+Engineering → Academic → Metabotics → Industrial work
 
-Visitor understands:
+A leadership evaluator:
 
-**the breadth and story connecting it.**
+Experience → Leadership → Sui On Campus → Photos
 
-## 5 MINUTES
+A client:
 
-A serious recruiter/client/collaborator can reasonably decide:
+Work → Services → Availability → Contact
 
-> **I want to talk to this person.**
+A collaborator:
 
----
+Metabotics → Writing → Now → Contact
 
-# 71 — IMPLEMENTATION ORDER
+Do this naturally through architecture.
 
-Do not attempt to perfect every page simultaneously.
-
-Build in this order:
-
-## PHASE 1
-
-1. Home
-2. Work
-3. Accurate Medical Center
-4. Juphil Aluminum
-5. Metabotics
-6. Journey
-7. About
-8. Contact
-
-## PHASE 2
-
-9. Leadership
-10. Sui On Campus
-11. Explore
-12. Engineering
-13. Writing
-14. Certifications
-
-## PHASE 3
-
-15. Individual articles
-16. Experiments
-17. Archive
-18. Search
-19. Currently
-20. Additional engineering evidence
+Do not create six disconnected versions of the website.
 
 ---
 
-# 72 — BEFORE CODING
+# 44. FINAL NAVIGATION
 
-Create an internal implementation/content audit.
+Keep the global navigation concise:
 
-For every intended content item classify:
+**HOME**
+**WORK**
+**SKILLS**
+**SERVICES**
+**AVAILABILITY**
+**CREDENTIALS**
+**EXPERIENCE**
+**CONTACT**
 
-**VERIFIED**
+Secondary content may be discovered through page sections, filters, deep links and contextual navigation.
 
-**PARTIALLY VERIFIED**
-
-**MISSING**
-
-**EXPLORATION**
-
-**REMOVE**
-
-Do not silently fill missing information with assumptions.
-
-If content is missing, use the architecture to leave room for it.
-
-Do not invent it.
+Do not turn the navbar into a list of every identity.
 
 ---
 
-# 73 — BEFORE FINAL DELIVERY
+# 45. IMPLEMENTATION DISCIPLINE
 
-Perform a final forensic review of the rebuilt website.
+Before writing large amounts of code:
 
-Check every page for:
+1. inspect the existing source and assets
+2. identify reusable content/evidence
+3. establish the new content model
+4. establish the page hierarchy
+5. establish reusable layout primitives
+6. build section by section
+7. test after each major stage
 
-### Credibility
-
-Any unsupported claims?
-
-### Links
-
-Any dead or incorrect links?
-
-### Evidence
-
-Is actual work being shown?
-
-### Images
-
-Any generic stock imagery still being used as evidence?
-
-### Case studies
-
-Any invented technical details?
-
-### Status
-
-Are unfinished projects clearly labelled?
-
-### Navigation
-
-Can a recruiter reach the important information quickly?
-
-### Content
-
-Is the homepage curated rather than overloaded?
-
-### Visual identity
-
-Does it still look like an AI-generated portfolio?
-
-### Personality
-
-Could another developer replace Testimony's name and the website still work?
-
-### Performance
-
-Any unnecessary libraries or animations?
-
-### Mobile
-
-Does the experience remain excellent?
-
-### Accessibility
-
-Keyboard, semantic structure, contrast, forms and motion?
-
-Fix all issues you identify.
+Do not perform a giant uncontrolled rewrite with duplicated components.
 
 ---
 
-# 74 — IMPORTANT: DO NOT STOP AT A MOCKUP
+# 46. VALIDATION
 
-This is an implementation task.
+After implementation:
 
-Do not simply produce:
+Run all available project checks.
 
-* a design concept
-* a Figma-like mockup
-* placeholder cards
-* lorem ipsum
-* fake project screenshots
-* fake content
-* a homepage demo
+At minimum:
 
-Build the actual website in the existing project.
+* lint
+* type check where available
+* production build
+* broken-link verification
+* route verification
+* accessibility sanity checks
+* image loading verification
+* responsive testing
 
-Routes should work.
+Then inspect the ACTUAL rendered website.
 
-Links should work.
-
-Images should load.
-
-Contact should work.
-
-Case studies should work.
-
-Responsive behavior should work.
-
-SEO should work.
+Do not consider the task complete because the code compiles.
 
 ---
 
-# 75 — IMPORTANT: DO NOT REBUILD JUST FOR THE SAKE OF REBUILDING
+# 47. FINAL QA QUESTIONS
 
-If an existing component/functionality is genuinely good and consistent with the new architecture:
+## IDENTITY
 
-**keep it.**
+Does this clearly communicate who Testimony is?
 
-If something is technically solid but visually inconsistent:
+## CREDIBILITY
 
-**adapt it.**
+Can I see evidence behind major claims?
 
-If something is fabricated, generic, misleading or unnecessary:
+## HUMANITY
 
-**remove it.**
+Does this feel like a real person's website?
 
-The objective is not:
+## BREADTH
 
-> “new code.”
+Can visitors discover software, AI, automation, Web3, engineering, leadership, academics and writing without feeling overwhelmed?
 
-The objective is:
+## DEPTH
 
-> **a substantially better portfolio.**
+Can someone go deeper into serious work?
 
----
+## PROFESSIONAL VALUE
 
-# 76 — THE FINAL EXPERIENCE
+Can a recruiter understand what Testimony can contribute?
 
-The finished website should feel like:
+## CLIENT VALUE
 
-**a real person's body of work**
+Can a potential client understand what Testimony can build?
 
-not
+## LEADERSHIP
 
-**a résumé**
+Does leadership feel like professional evidence?
 
-and not
+## ENGINEERING
 
-**a generated website.**
+Does the engineering background feel real and appropriately scoped?
 
-It should feel:
+## WEB3
 
-**built**
+Does Sui/Web3 feel substantive rather than decorative?
 
-not manufactured.
+## AI
 
-**documented**
+Does AI appear as actual work/exploration rather than buzzwords?
 
-not decorated.
+## PERSONALIZATION
 
-**human**
+Could this website belong to another developer?
 
-not synthetic.
+If YES, keep refining.
 
-**ambitious**
+## AUTHENTICITY
 
-not exaggerated.
+Does it look generated?
 
-**multidisciplinary**
-
-not scattered.
-
-**technical**
-
-not performatively technical.
-
-**personal**
-
-not generic.
+If YES, remove the generated-looking layer and make the content/evidence drive the presentation.
 
 ---
 
-# 77 — NORTH STAR
+# 48. THE FINAL QUALITY BAR
 
-Everything ultimately serves this reaction:
+The finished site should feel like:
 
-> **“This guy knows what he's doing.”**
+**A serious professional portfolio belonging to a real young multidisciplinary builder.**
 
-followed by:
+It should be:
 
-> **“And there is clearly much more here than I first expected.”**
+* substantial
+* clear
+* visually confident
+* evidence-driven
+* human
+* technically credible
+* easy to navigate
+* easy to update
+* memorable
 
-Build the website to earn those reactions through **evidence**, not through visual tricks.
+It must NOT feel like:
+
+* an AI-generated portfolio
+* a generic developer template
+* a startup landing page
+* a crypto landing page
+* a résumé with animations
+* a collection of random disciplines
+
+The final impression should be:
+
+> **“Testimony knows what he is doing.”**
+
+then:
+
+> **“He has built real things.”**
+
+then:
+
+> **“He has range.”**
+
+then:
+
+> **“He can create value here.”**
 
 ---
 
-# 78 — FINAL INSTRUCTION TO ANTIGRAVITY
+# 49. FINAL NON-NEGOTIABLES
 
-You already have access to the existing project.
+**USE THE REAL PROJECTS.**
 
-**Inspect it first.**
+Accurate Medical Center:
+https://accurate-medical.vercel.app/
 
-Then implement this architecture directly into the existing codebase.
+Juphil Aluminum:
+https://juphil.vercel.app/
 
-Do not ask me to manually describe files that you can inspect yourself.
+Metabotics:
+https://metabotics.vercel.app/
 
-Do not invent missing content.
+**USE THE REAL SCREENSHOTS.**
 
-Do not replace real evidence with placeholders if real assets already exist.
+`public/Accurate medical screenshots`
+`public/Juphil screenshots`
 
-Do not create another generic AI portfolio.
+**USE ALL 17 SUI ON CAMPUS PHOTOS.**
 
-Do not optimize for visual spectacle.
+`public/SUI ON CAMPUS`
 
-Optimize for:
+**USE THE REAL CV.**
 
-**clarity → credibility → evidence → depth → personality.**
+`public/CV/Testimony_Owolabi_Claude_Campus_Ambassador_Resume-1.pdf`
 
-When implementation is complete, provide a concise report containing:
+**USE THE REAL CERTIFICATES.**
 
-1. what you changed
-2. routes created/modified
-3. content reused
-4. assets reused
-5. content gaps discovered
-6. components removed
-7. dependencies removed
-8. any claims/content that still require verification
-9. any remaining technical issues
-10. recommended next steps
+`public/certifications`
 
-The portfolio is successful only when the implementation makes the **real person and real body of work** more visible.
+**USE THE REAL ARTICLES.**
+
+Engineering the Future of Intelligent Industry in Africa
+https://owolabitestimony.medium.com/engineering-the-future-of-intelligent-industry-in-africa-9984c5f2885f
+
+Inside Metabotics: Engineering the Brain of Smart Factories
+https://owolabitestimony.medium.com/inside-metabotics-engineering-the-brain-of-smart-factories-2ad030054f79
+
+I Was Never Meant to Be Average
+https://owolabitestimony.medium.com/i-was-never-meant-to-be-average-e974007efee5
+
+**USE THE CORRECT SOCIAL IDENTITIES.**
+
+Sui/Web3:
+https://x.com/_buzzdotsui
+
+Student/leadership:
+https://x.com/testytech_pr
+
+GitHub:
+https://github.com/buzzdotsui
+
+Do not invent replacements.
+
+---
+
+# 50. ABSOLUTE FINAL INSTRUCTION
+
+Do not make the portfolio impressive by adding more effects.
+
+Make it impressive by making the **person, work, evidence and story impossible to overlook**.
+
+Build the website around the actual substance.
+
+Make the interface serve the evidence.
+
+Make the evidence serve the story.
+
+Make the story serve the person.
+
+And make the finished website unmistakably:
+
+# TESTIMONY OWOLABI.

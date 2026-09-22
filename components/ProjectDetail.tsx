@@ -1,8 +1,9 @@
-﻿import React, { useState } from 'react';
+import React, { useState } from 'react';
 import { ArrowLeft, ExternalLink, Github, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Project } from '../types';
 import { Footer } from './Footer';
 import { OptimizedImage } from './ui/OptimizedImage';
+import { Navbar } from './Navbar';
 
 interface ProjectDetailProps {
   project: Project;
@@ -25,15 +26,17 @@ export const ProjectDetail: React.FC<ProjectDetailProps> = ({ project, onBack })
 
   return (
     <div className="min-h-screen bg-background">
-      {/* Back button bar */}
-      <div className="sticky top-0 z-40 border-b border-border/60 bg-background/95 backdrop-blur-xl">
-        <div className="max-w-6xl mx-auto px-5 md:px-8 h-14 flex items-center gap-4">
+      <Navbar />
+
+      {/* Back bar */}
+      <div className="sticky top-[60px] z-40 border-b border-border/60 bg-background/95 backdrop-blur-xl">
+        <div className="max-w-6xl mx-auto px-5 md:px-8 h-12 flex items-center gap-4">
           <button
             onClick={onBack}
             className="flex items-center gap-2 text-sm font-medium text-text-muted hover:text-primary transition-colors group"
             aria-label="Back to projects"
           >
-            <ArrowLeft size={16} className="group-hover:-translate-x-0.5 transition-transform" />
+            <ArrowLeft size={15} className="group-hover:-translate-x-0.5 transition-transform" />
             Back to work
           </button>
           <div className="h-4 w-px bg-border/60" />
@@ -49,7 +52,8 @@ export const ProjectDetail: React.FC<ProjectDetailProps> = ({ project, onBack })
         </div>
       </div>
 
-      <main className="max-w-6xl mx-auto px-5 md:px-8 py-16">
+      <main className="max-w-6xl mx-auto px-5 md:px-8 py-16" id="main-content">
+
         {/* Header */}
         <div className="mb-12">
           <div className="text-[11px] font-mono text-text-dim mb-3 tracking-wider uppercase">{project.category}</div>
@@ -59,10 +63,10 @@ export const ProjectDetail: React.FC<ProjectDetailProps> = ({ project, onBack })
           >
             {project.title}
           </h1>
-          <p className="text-lg text-text-muted max-w-2xl leading-relaxed font-light">
+          <p className="text-lg text-text-muted max-w-2xl leading-relaxed font-light mb-6">
             {project.description}
           </p>
-          <div className="flex flex-wrap gap-3 mt-6">
+          <div className="flex flex-wrap gap-3">
             {project.liveUrl && (
               <a
                 href={project.liveUrl}
@@ -70,20 +74,33 @@ export const ProjectDetail: React.FC<ProjectDetailProps> = ({ project, onBack })
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 px-5 py-2.5 bg-primary text-white text-sm font-semibold rounded hover:bg-primary-hover transition-all"
               >
-                <ExternalLink size={14} /> View live
+                <ExternalLink size={14} /> View live site
+              </a>
+            )}
+            {project.githubUrl && (
+              <a
+                href={project.githubUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 px-5 py-2.5 border border-border text-text-muted text-sm font-medium rounded hover:border-primary/40 hover:text-text-main transition-all"
+              >
+                <Github size={14} /> GitHub
               </a>
             )}
           </div>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16">
-          {/* Left: Screenshots + Case study */}
+
+          {/* Main content */}
           <div className="lg:col-span-8 space-y-10">
-            {/* Screenshot gallery */}
+
+            {/* Screenshots */}
             {screenshots.length > 0 && (
               <div>
                 <div className="mono-label mb-4 flex items-center gap-2">
-                  <span className="w-4 h-px bg-border" /> Screenshots
+                  <span className="w-4 h-px bg-border" />
+                  Screenshots
                   {screenshots.length > 1 && (
                     <span className="text-text-dim ml-2">{activeScreenshot + 1} / {screenshots.length}</span>
                   )}
@@ -96,15 +113,15 @@ export const ProjectDetail: React.FC<ProjectDetailProps> = ({ project, onBack })
                   />
                   {screenshots.length > 1 && (
                     <>
-                      <button onClick={prev} className="absolute left-3 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-background/80 border border-border text-text-muted hover:text-primary flex items-center justify-center transition-all opacity-0 group-hover:opacity-100" aria-label="Previous">
+                      <button onClick={prev} className="absolute left-3 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-background/80 border border-border text-text-muted hover:text-primary flex items-center justify-center transition-all opacity-0 group-hover:opacity-100" aria-label="Previous screenshot">
                         <ChevronLeft size={16} />
                       </button>
-                      <button onClick={next} className="absolute right-3 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-background/80 border border-border text-text-muted hover:text-primary flex items-center justify-center transition-all opacity-0 group-hover:opacity-100" aria-label="Next">
+                      <button onClick={next} className="absolute right-3 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-background/80 border border-border text-text-muted hover:text-primary flex items-center justify-center transition-all opacity-0 group-hover:opacity-100" aria-label="Next screenshot">
                         <ChevronRight size={16} />
                       </button>
                       <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex gap-1.5">
                         {screenshots.map((_, i) => (
-                          <button key={i} onClick={() => setActiveScreenshot(i)} className={`w-1.5 h-1.5 rounded-full transition-all ${i === activeScreenshot ? 'bg-primary' : 'bg-border'}`} aria-label={`Screenshot ${i + 1}`} />
+                          <button key={i} onClick={() => setActiveScreenshot(i)} className={`w-1.5 h-1.5 rounded-full transition-all ${i === activeScreenshot ? 'bg-primary' : 'bg-white/40'}`} aria-label={`Screenshot ${i + 1}`} />
                         ))}
                       </div>
                     </>
@@ -122,16 +139,15 @@ export const ProjectDetail: React.FC<ProjectDetailProps> = ({ project, onBack })
               </div>
             )}
 
+            {/* No screenshots placeholder (Metabotics) */}
             {screenshots.length === 0 && (
-              <div className="rounded-lg border border-border bg-surface/40 p-12 flex flex-col items-center justify-center text-center relative overflow-hidden">
-                <div className="absolute inset-0 bg-schematic opacity-60" />
-                <div className="relative z-10">
-                  <div className="text-4xl font-bold font-mono text-primary/15 mb-3">M</div>
-                  <div className="text-xs font-mono text-text-dim">Screenshots available as the prototype develops.</div>
-                </div>
+              <div className="rounded-lg border border-border bg-surface/40 p-12 flex flex-col items-center justify-center text-center">
+                <div className="text-4xl font-bold font-mono text-primary/15 mb-3">M</div>
+                <div className="text-xs font-mono text-text-dim">Screenshots will be available as the prototype develops.</div>
               </div>
             )}
 
+            {/* Problem */}
             {project.problem && (
               <div>
                 <div className="mono-label mb-4 flex items-center gap-2"><span className="w-4 h-px bg-border" /> The Problem</div>
@@ -141,52 +157,138 @@ export const ProjectDetail: React.FC<ProjectDetailProps> = ({ project, onBack })
               </div>
             )}
 
-            {project.outcome && (
+            {/* Context */}
+            {project.context && (
+              <div>
+                <div className="mono-label mb-4 flex items-center gap-2"><span className="w-4 h-px bg-border" /> Context</div>
+                <p className="text-sm text-text-muted leading-relaxed">{project.context}</p>
+              </div>
+            )}
+
+            {/* What was built */}
+            {project.whatWasBuilt && (
               <div>
                 <div className="mono-label mb-4 flex items-center gap-2"><span className="w-4 h-px bg-secondary/50" /> What Was Built</div>
                 <div className="p-6 rounded-lg border border-secondary/20 bg-secondary/5">
-                  <p className="text-base text-text-muted leading-relaxed">{project.outcome}</p>
+                  <p className="text-base text-text-muted leading-relaxed">{project.whatWasBuilt}</p>
                 </div>
+              </div>
+            )}
+
+            {/* Technical approach */}
+            {project.technicalApproach && (
+              <div>
+                <div className="mono-label mb-4 flex items-center gap-2"><span className="w-4 h-px bg-border" /> Technical Approach</div>
+                <p className="text-sm text-text-muted leading-relaxed">{project.technicalApproach}</p>
+              </div>
+            )}
+
+            {/* Key decisions */}
+            {project.decisions && project.decisions.length > 0 && (
+              <div>
+                <div className="mono-label mb-4 flex items-center gap-2"><span className="w-4 h-px bg-border" /> Key Decisions</div>
+                <ul className="space-y-2">
+                  {project.decisions.map((d, i) => (
+                    <li key={i} className="flex gap-3 text-sm text-text-muted">
+                      <span className="text-primary/50 mt-1">›</span>
+                      {d}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+
+            {/* Challenges */}
+            {project.challenges && project.challenges.length > 0 && (
+              <div>
+                <div className="mono-label mb-4 flex items-center gap-2"><span className="w-4 h-px bg-border" /> Challenges</div>
+                <ul className="space-y-2">
+                  {project.challenges.map((c, i) => (
+                    <li key={i} className="flex gap-3 text-sm text-text-muted">
+                      <span className="text-accent/60 mt-1">›</span>
+                      {c}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+
+            {/* Current state */}
+            {project.currentState && (
+              <div>
+                <div className="mono-label mb-4 flex items-center gap-2"><span className="w-4 h-px bg-primary/50" /> Current State</div>
+                <div className="p-5 rounded-lg border border-primary/20 bg-primary/5">
+                  <p className="text-sm text-text-muted leading-relaxed">{project.currentState}</p>
+                </div>
+              </div>
+            )}
+
+            {/* Lessons */}
+            {project.lessons && project.lessons.length > 0 && (
+              <div>
+                <div className="mono-label mb-4 flex items-center gap-2"><span className="w-4 h-px bg-border" /> Lessons</div>
+                <ul className="space-y-2">
+                  {project.lessons.map((l, i) => (
+                    <li key={i} className="flex gap-3 text-sm text-text-muted">
+                      <span className="text-secondary/60 mt-1">›</span>
+                      {l}
+                    </li>
+                  ))}
+                </ul>
               </div>
             )}
           </div>
 
-          {/* Right: Sidebar */}
-          <div className="lg:col-span-4 space-y-6">
+          {/* Sidebar */}
+          <div className="lg:col-span-4 space-y-5">
             {project.role && (
               <div className="p-5 rounded-lg border border-border bg-surface/30">
                 <div className="mono-label mb-3">My Role</div>
                 <p className="text-sm text-text-muted leading-relaxed">{project.role}</p>
               </div>
             )}
+
             {project.tags.length > 0 && (
               <div className="p-5 rounded-lg border border-border bg-surface/30">
-                <div className="mono-label mb-4">Tech Stack</div>
+                <div className="mono-label mb-4">Technology</div>
                 <div className="flex flex-wrap gap-2">
                   {project.tags.map((tag) => (
-                    <span key={tag} className="text-[10px] font-mono px-2.5 py-1 rounded-sm border border-border text-text-muted bg-background/60">{tag}</span>
+                    <span key={tag} className="text-[10px] font-mono px-2.5 py-1 rounded-sm border border-border text-text-muted bg-background/60">
+                      {tag}
+                    </span>
                   ))}
                 </div>
               </div>
             )}
+
             <div className="p-5 rounded-lg border bg-surface/30" style={{ borderColor: sStyle.border }}>
               <div className="mono-label mb-3">Status</div>
-              <span className="text-[10px] font-mono font-bold tracking-widest uppercase px-2.5 py-1.5 rounded-sm border inline-block" style={{ borderColor: sStyle.border, background: sStyle.bg, color: sStyle.color }}>
+              <span
+                className="text-[10px] font-mono font-bold tracking-widest uppercase px-2.5 py-1.5 rounded-sm border inline-block"
+                style={{ borderColor: sStyle.border, background: sStyle.bg, color: sStyle.color }}
+              >
                 {project.status}
               </span>
               {project.status === 'RESEARCH / PROTOTYPING' && (
-                <p className="text-xs text-text-dim mt-3 leading-relaxed">This is an emerging initiative. Work is ongoing and in early-stage development.</p>
+                <p className="text-xs text-text-dim mt-3 leading-relaxed">
+                  This is an emerging initiative in active development. The vision is established; the infrastructure is being built.
+                </p>
               )}
             </div>
-            {project.liveUrl && (
+
+            {(project.liveUrl || project.githubUrl) && (
               <div className="p-5 rounded-lg border border-border bg-surface/30 space-y-3">
                 <div className="mono-label mb-2">Links</div>
-                <a href={project.liveUrl} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-sm text-text-muted hover:text-primary transition-colors font-mono">
-                  <ExternalLink size={12} /> Live site
-                </a>
-                <a href="https://github.com/buzzdotsui" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-sm text-text-muted hover:text-primary transition-colors font-mono">
-                  <Github size={12} /> GitHub profile
-                </a>
+                {project.liveUrl && (
+                  <a href={project.liveUrl} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-sm text-text-muted hover:text-primary transition-colors font-mono">
+                    <ExternalLink size={12} /> Live site
+                  </a>
+                )}
+                {project.githubUrl && (
+                  <a href={project.githubUrl} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-sm text-text-muted hover:text-primary transition-colors font-mono">
+                    <Github size={12} /> GitHub profile
+                  </a>
+                )}
               </div>
             )}
           </div>

@@ -1,12 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { SectionId, Project } from '../types';
-import { Badge } from './ui/Badge';
-import { Github, ArrowRight, ExternalLink } from 'lucide-react';
+import { Github, ArrowRight, ExternalLink, ChevronLeft, ChevronRight } from 'lucide-react';
 import { OptimizedImage } from './ui/OptimizedImage';
 import { MotionWrapper } from './ui/MotionWrapper';
 
 // ──────────────────────────────────────────────────────────
-// STATUS badge colours
+// STATUS styles
 // ──────────────────────────────────────────────────────────
 const statusStyle: Record<string, { border: string; bg: string; color: string }> = {
   'LIVE':                   { border: 'rgba(16,185,129,0.3)',  bg: 'rgba(16,185,129,0.08)',  color: '#10b981' },
@@ -15,21 +14,25 @@ const statusStyle: Record<string, { border: string; bg: string; color: string }>
 };
 
 // ──────────────────────────────────────────────────────────
-// Project data — verified content only
+// Verified project data — real evidence only
 // ──────────────────────────────────────────────────────────
-const projects: Project[] = [
+export const projectsData: Project[] = [
   {
     id: 'accurate-hms',
+    number: '01',
     title: 'Accurate Medical Center HMS',
-    shortDescription: 'Full-stack hospital management system for patient records, appointments, and clinical workflows.',
-    description: 'A comprehensive hospital management system handling patient records, appointments, role-based access control, and administrative workflows for Accurate Medical Center.',
-    problem: 'Healthcare facilities need secure, reliable systems that protect patient data while streamlining day-to-day operational workflows across clinical and admin departments.',
-    outcome: 'Delivered a production-ready HMS with secure authentication, role-based permissions, and structured data flow — now live and in active use.',
-    role: 'Sole developer — full-stack design, build, and deployment',
+    shortDescription: 'Hospital management system handling patient records, appointments, role-based access control, and clinical workflows.',
+    description: 'A comprehensive, production-ready hospital management system built for Accurate Medical Center. Handles secure authentication, patient records, role-based staff permissions, appointment scheduling, and clinical administrative workflows.',
+    problem: 'Healthcare facilities need secure, reliable systems that protect sensitive patient data while enabling clinical and administrative staff to work efficiently — without the overhead of expensive enterprise software.',
+    context: 'Built as a full-stack commissioned project for a real medical facility. The HMS needed to support multiple user roles (admin, doctors, nurses, reception) with appropriate permission levels across every system function.',
+    role: 'Sole developer — full-stack design, architecture, build, and Vercel deployment.',
+    whatWasBuilt: 'A complete HMS covering: secure authentication with role-based access control, patient registration and records management, appointment scheduling system, administrative dashboards, and structured clinical workflows. Deployed to Vercel and live in active use.',
+    technicalApproach: 'Built with React (TypeScript) on the frontend, Node.js + Express backend, PostgreSQL database with Prisma ORM. Authentication implemented with JWT and role-based middleware. Deployed on Vercel with environment-separated configuration.',
+    currentState: 'Live and in production use at Accurate Medical Center.',
     status: 'LIVE',
     significance: 'signature',
-    category: 'Full-Stack · Client Work',
-    tags: ['TypeScript', 'React', 'Node.js', 'PostgreSQL', 'Prisma'],
+    category: 'Software · Healthcare · Client Work',
+    tags: ['TypeScript', 'React', 'Node.js', 'PostgreSQL', 'Prisma', 'JWT Auth', 'RBAC'],
     screenshots: [
       '/Accurate medical screenshots/Screenshot 2026-09-08 172240.png',
       '/Accurate medical screenshots/Screenshot 2026-09-08 172251.png',
@@ -41,19 +44,64 @@ const projects: Project[] = [
     liveUrl: 'https://accurate-medical.vercel.app/',
     githubUrl: 'https://github.com/buzzdotsui',
     featured: true,
+    decisions: [
+      'Chose Prisma ORM for type-safe database access and easier schema migrations',
+      'Implemented role-based middleware at the API route level to enforce permissions server-side',
+      'Used JWT for stateless authentication to support multi-device access without session overhead',
+    ],
+    challenges: [
+      'Designing a permission model flexible enough to cover multiple clinical roles without becoming unmaintainable',
+      'Ensuring data consistency across patient records, appointments, and billing workflows',
+    ],
+    lessons: [
+      'Healthcare systems require extremely careful attention to data integrity and permission boundaries',
+      'Early investment in a clear data model pays dividends throughout the entire build',
+    ],
+  },
+  {
+    id: 'metabotics-initiative',
+    number: '02',
+    title: 'Metabotics',
+    shortDescription: 'A technology initiative building intelligent monitoring and automation systems for industrial processes.',
+    description: 'Metabotics is my attempt to bridge software engineering and materials science by developing intelligent monitoring, automation, and data infrastructure for industrial processes. An emerging initiative built on a clear long-term vision — honest about where it currently stands.',
+    problem: 'Industrial processes are largely opaque — data-rich in theory but difficult to observe, interpret, and act on without sophisticated software infrastructure. Most industrial operations in emerging markets lack the tooling to make their processes intelligent.',
+    context: 'Born from the question: what if you applied software engineering\'s rigor to physical industrial systems? The engineering coursework at FUTA provided the domain knowledge; the software background provided the tools.',
+    role: 'Founder and sole developer — research, architecture, and build.',
+    whatWasBuilt: 'The Metabotics conceptual architecture (Sense → Understand → Predict → Optimize) and initial web platform. Currently building foundational software infrastructure and exploring sensor integration patterns.',
+    technicalApproach: 'Researching industrial data acquisition patterns, sensor integration approaches, and data modeling strategies for materials processes. The current platform demonstrates the vision and direction.',
+    currentState: 'Research and prototyping phase. The long-term vision is live and the conceptual architecture is established. Active development of the foundational infrastructure.',
+    status: 'RESEARCH / PROTOTYPING',
+    significance: 'signature',
+    category: 'Industrial Technology · AI · Automation',
+    tags: ['Systems Design', 'Industrial IoT', 'Data Infrastructure', 'Automation', 'AI'],
+    liveUrl: 'https://metabotics.vercel.app/',
+    githubUrl: 'https://github.com/buzzdotsui',
+    featured: true,
+    decisions: [
+      'Committed to honest labeling — clearly distinguishing what exists vs. what is being explored vs. vision',
+      'Started with the conceptual architecture before building specific tooling',
+    ],
+    lessons: [
+      'The intersection of software engineering and industrial systems is genuinely underserved — there is real opportunity',
+      'Engineering domain knowledge is a genuine competitive advantage in this space',
+    ],
   },
   {
     id: 'juphil-aluminum',
+    number: '03',
     title: 'Juphil Aluminum',
-    shortDescription: 'Digital platform for an industrial aluminum manufacturing company.',
-    description: 'A performant digital platform for a Nigerian aluminum manufacturing company — bridging physical manufacturing capabilities with professional digital presence.',
-    problem: 'A manufacturing company needed a modern digital presence to showcase industrial capabilities, communicate quality standards, and handle customer inquiries.',
-    outcome: 'Built a responsive, performant web platform that accurately represents industrial capabilities and serves as the company\'s professional digital front.',
-    role: 'Sole developer — design, development, and deployment',
+    shortDescription: 'Digital platform for a Nigerian aluminum manufacturing company — bridging industrial capability with professional digital presence.',
+    description: 'A performant digital platform for Juphil Aluminum, a Nigerian aluminum manufacturing company. The project bridges physical manufacturing capabilities with professional digital presence — demonstrating the intersection of software and industrial context.',
+    problem: 'A manufacturing company needed a modern digital presence to showcase industrial capabilities, communicate quality standards, and serve as a professional interface for potential clients and partners.',
+    context: 'This project is strategically relevant because it sits at the intersection of software development and industrial/manufacturing context — directly relevant to the Metabotics vision.',
+    role: 'Sole developer — design, development, and deployment.',
+    whatWasBuilt: 'A responsive, performant web platform that accurately represents industrial manufacturing capabilities, product ranges, and company identity. Deployed and live.',
+    technicalApproach: 'Built with React and Next.js for performance and SEO. Tailwind CSS for responsive styling. Deployed to Vercel with optimized assets for fast loading on variable network conditions.',
+    currentState: 'Live and deployed. Serving as the company\'s professional digital presence.',
     status: 'LIVE',
     significance: 'signature',
-    category: 'Web Platform · Client Work',
-    tags: ['React', 'Next.js', 'TailwindCSS', 'Performance'],
+    category: 'Web Platform · Client Work · Industrial',
+    tags: ['React', 'Next.js', 'TailwindCSS', 'Performance', 'Vercel'],
     screenshots: [
       '/Juphil screenshots/Screenshot 2026-09-08 172456.png',
       '/Juphil screenshots/Screenshot 2026-09-08 172506.png',
@@ -65,69 +113,91 @@ const projects: Project[] = [
     githubUrl: 'https://github.com/buzzdotsui',
     featured: true,
   },
-  {
-    id: 'metabotics-initiative',
-    title: 'Metabotics',
-    shortDescription: 'Technology initiative building intelligent monitoring and data-driven systems for industrial processes.',
-    description: 'An emerging technology initiative to bridge software engineering and materials science — developing intelligent monitoring, automation, and data infrastructure for industrial processes.',
-    problem: 'Industrial processes are largely opaque — data-rich in theory but difficult to observe, interpret, and act on without sophisticated software infrastructure.',
-    outcome: 'Exploring a unified sensing-to-optimization architecture: how software engineering principles can be applied to physical materials systems.',
-    role: 'Founder and sole developer — research, architecture, and build',
-    status: 'RESEARCH / PROTOTYPING',
-    significance: 'signature',
-    category: 'Industrial Tech',
-    tags: ['Systems Design', 'Industrial IoT', 'Data Infrastructure', 'Automation'],
-    liveUrl: 'https://metabotics.vercel.app/',
-    githubUrl: 'https://github.com/buzzdotsui',
-    featured: true,
-  },
 ];
 
 // ──────────────────────────────────────────────────────────
-// ProjectCard
+// Screenshot carousel for featured card
+// ──────────────────────────────────────────────────────────
+const MiniCarousel: React.FC<{ screenshots: string[]; title: string }> = ({ screenshots, title }) => {
+  const [active, setActive] = useState(0);
+  if (screenshots.length === 0) return null;
+  const prev = () => setActive((i) => (i === 0 ? screenshots.length - 1 : i - 1));
+  const next = () => setActive((i) => (i === screenshots.length - 1 ? 0 : i + 1));
+  return (
+    <div className="relative w-full h-full group/carousel">
+      <OptimizedImage
+        src={screenshots[active]}
+        alt={`${title} screenshot ${active + 1}`}
+        className="w-full h-full object-cover object-top transition-opacity duration-300"
+      />
+      {screenshots.length > 1 && (
+        <>
+          <button
+            onClick={(e) => { e.stopPropagation(); prev(); }}
+            className="absolute left-2 top-1/2 -translate-y-1/2 w-7 h-7 rounded-full bg-background/80 border border-border flex items-center justify-center opacity-0 group-hover/carousel:opacity-100 transition-opacity text-text-muted hover:text-primary"
+            aria-label="Previous screenshot"
+          >
+            <ChevronLeft size={14} />
+          </button>
+          <button
+            onClick={(e) => { e.stopPropagation(); next(); }}
+            className="absolute right-2 top-1/2 -translate-y-1/2 w-7 h-7 rounded-full bg-background/80 border border-border flex items-center justify-center opacity-0 group-hover/carousel:opacity-100 transition-opacity text-text-muted hover:text-primary"
+            aria-label="Next screenshot"
+          >
+            <ChevronRight size={14} />
+          </button>
+          <div className="absolute bottom-2 left-1/2 -translate-x-1/2 flex gap-1.5">
+            {screenshots.map((_, i) => (
+              <button
+                key={i}
+                onClick={(e) => { e.stopPropagation(); setActive(i); }}
+                className={`w-1.5 h-1.5 rounded-full transition-all ${i === active ? 'bg-primary' : 'bg-white/40'}`}
+                aria-label={`Screenshot ${i + 1}`}
+              />
+            ))}
+          </div>
+        </>
+      )}
+    </div>
+  );
+};
+
+// ──────────────────────────────────────────────────────────
+// Large featured project card
 // ──────────────────────────────────────────────────────────
 interface ProjectCardProps {
   project: Project;
   onSelect: (p: Project) => void;
+  index: number;
 }
 
-const ProjectCard: React.FC<ProjectCardProps> = ({ project, onSelect }) => {
+const FeaturedProjectCard: React.FC<ProjectCardProps> = ({ project, onSelect, index }) => {
   const sStyle = statusStyle[project.status] ?? statusStyle['LIVE'];
+  const isEven = index % 2 === 0;
+  const screenshots = project.screenshots ?? [];
 
   return (
     <article
-      onClick={() => onSelect(project)}
-      onKeyDown={(e) => e.key === 'Enter' && onSelect(project)}
-      className="group relative rounded-lg border border-border bg-surface/40 hover:border-primary/35 transition-all duration-300 overflow-hidden cursor-pointer signal-card flex flex-col"
-      tabIndex={0}
-      role="button"
-      aria-label={`View project: ${project.title}`}
+      className="grid grid-cols-1 lg:grid-cols-2 gap-0 border border-border rounded-lg overflow-hidden bg-surface/20 hover:bg-surface/40 transition-all duration-300 group"
     >
-      {/* Screenshot / thumbnail */}
-      <div className="h-48 w-full overflow-hidden relative border-b border-border/60 bg-surface">
-        {project.imageUrl ? (
-          <>
-            <div className="absolute inset-0 bg-gradient-to-t from-background/70 to-transparent z-10" />
-            <OptimizedImage
-              src={project.imageUrl}
-              alt={`${project.title} screenshot`}
-              wrapperClassName="h-full w-full"
-              className="w-full h-full object-cover object-top opacity-90 group-hover:opacity-100 group-hover:scale-[1.03] transition-all duration-500 ease-out"
-            />
-          </>
+      {/* Image — alternates left/right */}
+      <div className={`relative aspect-[16/10] lg:aspect-auto lg:min-h-[340px] overflow-hidden bg-surface ${isEven ? '' : 'lg:order-2'}`}>
+        {screenshots.length > 0 ? (
+          <MiniCarousel screenshots={screenshots} title={project.title} />
         ) : (
-          /* Metabotics — no screenshot yet, show a minimal placeholder */
-          <div className="h-full w-full flex items-center justify-center bg-surface relative overflow-hidden">
-            <div className="absolute inset-0 bg-schematic opacity-80" />
-            <div className="relative z-10 text-center">
-              <div className="text-3xl font-bold font-mono text-primary/20 mb-1">M</div>
+          <div className="w-full h-full flex items-center justify-center bg-surface relative">
+            <div className="absolute inset-0" style={{
+              backgroundSize: '24px 24px',
+              backgroundImage: 'linear-gradient(to right, rgba(14,165,233,0.06) 1px, transparent 1px), linear-gradient(to bottom, rgba(14,165,233,0.06) 1px, transparent 1px)',
+            }} />
+            <div className="relative text-center">
+              <div className="text-4xl font-bold font-mono text-primary/15 mb-2">M</div>
               <div className="text-[10px] font-mono text-text-dim tracking-widest uppercase">Research / Prototyping</div>
             </div>
           </div>
         )}
-
         {/* Status badge */}
-        <div className="absolute top-3 left-3 z-20">
+        <div className="absolute top-3 left-3 z-10">
           <span
             className="text-[9px] font-mono font-bold tracking-widest uppercase px-2 py-1 rounded-sm border"
             style={{ borderColor: sStyle.border, background: sStyle.bg, color: sStyle.color }}
@@ -135,64 +205,65 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, onSelect }) => {
             {project.status}
           </span>
         </div>
-
-        {/* Live link */}
-        {project.liveUrl && (
-          <div className="absolute bottom-3 right-3 z-20 opacity-0 group-hover:opacity-100 translate-y-1 group-hover:translate-y-0 transition-all duration-300">
-            <a
-              href={project.liveUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              onClick={(e) => e.stopPropagation()}
-              className="flex items-center gap-1.5 px-3 py-1.5 bg-background/90 border border-border text-text-muted hover:text-primary hover:border-primary/40 rounded text-[11px] font-mono transition-colors"
-              aria-label={`Visit ${project.title} live`}
-            >
-              <ExternalLink size={11} /> Live
-            </a>
-          </div>
-        )}
       </div>
 
       {/* Content */}
-      <div className="p-6 flex flex-col flex-grow">
-        <div className="text-[10px] font-mono text-text-dim mb-2">{project.category}</div>
+      <div className={`flex flex-col p-8 ${isEven ? '' : 'lg:order-1'}`}>
+        <div className="flex items-start justify-between gap-4 mb-3">
+          <div className="text-[10px] font-mono text-text-dim uppercase tracking-widest">{project.category}</div>
+          <span className="text-2xl font-bold font-mono text-border/50 shrink-0">{project.number}</span>
+        </div>
+
         <h3
-          className="text-lg font-bold text-text-main group-hover:text-primary transition-colors mb-2 leading-snug"
+          className="text-2xl font-bold text-text-main mb-3 leading-snug group-hover:text-primary transition-colors"
           style={{ fontFamily: 'Space Grotesk, Inter, sans-serif' }}
         >
           {project.title}
         </h3>
 
-        <p className="text-sm text-text-muted leading-relaxed mb-4 font-light">
+        <p className="text-sm text-text-muted leading-relaxed mb-5 font-light flex-grow">
           {project.shortDescription ?? project.description}
         </p>
 
-        {/* Problem → Outcome */}
-        <div className="space-y-2.5 mb-5 mt-auto">
-          {project.problem && (
-            <div className="p-3 rounded bg-background/50 border border-border/40">
-              <div className="mono-label mb-1 text-text-dim">Problem</div>
-              <p className="text-xs text-text-muted leading-relaxed">{project.problem}</p>
-            </div>
-          )}
-          {project.outcome && (
-            <div className="p-3 rounded bg-secondary/5 border border-secondary/15">
-              <div className="mono-label mb-1 text-secondary/70">Outcome</div>
-              <p className="text-xs text-text-muted leading-relaxed">{project.outcome}</p>
-            </div>
-          )}
+        {/* Tags */}
+        <div className="flex flex-wrap gap-1.5 mb-6">
+          {project.tags.slice(0, 5).map((tag) => (
+            <span key={tag} className="text-[10px] font-mono px-2 py-0.5 rounded-sm bg-background border border-border/60 text-text-dim">
+              {tag}
+            </span>
+          ))}
         </div>
 
-        {/* Tags + CTA */}
-        <div className="pt-4 border-t border-border/40 flex items-center justify-between gap-4">
-          <div className="flex flex-wrap gap-1.5">
-            {project.tags.slice(0, 3).map((tag) => (
-              <Badge key={tag} variant="neutral">{tag}</Badge>
-            ))}
-          </div>
-          <button className="text-[11px] font-bold uppercase font-mono flex items-center gap-1 text-text-dim group-hover:text-primary transition-colors shrink-0">
-            Case study <ArrowRight size={12} />
+        {/* Actions */}
+        <div className="flex items-center gap-3 pt-5 border-t border-border/40">
+          <button
+            onClick={() => onSelect(project)}
+            className="inline-flex items-center gap-2 text-sm font-semibold text-text-main hover:text-primary transition-colors group/btn"
+          >
+            Case study <ArrowRight size={14} className="group-hover/btn:translate-x-0.5 transition-transform" />
           </button>
+          {project.liveUrl && (
+            <a
+              href={project.liveUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={(e) => e.stopPropagation()}
+              className="ml-auto inline-flex items-center gap-1.5 text-xs font-mono text-text-muted hover:text-primary transition-colors"
+            >
+              <ExternalLink size={12} /> Live site
+            </a>
+          )}
+          {project.githubUrl && (
+            <a
+              href={project.githubUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={(e) => e.stopPropagation()}
+              className="inline-flex items-center gap-1.5 text-xs font-mono text-text-muted hover:text-primary transition-colors"
+            >
+              <Github size={12} /> GitHub
+            </a>
+          )}
         </div>
       </div>
     </article>
@@ -208,33 +279,47 @@ interface ProjectsProps {
 
 export const Projects: React.FC<ProjectsProps> = ({ onProjectSelect }) => {
   return (
-    <section id={SectionId.PROJECTS} className="py-28 px-5 md:px-8 bg-background border-t border-border/40">
+    <section
+      id={SectionId.PORTFOLIO}
+      className="py-24 px-5 md:px-8 bg-background border-t border-border/40"
+      aria-labelledby="portfolio-heading"
+    >
       <MotionWrapper className="max-w-6xl mx-auto">
 
         {/* Header */}
         <div className="mb-14 reveal">
-          <div className="mono-label mb-5 flex items-center gap-2">
+          <div className="mono-label mb-4 flex items-center gap-2">
             <span className="w-4 h-px bg-primary/50" />
-            Featured Work
+            Portfolio
           </div>
-          <h2 className="text-3xl md:text-4xl font-bold text-text-main mb-3" style={{ fontFamily: 'Space Grotesk, Inter, sans-serif' }}>
-            Selected Projects
+          <h2
+            id="portfolio-heading"
+            className="text-3xl md:text-4xl font-bold text-text-main mb-3"
+            style={{ fontFamily: 'Space Grotesk, Inter, sans-serif' }}
+          >
+            Featured Projects
           </h2>
           <p className="text-base text-text-muted max-w-xl">
-            Engineering depth across software, web, and physical systems. Each project is framed around the problem it solves.
+            Real work. Real screenshots. Each project is documented with its actual context, role, and current state.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 stagger-children">
-          {projects.map((project) => (
-            <ProjectCard key={project.id} project={project} onSelect={onProjectSelect} />
+        {/* Projects — large alternating layout */}
+        <div className="space-y-6 stagger-children">
+          {projectsData.map((project, idx) => (
+            <FeaturedProjectCard
+              key={project.id}
+              project={project}
+              onSelect={onProjectSelect}
+              index={idx}
+            />
           ))}
         </div>
 
         {/* Footer note */}
         <div className="mt-10 pt-8 border-t border-border/40 flex flex-col md:flex-row items-start md:items-center justify-between gap-4 reveal">
           <p className="text-xs font-mono text-text-dim">
-            All projects listed are real, shipped work. No fabricated case studies.
+            All projects listed are real, shipped work. No fabricated case studies or invented metrics.
           </p>
           <a
             href="https://github.com/buzzdotsui"
@@ -242,7 +327,7 @@ export const Projects: React.FC<ProjectsProps> = ({ onProjectSelect }) => {
             rel="noopener noreferrer"
             className="inline-flex items-center gap-2 text-xs font-mono text-text-muted hover:text-primary transition-colors"
           >
-            <Github size={13} /> View GitHub
+            <Github size={13} /> View GitHub profile
           </a>
         </div>
 
@@ -250,5 +335,3 @@ export const Projects: React.FC<ProjectsProps> = ({ onProjectSelect }) => {
     </section>
   );
 };
-
-

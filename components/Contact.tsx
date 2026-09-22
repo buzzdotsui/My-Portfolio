@@ -94,25 +94,25 @@ export const Contact: React.FC = () => {
   };
 
   return (
-    <section id={SectionId.CONTACT} className="py-28 px-5 md:px-8 border-t border-border/40 bg-surface/20 relative overflow-hidden">
+    <section id={SectionId.CONTACT} className="py-24 px-5 md:px-8 border-t border-border/40 bg-surface/10 relative overflow-hidden" aria-labelledby="contact-heading">
       <Toaster position="bottom-right" />
 
       {/* Subtle background element */}
-      <div className="absolute bottom-0 right-0 w-[500px] h-[500px] bg-primary/5 rounded-full blur-[140px] pointer-events-none" />
+      <div className="absolute bottom-0 right-0 w-[500px] h-[500px] bg-primary/5 rounded-full blur-[140px] pointer-events-none" aria-hidden="true" />
 
       <MotionWrapper className="max-w-6xl mx-auto relative z-10">
 
         {/* Header */}
         <div className="mb-14 reveal">
-          <div className="mono-label mb-5 flex items-center gap-2">
+          <div className="mono-label mb-4 flex items-center gap-2">
             <span className="w-4 h-px bg-primary/50" />
-            07 — Contact
+            Let's Work Together
           </div>
-          <h2 className="text-3xl md:text-5xl font-bold text-text-main mb-4" style={{ fontFamily: 'Space Grotesk, Inter, sans-serif' }}>
-            Let's build something<br />meaningful.
+          <h2 id="contact-heading" className="text-3xl md:text-5xl font-bold text-text-main mb-4" style={{ fontFamily: 'Space Grotesk, Inter, sans-serif' }}>
+            Let's build something<br />useful.
           </h2>
           <p className="text-base text-text-muted max-w-xl">
-            I'm interested in software engineering roles, intelligent industrial systems, materials technology research, and ambitious technical projects.
+            I'm interested in software engineering roles, intelligent industrial systems, materials technology research, and ambitious technical projects. If you're working on something real, I want to hear about it.
           </p>
         </div>
 
@@ -120,7 +120,7 @@ export const Contact: React.FC = () => {
 
           {/* Form */}
           <div className="md:col-span-7 reveal-left">
-            <form onSubmit={handleSubmit} className="p-6 md:p-8 rounded-lg border border-border bg-surface/60 corner-marks">
+            <form onSubmit={handleSubmit} className="p-6 md:p-8 rounded-lg border border-border bg-surface/60">
               <div className="mono-label mb-6">Send a message</div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mb-5">

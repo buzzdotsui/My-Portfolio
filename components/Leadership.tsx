@@ -139,22 +139,21 @@ const PhotoGroup: React.FC<{ label: string; photos: { src: string; caption: stri
 // ──────────────────────────────────────────────────────────
 export const Leadership: React.FC = () => {
   return (
-    <section id={SectionId.LEADERSHIP} className="py-24 px-5 md:px-8 border-t border-border/40 bg-background relative overflow-hidden">
-      <div className="absolute top-0 right-0 w-[350px] h-[350px] bg-secondary/4 rounded-full blur-[120px] pointer-events-none" />
+    <section id={SectionId.LEADERSHIP} className="py-24 px-5 md:px-8 border-t border-border/40 bg-surface/10" aria-labelledby="leadership-heading">
 
       <MotionWrapper className="max-w-6xl mx-auto relative z-10">
 
         {/* Header */}
         <div className="mb-12 reveal">
-          <div className="mono-label mb-5 flex items-center gap-2">
+          <div className="mono-label mb-4 flex items-center gap-2">
             <span className="w-4 h-px bg-primary/50" />
-            06 — Leadership & Community
+            Leadership & Community
           </div>
-          <h2 className="text-2xl md:text-3xl font-bold text-text-main mb-3" style={{ fontFamily: 'Space Grotesk, Inter, sans-serif' }}>
+          <h2 id="leadership-heading" className="text-3xl md:text-4xl font-bold text-text-main mb-3" style={{ fontFamily: 'Space Grotesk, Inter, sans-serif' }}>
             Building Communities Around Technology
           </h2>
-          <p className="text-sm text-text-muted max-w-xl">
-            I don't only build software. I also build communities around technology — organizing people, facilitating learning, and cultivating local ecosystems.
+          <p className="text-base text-text-muted max-w-xl">
+            I build software. I also build communities around technology — organizing developers, facilitating learning, and growing local ecosystems.
           </p>
         </div>
 

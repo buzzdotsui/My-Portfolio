@@ -50,20 +50,20 @@ const journeyData: TimelineItem[] = [
 
 export const Experience: React.FC = () => {
   return (
-    <section id={SectionId.EXPERIENCE} className="py-28 px-5 md:px-8 border-t border-border/40 relative overflow-hidden">
+    <section id={SectionId.EXPERIENCE} className="py-24 px-5 md:px-8 border-t border-border/40 bg-background" aria-labelledby="experience-heading">
       <MotionWrapper className="max-w-6xl mx-auto relative z-10">
 
         {/* Header */}
         <div className="mb-14 reveal">
-          <div className="mono-label mb-5 flex items-center gap-2">
+          <div className="mono-label mb-4 flex items-center gap-2">
             <span className="w-4 h-px bg-primary/50" />
-            02 — Journey
+            Professional Experience
           </div>
-          <h2 className="text-3xl md:text-4xl font-bold text-text-main mb-3" style={{ fontFamily: 'Space Grotesk, Inter, sans-serif' }}>
+          <h2 id="experience-heading" className="text-3xl md:text-4xl font-bold text-text-main mb-3" style={{ fontFamily: 'Space Grotesk, Inter, sans-serif' }}>
             The Journey
           </h2>
           <p className="text-base text-text-muted max-w-xl">
-            How curiosity evolved into engineering. A story, not a CV.
+            How curiosity evolved into engineering — from a Cisco lab to building production software and founding Metabotics.
           </p>
         </div>
 

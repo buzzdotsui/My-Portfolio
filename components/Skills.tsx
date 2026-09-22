@@ -1,149 +1,203 @@
 import React from 'react';
-import { SectionId, SkillCategory } from '../types';
+import { SectionId } from '../types';
 import { MotionWrapper } from './ui/MotionWrapper';
-import { Terminal, Cpu, FlaskConical, Layers } from 'lucide-react';
+import { Terminal, Cpu, Zap, Globe, Shield, FlaskConical } from 'lucide-react';
 
-const skillCategories: SkillCategory[] = [
+const skillGroups = [
   {
+    id: 'software',
     title: 'Software Engineering',
     icon: Terminal,
+    color: '#0ea5e9',
     skills: [
-      'TypeScript / JavaScript',
-      'React / Next.js',
-      'Node.js / Express',
-      'PostgreSQL',
-      'Prisma ORM',
-      'Full-Stack Architecture',
-      'REST APIs',
-      'Authentication & Auth Systems',
-      'Cloud Deployment',
-      'Git / GitHub',
+      { name: 'TypeScript / JavaScript', level: 'Core' },
+      { name: 'React / Next.js', level: 'Core' },
+      { name: 'Node.js / Express', level: 'Core' },
+      { name: 'PostgreSQL', level: 'Core' },
+      { name: 'Prisma ORM', level: 'Core' },
+      { name: 'REST API Design', level: 'Core' },
+      { name: 'Authentication & RBAC', level: 'Core' },
+      { name: 'Full-Stack Architecture', level: 'Core' },
+      { name: 'Cloud Deployment (Vercel, CF)', level: 'Working' },
+      { name: 'Git / GitHub', level: 'Core' },
     ],
   },
   {
-    title: 'Intelligent Systems',
+    id: 'ai',
+    title: 'AI & Intelligent Systems',
     icon: Cpu,
-    note: 'Exploration & R&D — not claimed mastery',
+    color: '#10b981',
+    note: 'Working knowledge + active R&D',
     skills: [
-      'Automation Systems',
-      'Data-Driven Architectures',
-      'AI / ML Exploration',
-      'Industrial Monitoring',
-      'Edge Computing Concepts',
-      'Sensor Systems',
-      'Predictive Analytics',
+      { name: 'AI-integrated applications', level: 'Working' },
+      { name: 'Generative AI tooling', level: 'Working' },
+      { name: 'Intelligent workflow design', level: 'Working' },
+      { name: 'Data-driven architecture', level: 'Working' },
+      { name: 'Industrial monitoring systems', level: 'Exploring' },
+      { name: 'Predictive analytics', level: 'Exploring' },
+      { name: 'Edge computing concepts', level: 'Exploring' },
     ],
   },
   {
+    id: 'automation',
+    title: 'Automation & Systems',
+    icon: Zap,
+    color: '#f59e0b',
+    skills: [
+      { name: 'Workflow automation', level: 'Working' },
+      { name: 'API integrations', level: 'Core' },
+      { name: 'Process automation', level: 'Working' },
+      { name: 'CI/CD concepts', level: 'Working' },
+      { name: 'Infrastructure automation', level: 'Exploring' },
+    ],
+  },
+  {
+    id: 'web3',
+    title: 'Web3',
+    icon: Globe,
+    color: '#a78bfa',
+    note: 'Active ecosystem participation',
+    skills: [
+      { name: 'Sui Ecosystem', level: 'Working' },
+      { name: 'Move Language', level: 'Exploring' },
+      { name: 'Blockchain concepts', level: 'Working' },
+      { name: 'Smart contract concepts', level: 'Exploring' },
+      { name: 'Web3 community building', level: 'Core' },
+    ],
+  },
+  {
+    id: 'security',
+    title: 'Security',
+    icon: Shield,
+    color: '#f472b6',
+    note: 'Security-first development + active learning',
+    skills: [
+      { name: 'Secure development practices', level: 'Working' },
+      { name: 'Auth system design (JWT/RBAC)', level: 'Core' },
+      { name: 'Cybersecurity fundamentals', level: 'Working' },
+      { name: 'Security-minded architecture', level: 'Working' },
+      { name: 'Penetration testing concepts', level: 'Exploring' },
+    ],
+  },
+  {
+    id: 'engineering',
     title: 'Engineering',
     icon: FlaskConical,
+    color: '#60b8f0',
     note: 'Formal academic study — FUTA',
     skills: [
-      'Materials Science',
-      'Metallurgy',
-      'Materials Processing',
-      'Heat Treatment',
-      'Manufacturing Systems',
-      'Corrosion Analysis',
-      'Industrial Systems',
-    ],
-  },
-  {
-    title: 'Additional Experience',
-    icon: Layers,
-    note: 'Secondary capabilities',
-    skills: [
-      'Sui / Move (Web3)',
-      'Blockchain Concepts',
-      'Cybersecurity Fundamentals',
-      'DevSecOps',
-      'CI/CD Automation',
-      'Community Building',
-      'Technical Leadership',
+      { name: 'Materials Science', level: 'Working' },
+      { name: 'Metallurgy', level: 'Working' },
+      { name: 'Thermal Processing', level: 'Working' },
+      { name: 'Manufacturing Systems', level: 'Working' },
+      { name: 'Corrosion Analysis', level: 'Working' },
+      { name: 'Industrial Systems', level: 'Working' },
     ],
   },
 ];
 
-const categoryColors = [
-  { border: 'border-primary/20', bg: 'bg-primary/5', icon: 'text-primary', dot: '#0ea5e9' },
-  { border: 'border-secondary/20', bg: 'bg-secondary/5', icon: 'text-secondary', dot: '#10b981' },
-  { border: 'border-accent/20', bg: 'bg-accent/5', icon: 'text-accent', dot: '#f59e0b' },
-  { border: 'border-border', bg: 'bg-surface/30', icon: 'text-text-dim', dot: '#4a6070' },
-];
+const levelStyle: Record<string, { color: string; bg: string; border: string }> = {
+  Core:      { color: '#10b981', bg: 'rgba(16,185,129,0.08)',  border: 'rgba(16,185,129,0.25)' },
+  Working:   { color: '#0ea5e9', bg: 'rgba(14,165,233,0.08)',  border: 'rgba(14,165,233,0.25)' },
+  Exploring: { color: '#f59e0b', bg: 'rgba(245,158,11,0.08)', border: 'rgba(245,158,11,0.25)' },
+};
 
 export const Skills: React.FC = () => {
   return (
-    <section id={SectionId.SKILLS} className="py-28 px-5 md:px-8 border-t border-border/40 relative overflow-hidden">
-      {/* Subtle bg */}
-      <div className="absolute inset-0 bg-surface/20 pointer-events-none" />
+    <section
+      id={SectionId.SKILLS}
+      className="py-24 px-5 md:px-8 border-t border-border/40 bg-background"
+      aria-labelledby="skills-heading"
+    >
+      <MotionWrapper className="max-w-6xl mx-auto">
 
-      <MotionWrapper className="max-w-6xl mx-auto relative z-10">
-
-        {/* Header */}
         <div className="mb-14 reveal">
-          <div className="mono-label mb-5 flex items-center gap-2">
+          <div className="mono-label mb-4 flex items-center gap-2">
             <span className="w-4 h-px bg-primary/50" />
-            04 — Technical Competencies
+            Technical Skills
           </div>
-          <h2 className="text-3xl md:text-4xl font-bold text-text-main mb-3" style={{ fontFamily: 'Space Grotesk, Inter, sans-serif' }}>
-            Skills &amp; Capabilities
+          <h2
+            id="skills-heading"
+            className="text-3xl md:text-4xl font-bold text-text-main mb-3"
+            style={{ fontFamily: 'Space Grotesk, Inter, sans-serif' }}
+          >
+            Skills & Capabilities
           </h2>
           <p className="text-base text-text-muted max-w-xl">
-            Organized into meaningful domains, not just a flat list of technologies.
+            Organized by domain. Evidence level reflects actual depth — not aspirations.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-5 stagger-children">
-          {skillCategories.map((category, idx) => {
-            const colors = categoryColors[idx];
-            return (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 stagger-children">
+          {skillGroups.map((group) => (
+            <div
+              key={group.id}
+              className="p-6 rounded-lg border border-border bg-surface/30 hover:bg-surface/50 transition-all duration-300 relative overflow-hidden"
+            >
+              {/* Top accent */}
               <div
-                key={category.title}
-                className={`rounded-lg border ${colors.border} ${colors.bg} p-6 relative overflow-hidden group hover:shadow-card transition-all duration-300`}
-              >
-                {/* Header */}
-                <div className="flex items-start justify-between mb-5">
-                  <div className="flex items-center gap-3">
-                    <div className={`w-8 h-8 rounded flex items-center justify-center border ${colors.border} bg-background`}>
-                      <category.icon size={16} className={colors.icon} />
-                    </div>
-                    <div>
-                      <h3 className="text-sm font-bold text-text-main uppercase tracking-wide">{category.title}</h3>
-                      {category.note && (
-                        <p className="text-[10px] font-mono text-text-dim mt-0.5">{category.note}</p>
-                      )}
-                    </div>
-                  </div>
-                  <span className="text-[10px] font-mono text-text-dim">{category.skills.length} items</span>
+                className="absolute top-0 left-0 right-0 h-px"
+                style={{ background: `linear-gradient(90deg, transparent, ${group.color}50, transparent)` }}
+              />
+
+              {/* Header */}
+              <div className="flex items-center gap-3 mb-4">
+                <div
+                  className="w-8 h-8 rounded flex items-center justify-center"
+                  style={{ background: `${group.color}12`, border: `1px solid ${group.color}25` }}
+                >
+                  <group.icon size={16} style={{ color: group.color }} />
                 </div>
-
-                {/* Skills list */}
-                <ul className="space-y-2">
-                  {category.skills.map((skill) => (
-                    <li key={skill} className="flex items-center gap-2.5 text-xs text-text-muted font-mono group/item hover:text-text-main transition-colors cursor-default">
-                      <span
-                        className="w-1 h-1 rounded-full shrink-0 opacity-50 group-hover/item:opacity-100 transition-opacity"
-                        style={{ background: colors.dot }}
-                      />
-                      {skill}
-                    </li>
-                  ))}
-                </ul>
-
-                {/* Decorative corner */}
-                <div className={`absolute bottom-0 right-0 w-12 h-12 opacity-5 pointer-events-none flex items-end justify-end pb-2 pr-2`}>
-                  <category.icon size={32} className={colors.icon} />
+                <div>
+                  <h3 className="text-sm font-bold text-text-main uppercase tracking-wide">
+                    {group.title}
+                  </h3>
+                  {group.note && (
+                    <p className="text-[10px] font-mono text-text-dim">{group.note}</p>
+                  )}
                 </div>
               </div>
-            );
-          })}
+
+              {/* Skills list */}
+              <ul className="space-y-2">
+                {group.skills.map((skill) => {
+                  const style = levelStyle[skill.level];
+                  return (
+                    <li key={skill.name} className="flex items-center justify-between gap-2">
+                      <span className="text-xs text-text-muted font-mono">{skill.name}</span>
+                      <span
+                        className="text-[9px] font-mono font-semibold px-1.5 py-0.5 rounded-sm shrink-0"
+                        style={{ color: style.color, background: style.bg, border: `1px solid ${style.border}` }}
+                      >
+                        {skill.level}
+                      </span>
+                    </li>
+                  );
+                })}
+              </ul>
+            </div>
+          ))}
         </div>
 
-        {/* Philosophy note */}
-        <div className="mt-10 p-5 rounded-lg border border-border/40 bg-transparent reveal">
-          <p className="text-xs text-text-dim font-mono leading-relaxed">
-            <span className="text-text-muted font-medium">Note:</span> Skills listed under "Intelligent Systems" are areas of active exploration and R&amp;D — they represent learning trajectories, not claimed professional mastery. All engineering skills reflect formal academic study at FUTA.
-          </p>
+        {/* Legend */}
+        <div className="mt-8 p-5 rounded-lg border border-border/40 bg-transparent reveal">
+          <div className="flex flex-wrap gap-6">
+            {Object.entries(levelStyle).map(([level, style]) => (
+              <div key={level} className="flex items-center gap-2">
+                <span
+                  className="text-[9px] font-mono font-semibold px-2 py-0.5 rounded-sm"
+                  style={{ color: style.color, background: style.bg, border: `1px solid ${style.border}` }}
+                >
+                  {level}
+                </span>
+                <span className="text-xs text-text-dim font-mono">
+                  {level === 'Core' && '— primary expertise, used in production'}
+                  {level === 'Working' && '— applied knowledge, actively using'}
+                  {level === 'Exploring' && '— learning, experimenting, R&D'}
+                </span>
+              </div>
+            ))}
+          </div>
         </div>
 
       </MotionWrapper>

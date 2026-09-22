@@ -1,13 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { NavItem, SectionId } from '../types';
-import { Menu, X, ArrowRight } from 'lucide-react';
+import { Menu, X, FileText } from 'lucide-react';
 import { ThemeToggle } from './ui/ThemeToggle';
 
 const navItems: NavItem[] = [
-  { label: 'Work', href: `#${SectionId.PROJECTS}` },
-  { label: 'Journey', href: `#${SectionId.EXPERIENCE}` },
-  { label: 'Writing', href: `#${SectionId.WRITING}` },
-  { label: 'About', href: `#${SectionId.ABOUT}` },
+  { label: 'Work',         href: `#${SectionId.PORTFOLIO}` },
+  { label: 'Skills',       href: `#${SectionId.SKILLS}` },
+  { label: 'Services',     href: `#${SectionId.SERVICES}` },
+  { label: 'Availability', href: `#${SectionId.AVAILABILITY}` },
+  { label: 'Credentials',  href: `#${SectionId.CREDENTIALS}` },
+  { label: 'Experience',   href: `#${SectionId.EXPERIENCE}` },
+  { label: 'Contact',      href: `#${SectionId.CONTACT}` },
 ];
 
 export const Navbar: React.FC = () => {
@@ -22,9 +25,9 @@ export const Navbar: React.FC = () => {
       const documentHeight = document.documentElement.scrollHeight;
       const scrollTop = window.scrollY;
       const progress = (scrollTop / (documentHeight - windowHeight)) * 100;
-      setScrollProgress(progress);
+      setScrollProgress(Math.min(100, progress));
     };
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
@@ -34,7 +37,7 @@ export const Navbar: React.FC = () => {
     const targetId = href.replace('#', '');
     const element = document.getElementById(targetId);
     if (element) {
-      const headerOffset = 80;
+      const headerOffset = 72;
       const elementPosition = element.getBoundingClientRect().top;
       const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
       window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
@@ -44,10 +47,11 @@ export const Navbar: React.FC = () => {
 
   return (
     <header
+      role="banner"
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
         scrolled
-          ? 'bg-background/90 backdrop-blur-xl border-b border-border/60'
-          : 'bg-transparent border-transparent'
+          ? 'bg-background/95 backdrop-blur-xl border-b border-border/60'
+          : 'bg-transparent'
       }`}
     >
       <div className="w-full px-5 md:px-8 h-[60px] flex items-center justify-between max-w-7xl mx-auto">
@@ -56,43 +60,32 @@ export const Navbar: React.FC = () => {
         <a
           href={`#${SectionId.HERO}`}
           onClick={(e) => handleNavClick(e, `#${SectionId.HERO}`)}
-          className="flex items-center gap-2.5 group"
-          aria-label="Testimony Owolabi – Home"
+          className="flex items-center gap-2 group"
+          aria-label="Testimony Owolabi — Home"
         >
-          <div className="w-7 h-7 relative shrink-0">
-            <div className="absolute inset-0 border border-primary/40 bg-primary/8 rounded-sm" />
-            <div className="absolute -top-px -left-px w-1.5 h-1.5 border-t border-l border-primary/60" />
-            <div className="absolute -bottom-px -right-px w-1.5 h-1.5 border-b border-r border-primary/60" />
-            <div className="absolute inset-0 flex items-center justify-center">
-              <span className="text-[10px] font-bold font-mono text-primary">TO</span>
-            </div>
-          </div>
-          <span className="font-mono text-[13px] font-semibold text-text-main tracking-tight group-hover:text-primary transition-colors duration-300">
-            testimony.dev
+          <span className="font-mono text-[13px] font-bold text-text-main tracking-tight group-hover:text-primary transition-colors">
+            TESTIMONY OWOLABI
           </span>
         </a>
 
         {/* Desktop Nav */}
-        <nav
-          className="hidden md:flex items-center gap-0.5"
-          aria-label="Main navigation"
-        >
+        <nav className="hidden lg:flex items-center gap-0.5" aria-label="Main navigation">
           {navItems.map((item) => (
             <a
               key={item.label}
               href={item.href}
               onClick={(e) => handleNavClick(e, item.href)}
-              className="text-[13px] font-medium text-text-muted hover:text-text-main transition-colors px-4 py-1.5 rounded relative group"
+              className="text-[12px] font-medium text-text-muted hover:text-text-main transition-colors px-3 py-1.5 rounded relative group"
             >
               {item.label}
-              <span className="absolute bottom-0 left-4 right-4 h-px bg-primary scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left" />
+              <span className="absolute bottom-0 left-3 right-3 h-px bg-primary scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left" />
             </a>
           ))}
         </nav>
 
-        {/* Right */}
-        <div className="hidden md:flex items-center gap-3">
-          <div className="flex items-center gap-2 mr-1">
+        {/* Right controls */}
+        <div className="hidden lg:flex items-center gap-3">
+          <div className="flex items-center gap-2">
             <span className="relative flex h-1.5 w-1.5">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-secondary opacity-75" />
               <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-secondary" />
@@ -103,21 +96,21 @@ export const Navbar: React.FC = () => {
           <a
             href={`#${SectionId.CONTACT}`}
             onClick={(e) => handleNavClick(e, `#${SectionId.CONTACT}`)}
-            className="flex items-center gap-1.5 px-4 py-1.5 text-[12px] font-semibold bg-primary text-white rounded hover:bg-primary-hover transition-all hover:shadow-glow-sm group"
+            className="flex items-center gap-1.5 px-4 py-1.5 text-[12px] font-semibold bg-primary text-white rounded hover:bg-primary-hover transition-all hover:shadow-glow-sm"
           >
-            Let's talk
-            <ArrowRight size={12} className="group-hover:translate-x-0.5 transition-transform" />
+            Get in touch
           </a>
         </div>
 
-        {/* Mobile */}
-        <div className="md:hidden flex items-center gap-2">
+        {/* Mobile controls */}
+        <div className="lg:hidden flex items-center gap-2">
           <ThemeToggle />
           <button
-            className="text-text-muted hover:text-primary transition-colors p-2"
+            className="text-text-muted hover:text-primary transition-colors p-2 rounded"
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            aria-label="Toggle Menu"
+            aria-label={isMobileMenuOpen ? 'Close menu' : 'Open menu'}
             aria-expanded={isMobileMenuOpen}
+            aria-controls="mobile-menu"
           >
             {isMobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
           </button>
@@ -126,34 +119,47 @@ export const Navbar: React.FC = () => {
 
       {/* Mobile Menu */}
       {isMobileMenuOpen && (
-        <div className="absolute top-[60px] left-0 right-0 bg-background/97 backdrop-blur-xl border-b border-border p-4 flex flex-col gap-1 shadow-card md:hidden">
+        <div
+          id="mobile-menu"
+          role="dialog"
+          aria-label="Mobile navigation"
+          className="absolute top-[60px] left-0 right-0 bg-background/98 backdrop-blur-xl border-b border-border p-4 flex flex-col gap-1 shadow-card lg:hidden"
+        >
           {navItems.map((item) => (
             <a
               key={item.label}
               href={item.href}
               onClick={(e) => handleNavClick(e, item.href)}
-              className="text-sm font-medium text-text-muted hover:text-primary hover:bg-surface transition-all p-3 rounded flex items-center gap-3"
+              className="text-sm font-medium text-text-muted hover:text-primary hover:bg-surface/50 transition-all p-3 rounded flex items-center gap-3"
             >
-              <span className="w-1 h-1 rounded-full bg-primary/50" />
+              <span className="w-1 h-1 rounded-full bg-primary/50 shrink-0" />
               {item.label}
             </a>
           ))}
-          <div className="pt-2 border-t border-border mt-1">
+          <div className="pt-3 border-t border-border mt-2 flex flex-col gap-2">
             <a
               href={`#${SectionId.CONTACT}`}
               onClick={(e) => handleNavClick(e, `#${SectionId.CONTACT}`)}
               className="flex items-center justify-center gap-2 w-full py-2.5 rounded text-sm font-semibold bg-primary text-white"
             >
-              Let's talk <ArrowRight size={14} />
+              Get in touch
+            </a>
+            <a
+              href="/CV/Testimony_Owolabi_Claude_Campus_Ambassador_Resume-1.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center justify-center gap-2 w-full py-2 rounded text-sm font-medium border border-border text-text-muted hover:text-primary transition-colors"
+            >
+              <FileText size={14} /> Download CV
             </a>
           </div>
         </div>
       )}
 
       {/* Scroll Progress Bar */}
-      <div className="absolute bottom-0 left-0 right-0 h-px bg-transparent">
+      <div className="absolute bottom-0 left-0 right-0 h-px bg-transparent" aria-hidden="true">
         <div
-          className="h-full bg-gradient-to-r from-primary via-secondary to-primary transition-all duration-100"
+          className="h-full bg-gradient-to-r from-primary to-secondary transition-all duration-150"
           style={{ width: `${scrollProgress}%` }}
         />
       </div>
