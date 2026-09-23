@@ -129,6 +129,172 @@
     transform: translateX(3px);
   }
 
+  /* ── 3D phone contact card ── */
+  .phone-scene {
+    perspective: 1200px;
+    max-width: 34rem;
+  }
+
+  .phone-card {
+    --tilt-x: 0deg;
+    --tilt-y: 0deg;
+    --glow-x: 50%;
+    --glow-y: 50%;
+    --glow-opacity: 0;
+    position: relative;
+    transform-style: preserve-3d;
+    transform: rotateX(var(--tilt-x)) rotateY(var(--tilt-y));
+    transition: transform var(--dur-slow) var(--ease-editorial);
+    border-radius: 1.25rem;
+    isolation: isolate;
+  }
+
+  .phone-card__edge {
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: linear-gradient(145deg, rgba(255, 107, 53, 0.55), rgba(36, 36, 36, 0.9) 40%, #0a0a0a 70%);
+    transform: translateZ(-18px) translateY(14px) scale(0.98);
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.55);
+    z-index: -1;
+  }
+
+  .phone-card__body {
+    position: relative;
+    z-index: 1;
+    border: 1px solid #2a2a2a;
+    border-radius: inherit;
+    background:
+      radial-gradient(
+        40rem 20rem at var(--glow-x) var(--glow-y),
+        rgba(255, 107, 53, 0.16),
+        transparent 55%
+      ),
+      linear-gradient(165deg, #161616 0%, #111111 45%, #0d0d0d 100%);
+    padding: clamp(1.5rem, 4vw, 2.25rem);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.05),
+      0 20px 50px rgba(0, 0, 0, 0.35);
+    transition: border-color var(--dur-base) ease;
+  }
+
+  .phone-card:hover .phone-card__body,
+  .phone-card:focus-within .phone-card__body {
+    border-color: rgba(255, 107, 53, 0.45);
+  }
+
+  .phone-card__shine {
+    pointer-events: none;
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: linear-gradient(
+      120deg,
+      transparent 30%,
+      rgba(255, 255, 255, 0.07) 45%,
+      transparent 60%
+    );
+    opacity: var(--glow-opacity);
+    transition: opacity var(--dur-base) ease;
+    mix-blend-mode: screen;
+    z-index: 2;
+  }
+
+  .phone-card__top {
+    @apply flex flex-wrap items-baseline justify-between gap-3 border-b border-line pb-4;
+  }
+
+  .phone-card__badge {
+    @apply inline-flex items-center gap-2 border border-line bg-ink/60 px-2.5 py-1 font-mono text-[10px] uppercase tracking-label text-mute;
+  }
+
+  .phone-card__pulse {
+    @apply inline-block h-1.5 w-1.5 rounded-full bg-accent;
+    box-shadow: 0 0 0 0 rgba(255, 107, 53, 0.6);
+    animation: phone-pulse 2s ease-out infinite;
+  }
+
+  .phone-card__number {
+    @apply mt-6 block font-medium tracking-[-0.03em] text-paper;
+    font-size: clamp(1.65rem, 5vw, 2.5rem);
+    line-height: 1.1;
+    transition: color var(--dur-fast) ease;
+    transform: translateZ(24px);
+  }
+
+  .phone-card__number:hover {
+    color: #ff6b35;
+  }
+
+  .phone-card__hint {
+    @apply mt-3 text-sm text-mute;
+    transform: translateZ(18px);
+  }
+
+  .phone-card__actions {
+    @apply mt-7 grid gap-3 sm:grid-cols-3;
+    transform: translateZ(32px);
+  }
+
+  .phone-action {
+    @apply flex items-center gap-3 border border-line bg-ink/70 px-3 py-3 text-left text-paper;
+    transition:
+      border-color var(--dur-fast) ease,
+      background-color var(--dur-fast) ease,
+      transform var(--dur-fast) var(--ease-editorial),
+      box-shadow var(--dur-fast) ease;
+  }
+
+  .phone-action:hover {
+    @apply border-zinc-500 bg-raised;
+    transform: translateZ(8px) translateY(-2px);
+    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.35);
+  }
+
+  .phone-action:active {
+    transform: translateZ(4px) translateY(0);
+  }
+
+  .phone-action__icon {
+    @apply flex h-10 w-10 shrink-0 items-center justify-center border border-line bg-surface text-accent;
+    transition: border-color var(--dur-fast) ease, background-color var(--dur-fast) ease,
+      color var(--dur-fast) ease;
+  }
+
+  .phone-action__text {
+    @apply flex min-w-0 flex-col;
+  }
+
+  .phone-action__label {
+    @apply font-mono text-[11px] uppercase tracking-cta;
+  }
+
+  .phone-action__meta {
+    @apply text-[12px] text-dim;
+  }
+
+  .phone-action--call:hover {
+    border-color: rgba(255, 107, 53, 0.55);
+  }
+
+  .phone-action--call:hover .phone-action__icon {
+    @apply border-accent bg-accent text-ink;
+  }
+
+  .phone-action--wa:hover {
+    border-color: rgba(37, 211, 102, 0.55);
+  }
+
+  .phone-action--wa:hover .phone-action__icon {
+    border-color: #25d366;
+    background: #25d366;
+    color: #0a0a0a;
+  }
+
+  .phone-card__foot {
+    @apply mt-6 flex flex-wrap items-center justify-between gap-3 border-t border-line pt-4;
+  }
+
   .link-quiet {
     @apply text-mute transition-colors duration-fast hover:text-paper;
   }
@@ -339,22 +505,86 @@
     color: #ff6b35;
   }
 
-  /* ── Focus room (Lo-Fi radio / songs / CLI) ── */
+  /* ── Focus room (Lo-Fi radio / CLI) ── */
   .lofi-panel {
     @apply flex flex-col border border-line bg-surface p-5 sm:p-6;
+    transition: border-color var(--dur-base) ease;
   }
 
-  .lofi-input {
-    @apply min-w-0 flex-1 border border-line bg-ink px-4 py-3 text-[15px] text-paper placeholder:text-dim;
+  .lofi-panel--premium {
+    border-top: 1px solid rgba(255, 107, 53, 0.45);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.03);
   }
 
-  .lofi-input:focus {
-    outline: none;
-    border-color: rgba(255, 107, 53, 0.5);
+  .lofi-panel--premium:hover {
+    border-color: #333;
+    border-top-color: rgba(255, 107, 53, 0.7);
+  }
+
+  .lofi-panel__head {
+    @apply flex items-baseline justify-between gap-4 border-b border-line pb-3;
+  }
+
+  .lofi-panel__section {
+    @apply mt-5 border-t border-line pt-4;
+  }
+
+  .lofi-status {
+    @apply font-mono text-[10px] uppercase tracking-label text-dim;
+  }
+
+  .lofi-status.is-live {
+    color: #ff6b35;
+  }
+
+  .lofi-nowplaying {
+    @apply mt-5 min-h-[3.5rem];
+  }
+
+  .lofi-nowplaying__title {
+    @apply font-mono text-[13px] uppercase tracking-[0.14em] text-paper;
+    text-wrap: balance;
+  }
+
+  .lofi-nowplaying__meta {
+    @apply mt-1.5 text-sm text-mute;
+  }
+
+  .lofi-controls {
+    @apply mt-4 flex flex-wrap items-center gap-2.5;
+  }
+
+  .lofi-volume {
+    @apply ml-auto flex w-full max-w-[9.5rem] min-w-[7.5rem] items-center gap-2;
+  }
+
+  .lofi-queue {
+    @apply mt-2;
+  }
+
+  .lofi-queue-row__main {
+    @apply flex min-w-0 flex-1 items-center gap-3 text-left;
+  }
+
+  .lofi-footnote {
+    @apply mt-auto pt-4 font-mono text-[10px] uppercase tracking-label text-dim;
+  }
+
+  .lofi-favorites {
+    @apply mt-5 border border-line bg-surface p-5 sm:p-6;
+    border-top: 1px solid rgba(255, 107, 53, 0.45);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.03);
+  }
+
+  .lofi-favorites__frame {
+    @apply mt-4 overflow-hidden rounded-xl border border-line;
+    box-shadow: 0 18px 50px rgba(0, 0, 0, 0.4);
   }
 
   .lofi-btn {
-    @apply inline-flex h-11 min-w-[2.75rem] items-center justify-center border border-line px-4 font-mono text-[11px] uppercase tracking-cta text-paper transition-colors duration-fast;
+    @apply inline-flex h-11 min-w-[2.75rem] items-center justify-center border border-line bg-transparent px-4 font-mono text-[11px] uppercase tracking-cta text-paper;
+    transition: border-color var(--dur-fast) ease, background-color var(--dur-fast) ease,
+      color var(--dur-fast) ease;
   }
 
   .lofi-btn:hover:not(:disabled) {
@@ -384,8 +614,9 @@
     height: 14px;
     border-radius: 999px;
     background: #ff6b35;
-    border: none;
+    border: 2px solid #0a0a0a;
     cursor: pointer;
+    box-shadow: 0 0 0 1px rgba(255, 107, 53, 0.4);
   }
 
   .lofi-range::-moz-range-thumb {
@@ -393,13 +624,13 @@
     height: 14px;
     border-radius: 999px;
     background: #ff6b35;
-    border: none;
+    border: 2px solid #0a0a0a;
     cursor: pointer;
   }
 
   .lofi-queue-row {
-    @apply flex w-full items-center gap-3 border-b border-line py-3 text-left;
-    transition: border-color 0.3s ease, background-color 0.3s ease;
+    @apply flex w-full items-center gap-2 border-b border-line py-3 text-left;
+    transition: border-color var(--dur-base) ease, background-color var(--dur-base) ease;
   }
 
   .lofi-queue-row:hover {
@@ -407,17 +638,51 @@
     background: #151515;
   }
 
+  .lofi-queue-row.is-active {
+    background: rgba(255, 107, 53, 0.04);
+    border-color: rgba(255, 107, 53, 0.35);
+  }
+
   .lofi-queue-row.is-active .mono-label:first-child {
     @apply text-accent;
   }
 
-  .lofi-panel--term {
-    border-color: #2a2a2a;
+  .cli-screen {
+    @apply relative mt-4 flex flex-col border border-line bg-ink p-3 font-mono text-[12px] leading-relaxed;
+    min-height: 16rem;
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.02);
   }
 
-  .cli-screen {
-    @apply flex flex-col border border-line bg-ink p-3 font-mono text-[12px] leading-relaxed;
-    min-height: 14rem;
+  .cli-welcome {
+    @apply absolute inset-0 z-10 flex items-center justify-center border border-line bg-ink/95 p-4 text-center;
+    animation: cli-welcome-out 0.55s var(--ease-editorial) 2.55s forwards;
+  }
+
+  .cli-welcome__text {
+    @apply font-mono text-[13px] uppercase tracking-cta text-accent sm:text-[15px];
+    text-wrap: balance;
+  }
+
+  .cli-welcome__ch {
+    display: inline-block;
+    opacity: 0;
+    transform: translateY(0.55em) rotateX(-70deg);
+    animation: cli-welcome-ch 0.45s var(--ease-editorial) forwards;
+  }
+
+  @keyframes cli-welcome-ch {
+    to {
+      opacity: 1;
+      transform: translateY(0) rotateX(0);
+    }
+  }
+
+  @keyframes cli-welcome-out {
+    to {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
   }
 
   .cli-line {
@@ -431,6 +696,14 @@
 
   .cli-input {
     @apply min-w-0 flex-1 border-0 bg-transparent p-0 text-paper caret-accent outline-none placeholder:text-dim;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .lofi-panel,
+    .lofi-btn,
+    .lofi-queue-row {
+      transition: none !important;
+    }
   }
 
   /* ── Article rows ── */
@@ -630,6 +903,18 @@
   }
 }
 
+@keyframes phone-pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(255, 107, 53, 0.55);
+  }
+  70% {
+    box-shadow: 0 0 0 8px rgba(255, 107, 53, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(255, 107, 53, 0);
+  }
+}
+
 .menu-in {
   animation: menu-in 0.35s var(--ease-editorial) both;
 }
@@ -641,6 +926,31 @@
   .rise,
   .menu-in {
     animation: none;
+  }
+  .cli-welcome {
+    animation: none;
+    opacity: 1;
+  }
+  .cli-welcome__ch {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+  .phone-card {
+    transform: none !important;
+    transition: none;
+  }
+  .phone-card__pulse {
+    animation: none;
+  }
+  .phone-action {
+    transition: none;
+  }
+  .phone-action:hover {
+    transform: none;
+  }
+  .phone-card__shine {
+    opacity: 0;
   }
   .reveal-ready [data-reveal] {
     opacity: 1;
