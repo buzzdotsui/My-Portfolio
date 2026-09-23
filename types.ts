@@ -1,117 +1,57 @@
-import { LucideIcon } from 'lucide-react';
+export interface ProjectImage {
+  src: string;
+  alt: string;
+  width: number;
+  height: number;
+}
 
 export interface Project {
-  id: string;
-  title: string;
-  shortDescription?: string;
-  description: string;
-  problem?: string;
-  context?: string;
-  role?: string;
-  whatWasBuilt?: string;
-  technicalApproach?: string;
-  outcome?: string;
-  currentState?: string;
-  status: 'LIVE' | 'SHIPPED' | 'ACTIVE' | 'IN DEVELOPMENT' | 'PROTOTYPE' | 'RESEARCH / PROTOTYPING' | 'EXPLORATION' | 'ARCHIVED' | 'CLIENT WORK';
-  significance: 'signature' | 'supporting' | 'archive';
-  category?: string;
-  tags: string[];
-  imageUrl?: string;
-  screenshots?: string[];
-  liveUrl?: string;
-  githubUrl?: string;
-  featured: boolean;
-  decisions?: string[];
-  challenges?: string[];
-  lessons?: string[];
-  number?: string;
-}
-
-export interface WorkItem {
-  title: string;
-  category: 'Software' | 'AI' | 'Automation' | 'Web3' | 'Security' | 'Engineering' | 'Academic' | 'Experiments' | 'Community';
-  description: string;
-  status: string;
-  tags: string[];
-  liveUrl?: string;
-  featured?: boolean;
-}
-
-export interface ServiceItem {
-  title: string;
-  description: string;
-  capabilities: string[];
-}
-
-export interface CertificationItem {
-  title: string;
-  issuer: string;
-  topic: string;
-  date?: string;
-  relevance: string;
-  imageUrl: string;
-}
-
-export interface SkillGroup {
-  title: string;
-  icon: LucideIcon;
-  note?: string;
-  skills: SkillItem[];
-}
-
-export interface SkillItem {
+  number: string;
   name: string;
-  level: 'Core' | 'Working' | 'Exploring';
+  description: string;
+  stack: string[];
+  role: string;
+  status: string;
+  url: string;
+  urlLabel: string;
+  image?: ProjectImage;
+  /** Typographic plate used when no verified screenshot exists. */
+  plate?: {
+    domain: string;
+    lines: string[];
+  };
 }
 
-export interface SkillCategory {
+export interface StackItem {
+  name: string;
+  /** Official brand SVG served from /public/logos */
+  logo?: string;
+  /** Typographic mark used when no official brand logo applies */
+  mark?: string;
+  /** Official brand color, revealed subtly on hover */
+  brand?: string;
+}
+
+export interface StackGroup {
   title: string;
-  skills: string[];
-  icon: LucideIcon;
-  note?: string;
+  /** e.g. ADDITIONAL / EXPLORING */
+  tag?: string;
+  featured?: boolean;
+  /** Tailwind grid classes (static strings for JIT scanning) */
+  grid: string;
+  items: readonly StackItem[];
+}
+
+export interface SocialLink {
+  platform: string;
+  handle: string;
+  description?: string;
+  url: string;
+  logo: string;
+  brand?: string;
 }
 
 export interface NavItem {
   label: string;
   href: string;
-}
-
-export interface WritingPost {
-  title: string;
-  url: string;
-  desc: string;
-  tag: string;
-  date?: string;
-  verified?: boolean;
-}
-
-export interface TimelineItem {
-  period: string;
-  title: string;
-  subtitle: string;
-  description: string;
-  tags: string[];
-  highlight?: boolean;
-}
-
-export interface NowItem {
-  category: 'Building' | 'Learning' | 'Leading' | 'Exploring';
-  items: string[];
-}
-
-export enum SectionId {
-  HERO = 'hero',
-  CRAFT = 'craft',
-  PORTFOLIO = 'portfolio',
-  WORK = 'work',
-  SKILLS = 'skills',
-  SERVICES = 'services',
-  AVAILABILITY = 'availability',
-  CREDENTIALS = 'credentials',
-  EXPERIENCE = 'experience',
-  LEADERSHIP = 'leadership',
-  ENGINEERING = 'engineering',
-  WRITING = 'writing',
-  NOW = 'now',
-  CONTACT = 'contact',
 }

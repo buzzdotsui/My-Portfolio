@@ -1,25 +1,22 @@
 {
-  "name": "buzzdotsui-portfolio",
+  "name": "testimony-owolabi-portfolio",
   "private": true,
-  "version": "0.0.0",
+  "version": "1.0.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "build": "tsc --noEmit && vite build",
+    "typecheck": "tsc --noEmit",
     "preview": "vite preview"
   },
   "dependencies": {
-    "emailjs-com": "^3.2.0",
-    "lucide-react": "0.344.0",
     "react": "18.3.1",
-    "react-dom": "18.3.1",
-    "react-hot-toast": "^2.4.1"
+    "react-dom": "18.3.1"
   },
   "devDependencies": {
     "@types/node": "^22.14.0",
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",
-    "@types/three": "^0.163.0",
     "@vitejs/plugin-react": "^4.3.1",
     "autoprefixer": "^10.4.19",
     "postcss": "^8.4.38",

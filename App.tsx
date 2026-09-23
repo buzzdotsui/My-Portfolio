@@ -1,74 +1,38 @@
-import React from 'react';
-import { Navbar } from './components/Navbar';
-import { Hero } from './components/Hero';
-import { Craft } from './components/Craft';
-import { Projects } from './components/Projects';
-import { WorkIndex } from './components/WorkIndex';
-import { Skills } from './components/Skills';
-import { Services } from './components/Services';
-import { Availability } from './components/Availability';
-import { Credentials } from './components/Credentials';
-import { Experience } from './components/Experience';
-import { Leadership } from './components/Leadership';
-import { Engineering } from './components/Engineering';
-import { Writing } from './components/Writing';
-import { Now } from './components/Now';
+import { useEffect } from 'react';
+import { About } from './components/About';
+import { BeyondSoftware } from './components/BeyondSoftware';
 import { Contact } from './components/Contact';
+import { Elsewhere } from './components/Elsewhere';
 import { Footer } from './components/Footer';
-import { ProjectDetail } from './components/ProjectDetail';
-import { ThemeProvider } from './contexts/ThemeContext';
-import { Project } from './types';
-import { useState, useEffect } from 'react';
-import { initScrollReveal } from './utils/scrollReveal';
+import { Hero } from './components/Hero';
+import { Nav } from './components/Nav';
+import { SelectedWork } from './components/SelectedWork';
+import { Stack } from './components/Stack';
+import { initReveal } from './utils/reveal';
 
-function App() {
-  const [selectedProject, setSelectedProject] = useState<Project | null>(null);
-
-  useEffect(() => {
-    if (!selectedProject) {
-      const timer = setTimeout(() => {
-        initScrollReveal();
-      }, 100);
-      return () => clearTimeout(timer);
-    }
-  }, [selectedProject]);
+export default function App() {
+  useEffect(() => initReveal(), []);
 
   return (
-    <ThemeProvider>
-      <div className="relative w-full min-h-screen bg-background">
-        {selectedProject ? (
-          <ProjectDetail
-            project={selectedProject}
-            onBack={() => {
-              setSelectedProject(null);
-              window.scrollTo({ top: 0, behavior: 'smooth' });
-            }}
-          />
-        ) : (
-          <>
-            <Navbar />
-            <main className="w-full">
-              <Hero />
-              <Craft />
-              <Projects onProjectSelect={setSelectedProject} />
-              <WorkIndex />
-              <Skills />
-              <Services />
-              <Availability />
-              <Credentials />
-              <Experience />
-              <Leadership />
-              <Engineering />
-              <Writing />
-              <Now />
-              <Contact />
-            </main>
-            <Footer />
-          </>
-        )}
-      </div>
-    </ThemeProvider>
+    <div className="min-h-screen bg-ink">
+      <a
+        href="#main"
+        className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[60] focus:bg-accent focus:px-4 focus:py-2 focus:font-mono focus:text-xs focus:uppercase focus:text-ink"
+      >
+        Skip to content
+      </a>
+      <div className="grain" aria-hidden="true" />
+      <Nav />
+      <main id="main">
+        <Hero />
+        <SelectedWork />
+        <About />
+        <Stack />
+        <Elsewhere />
+        <BeyondSoftware />
+        <Contact />
+      </main>
+      <Footer />
+    </div>
   );
 }
-
-export default App;
