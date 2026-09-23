@@ -152,14 +152,6 @@ export const writing = {
   note: 'Essays on intelligent industry, systems thinking, and the path so far — published on Medium.',
   articles: [
     {
-      title: 'Engineering the Future of Intelligent Industry in Africa',
-      excerpt:
-        'Industrial progress has always been driven by people who look at existing systems and ask a simple question: Can this be done better? The question is no longer whether industry will become intelligent — it is who will build the systems that make it possible.',
-      date: 'Mar 16, 2026',
-      readTime: '5 min read',
-      url: 'https://owolabitestimony.medium.com/engineering-the-future-of-intelligent-industry-in-africa-9984c5f2885f',
-    },
-    {
       title: 'I Was Never Meant to Be Average',
       excerpt:
         'At 18, inside Federal University of Technology Akure, I stopped waiting for opportunity — and started building systems that could change Africa. Born in Offa, raised in Ado Ekiti — and always feeling like something did not quite fit.',
@@ -174,6 +166,14 @@ export const writing = {
       date: 'Mar 17, 2026',
       readTime: '4 min read',
       url: 'https://owolabitestimony.medium.com/inside-metabotics-engineering-the-brain-of-smart-factories-2ad030054f79',
+    },
+    {
+      title: 'Engineering the Future of Intelligent Industry in Africa',
+      excerpt:
+        'Industrial progress has always been driven by people who look at existing systems and ask a simple question: Can this be done better? The question is no longer whether industry will become intelligent — it is who will build the systems that make it possible.',
+      date: 'Mar 16, 2026',
+      readTime: '5 min read',
+      url: 'https://owolabitestimony.medium.com/engineering-the-future-of-intelligent-industry-in-africa-9984c5f2885f',
     },
   ],
 } as const;
