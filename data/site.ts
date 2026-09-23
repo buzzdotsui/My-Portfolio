@@ -1,4 +1,4 @@
-import type { Certification, NavItem } from '../types';
+import type { NavItem, StackGroup } from '../types';
 
 export const site = {
   name: 'Testimony Owolabi',
@@ -13,7 +13,7 @@ export const site = {
   github: 'https://github.com/buzzdotsui',
   linkedin: 'https://www.linkedin.com/in/testimony-owolabi/',
   medium: 'https://owolabitestimony.medium.com/',
-  cv: '/CV/Testimony_Owolabi_Full_Stack_Resume.pdf',
+  cv: '/CV/Testimony_Owolabi_CV_Premium.pdf',
   portrait: {
     src: '/portrait.jpg',
     alt: 'Black and white portrait of Testimony Owolabi',
@@ -159,88 +159,84 @@ export const certifications = {
   label: 'Certifications',
   heading: 'Licenses & certifications.',
   note: 'Coursework and professional credentials.',
-  credentialsUrl: 'https://www.linkedin.com/in/testimony-owolabi/#licenses',
   groups: [
     {
       title: 'Claude Academy / Anthropic',
+      featured: true,
+      grid: 'grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-4 md:grid-cols-4 lg:grid-cols-5',
       items: [
         {
-          title: 'Introduction to Model Context Protocol',
-          issuer: 'Anthropic',
-          issued: 'Sep 2026',
-          credentialId: '542dc552ac6e40baae248773ba04be77',
-          skills: ['Model Context Protocol (MCP)'],
+          name: 'Introduction to Model Context Protocol',
+          logo: '/logos/anthropic.svg',
+          brand: '#D97757',
         },
         {
-          title: 'Model Context Protocol: Advanced topics',
-          issuer: 'Anthropic',
-          issued: 'Sep 2026',
-          credentialId: '19402148fa11b70845f99b236c45855d',
-          skills: ['Artificial Intelligence (AI)'],
+          name: 'Model Context Protocol: Advanced topics',
+          logo: '/logos/anthropic.svg',
+          brand: '#D97757',
         },
         {
-          title: 'AI capabilities and limitations',
-          issuer: 'Anthropic',
-          issued: 'Sep 2026',
-          credentialId: 'fb77cca81340fc53d2b7a9d6dab4bfe0',
-          skills: ['Artificial Intelligence (AI)'],
+          name: 'AI capabilities and limitations',
+          logo: '/logos/anthropic.svg',
+          brand: '#D97757',
         },
         {
-          title: 'AI Fluency for builders',
-          issuer: 'Anthropic',
-          issued: 'Sep 2026',
-          credentialId: 'f800dfc606f22b63e625199a9dac596f',
-          skills: ['Artificial Intelligence (AI)'],
+          name: 'AI Fluency for builders',
+          logo: '/logos/anthropic.svg',
+          brand: '#D97757',
         },
         {
-          title: 'AI Fluency for students',
-          issuer: 'Anthropic',
-          issued: 'Sep 2026',
-          credentialId: '4a34c375527eed1ef14ec38d08794504',
-          skills: ['Artificial Intelligence (AI)'],
+          name: 'AI Fluency for students',
+          logo: '/logos/anthropic.svg',
+          brand: '#D97757',
         },
         {
-          title: 'AI Fluency: Framework and foundations',
-          issuer: 'Anthropic',
-          issued: 'Sep 2026',
-          credentialId: '635f8093a41b5de7ab778d60b2635eb1',
-          skills: ['Artificial Intelligence (AI)'],
+          name: 'AI Fluency: Framework and foundations',
+          logo: '/logos/anthropic.svg',
+          brand: '#D97757',
         },
       ],
     },
     {
       title: 'The Open University',
+      grid: 'grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-4 lg:grid-cols-6',
       items: [
         {
-          title: 'Advancing Black leadership',
-          issuer: 'The Open University',
-          skills: ['Leadership'],
+          name: 'Advancing Black leadership',
+          logo: '/logos/openuniversity.svg',
+          brand: '#FFFFFF',
         },
         {
-          title: 'Introducing Black leadership',
-          issuer: 'The Open University',
-          skills: ['Leadership'],
+          name: 'Introducing Black leadership',
+          logo: '/logos/openuniversity.svg',
+          brand: '#FFFFFF',
         },
         {
-          title: 'Mathematics for science and technology',
-          issuer: 'The Open University',
+          name: 'Mathematics for science and technology',
+          logo: '/logos/openuniversity.svg',
+          brand: '#FFFFFF',
         },
       ],
     },
     {
       title: 'Professional',
+      tag: 'Certificates',
+      grid: 'grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-4',
       items: [
         {
-          title: 'IBM Full Stack Software Developer Professional Certificate',
-          issuer: 'IBM',
+          name: 'IBM Full Stack Software Developer',
+          logo: '/logos/ibm.svg',
+          brand: '#1F70C1',
         },
         {
-          title: 'freeCodeCamp Full Stack Developer Certification',
-          issuer: 'freeCodeCamp',
+          name: 'freeCodeCamp Full Stack Developer',
+          logo: '/logos/freecodecamp.svg',
+          brand: '#FFFFFF',
         },
         {
-          title: 'Oracle Certified Professional: Java SE Developer',
-          issuer: 'Oracle',
+          name: 'Oracle Certified Professional: Java SE',
+          logo: '/logos/oracle.svg',
+          brand: '#C74634',
         },
       ],
     },
@@ -249,8 +245,7 @@ export const certifications = {
   label: string;
   heading: string;
   note: string;
-  credentialsUrl: string;
-  groups: readonly { title: string; items: readonly Certification[] }[];
+  groups: readonly StackGroup[];
 };
 
 export const writing = {

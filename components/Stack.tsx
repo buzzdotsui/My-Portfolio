@@ -24,7 +24,7 @@ function TechTile({ item, featured }: { item: StackItem; featured?: boolean }) {
   );
 }
 
-function Group({ group }: { group: StackGroup }) {
+export function StackGroup({ group }: { group: StackGroup }) {
   return (
     <div>
       <div
@@ -62,7 +62,7 @@ export function Stack() {
 
         <div className="mt-14 space-y-14 sm:mt-16">
           {stack.groups.map((group) => (
-            <Group key={group.title} group={group} />
+            <StackGroup key={group.title} group={group} />
           ))}
         </div>
       </div>
