@@ -1,13 +1,11 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
-import {
-  ChaosBoundary,
-  ChaosMonkey,
-  StateProbe,
-  useChaos,
-} from './ChaosMonkey';
 import { SectionLabel } from './SectionLabel';
+import { Terminal } from './Terminal';
 
 const QUEUE_KEY = 'lofi-song-queue-v1';
+
+const SPOTIFY_PLAYLIST_SRC =
+  'https://open.spotify.com/embed/playlist/6SmTtBvUybmRcBLGqqFuaw?utm_source=generator&theme=0';
 
 const STATIONS = [
   { id: 'rain', title: 'Rain on Glass', artist: 'Field Recording', kind: 'rain' as const },
@@ -94,7 +92,6 @@ export function FocusRoom() {
   const [queue, setQueue] = useState<QueueItem[]>([]);
   const [activeId, setActiveId] = useState<string | null>(null);
   const [playing, setPlaying] = useState(false);
-  const { chaos, onBreak, onFix, onToggle } = useChaos();
 
   const stationRef = useRef<{
     ctx: AudioContext | null;
@@ -306,26 +303,16 @@ export function FocusRoom() {
     setSearching(true);
     setSearchError('');
     try {
-      if (chaos.latency) {
-        await new Promise((r) => setTimeout(r, 1800));
-      }
-      if (chaos.wsDown) {
-        throw new Error('Socket closed');
-      }
       const songs = await searchDeezer(q);
       setResults(songs);
       if (songs.length === 0) setSearchError('No matches. Try another title or artist.');
     } catch {
       setResults([]);
-      setSearchError(
-        chaos.latency || chaos.wsDown
-          ? 'Injected failure: request timed out or socket dropped.'
-          : 'Search is unavailable right now. Check your connection and try again.',
-      );
+      setSearchError('Search is unavailable right now. Check your connection and try again.');
     } finally {
       setSearching(false);
     }
-  }, [query, chaos.latency, chaos.wsDown]);
+  }, [query]);
 
   const enqueueSong = useCallback((song: Song) => {
     const item: QueueItem = {
@@ -381,15 +368,12 @@ export function FocusRoom() {
           <SectionLabel num="04" label="Lo-Fi Radio" />
           <h2 className="display display-md mt-5">Listen & focus.</h2>
           <p className="lede mt-4">
-            Queue ambient stations, search a huge open catalog for tracks, or break the page on
-            purpose and watch the self-heal script restore it.
+            Ambient stations, searchable tracks, your Spotify favorites, and a terminal you can
+            type into. Built into the portfolio.
           </p>
         </div>
 
-        <div
-          data-reveal
-          className={`mt-12 grid gap-6 lg:grid-cols-12${chaos.gridDown ? ' chaos-grid-broken' : ''}`}
-        >
+        <div data-reveal className="mt-12 grid gap-6 lg:grid-cols-12">
           {/* Now playing + queue */}
           <div className="lofi-panel lg:col-span-5">
             <div className="flex items-baseline justify-between gap-4">
@@ -397,13 +381,10 @@ export function FocusRoom() {
               <p className="mono-label">{playing ? 'On air' : 'Standby'}</p>
             </div>
 
-            <ChaosBoundary resetKey={chaos.resetKey}>
-              <StateProbe
-                corrupt={chaos.corrupt}
-                title={current?.title || 'Nothing selected'}
-                artist={current?.artist || 'Pick a station or song'}
-              />
-            </ChaosBoundary>
+            <p className="mt-5 font-mono text-sm uppercase tracking-[0.14em] text-paper">
+              {current?.title || 'Nothing selected'}
+            </p>
+            <p className="mt-1 text-sm text-mute">{current?.artist || 'Pick a station or song'}</p>
 
             <div className="mt-5 flex flex-wrap items-center gap-3">
               <button
@@ -528,7 +509,7 @@ export function FocusRoom() {
               </p>
             )}
 
-            <ul className="mt-4 max-h-[26rem] overflow-y-auto" aria-label="Search results">
+            <ul className="mt-4 max-h-[16rem] overflow-y-auto" aria-label="Search results">
               {results.map((song) => (
                 <li key={song.id} className="border-b border-line">
                   <div className="flex items-center gap-3 py-3">
@@ -581,7 +562,34 @@ export function FocusRoom() {
             </ul>
           </div>
 
-          <ChaosMonkey chaos={chaos} onBreak={onBreak} onFix={onFix} onToggle={onToggle} />
+          <Terminal />
+        </div>
+
+        <div data-reveal className="mt-6 border border-line bg-surface p-4 sm:p-5">
+          <div className="flex items-baseline justify-between gap-4">
+            <p className="mono-label text-accent">Favorites</p>
+            <a
+              href="https://open.spotify.com/playlist/6SmTtBvUybmRcBLGqqFuaw"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mono-label text-dim transition-colors hover:text-paper"
+            >
+              Open in Spotify
+            </a>
+          </div>
+          <div className="mt-4 overflow-hidden rounded-xl border border-line">
+            <iframe
+              data-testid="embed-iframe"
+              title="Spotify playlist embed"
+              src={SPOTIFY_PLAYLIST_SRC}
+              width="100%"
+              height="352"
+              frameBorder="0"
+              allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+              loading="lazy"
+              className="block w-full"
+            />
+          </div>
         </div>
       </div>
     </section>

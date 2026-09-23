@@ -339,7 +339,7 @@
     color: #ff6b35;
   }
 
-  /* ── Focus room (Lo-Fi radio / songs / chaos) ── */
+  /* ── Focus room (Lo-Fi radio / songs / CLI) ── */
   .lofi-panel {
     @apply flex flex-col border border-line bg-surface p-5 sm:p-6;
   }
@@ -411,49 +411,26 @@
     @apply text-accent;
   }
 
-  .lofi-panel--chaos {
+  .lofi-panel--term {
     border-color: #2a2a2a;
   }
 
-  .chaos-toggle {
-    @apply flex w-full items-center gap-3 border border-line bg-ink px-3 py-2.5 text-left transition-colors duration-fast;
+  .cli-screen {
+    @apply flex flex-col border border-line bg-ink p-3 font-mono text-[12px] leading-relaxed;
+    min-height: 14rem;
   }
 
-  .chaos-toggle:hover:not(:disabled) {
-    border-color: #3f3f46;
+  .cli-line {
+    @apply whitespace-pre-wrap break-words;
+    word-break: break-word;
   }
 
-  .chaos-toggle:disabled {
-    @apply cursor-not-allowed opacity-50;
+  .cli-prompt {
+    @apply shrink-0 text-accent;
   }
 
-  .chaos-toggle.is-on {
-    border-color: rgba(255, 107, 53, 0.55);
-    background: rgba(255, 107, 53, 0.06);
-  }
-
-  .chaos-toggle__dot {
-    @apply h-2.5 w-2.5 shrink-0 rounded-full bg-zinc-600;
-  }
-
-  .chaos-toggle.is-on .chaos-toggle__dot {
-    background: #ff6b35;
-    box-shadow: 0 0 0 3px rgba(255, 107, 53, 0.18);
-  }
-
-  .chaos-grid-broken {
-    display: flex !important;
-    flex-direction: column;
-    gap: 0.75rem;
-  }
-
-  .chaos-grid-broken > * {
-    width: 100%;
-    max-width: none;
-  }
-
-  .chaos-log {
-    font-family: 'Geist Mono', ui-monospace, monospace;
+  .cli-input {
+    @apply min-w-0 flex-1 border-0 bg-transparent p-0 text-paper caret-accent outline-none placeholder:text-dim;
   }
 
   /* ── Article rows ── */
