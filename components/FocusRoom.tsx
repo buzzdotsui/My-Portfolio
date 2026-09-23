@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { SectionLabel } from './SectionLabel';
 import { Terminal } from './Terminal';
+import { hasSpotifyCredentials, searchSpotify, type SpotifySong } from '../utils/spotify';
 
 const QUEUE_KEY = 'lofi-song-queue-v1';
 
@@ -16,18 +17,17 @@ const STATIONS = [
 
 type StationKind = (typeof STATIONS)[number]['kind'];
 
-type Song = {
-  id: string;
-  title: string;
-  artist: string;
-  album: string;
-  artwork: string;
-  preview: string;
-};
-
 type QueueItem =
   | { type: 'station'; id: string; title: string; artist: string }
-  | { type: 'song'; id: string; title: string; artist: string; preview: string; artwork: string };
+  | {
+      type: 'song';
+      id: string;
+      title: string;
+      artist: string;
+      artwork: string;
+      embedUrl: string;
+      url: string;
+    };
 
 function loadJson<T>(key: string, fallback: T): T {
   try {
@@ -47,45 +47,15 @@ function makeNoise(ctx: AudioContext, seconds = 2): AudioBuffer {
   return buf;
 }
 
-async function searchDeezer(query: string): Promise<Song[]> {
-  const url = `https://api.deezer.com/search?q=${encodeURIComponent(query)}&limit=12`;
-  const candidates = [url, `https://api.allorigins.win/raw?url=${encodeURIComponent(url)}`];
-
-  let lastErr: unknown;
-  for (const candidate of candidates) {
-    try {
-      const res = await fetch(candidate);
-      if (!res.ok) throw new Error(`HTTP ${res.status}`);
-      const data = (await res.json()) as {
-        data?: Array<{
-          id: number;
-          title: string;
-          preview: string;
-          artist?: { name?: string };
-          album?: { title?: string; cover_medium?: string };
-        }>;
-      };
-      if (!Array.isArray(data.data)) continue;
-      return data.data
-        .filter((t) => Boolean(t.preview))
-        .map((t) => ({
-          id: String(t.id),
-          title: t.title,
-          artist: t.artist?.name || 'Unknown artist',
-          album: t.album?.title || '',
-          artwork: t.album?.cover_medium || '',
-          preview: t.preview,
-        }));
-    } catch (e) {
-      lastErr = e;
-    }
-  }
-  throw lastErr instanceof Error ? lastErr : new Error('Search failed');
+function isLegacyQueueSong(
+  item: { type: string },
+): item is Extract<QueueItem, { type: 'song' }> {
+  return item.type === 'song' && 'embedUrl' in item;
 }
 
 export function FocusRoom() {
   const [query, setQuery] = useState('');
-  const [results, setResults] = useState<Song[]>([]);
+  const [results, setResults] = useState<SpotifySong[]>([]);
   const [searching, setSearching] = useState(false);
   const [searchError, setSearchError] = useState('');
   const [volume, setVolume] = useState(0.7);
@@ -99,8 +69,6 @@ export function FocusRoom() {
     nodes: AudioNode[];
   }>({ ctx: null, master: null, nodes: [] });
 
-  const songAudioRef = useRef<HTMLAudioElement | null>(null);
-
   const defaultQueue: QueueItem[] = STATIONS.map((s) => ({
     type: 'station',
     id: s.id,
@@ -110,7 +78,7 @@ export function FocusRoom() {
 
   useEffect(() => {
     const saved = loadJson<QueueItem[]>(QUEUE_KEY, []);
-    const songsOnly = saved.filter((q) => q.type === 'song');
+    const songsOnly = saved.filter((q) => isLegacyQueueSong(q));
     setQueue(songsOnly.length > 0 ? [...songsOnly, ...defaultQueue] : defaultQueue);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -131,14 +99,6 @@ export function FocusRoom() {
       }
     });
     a.nodes = [];
-  }, []);
-
-  const stopSong = useCallback(() => {
-    const el = songAudioRef.current;
-    if (el) {
-      el.pause();
-      el.currentTime = 0;
-    }
   }, []);
 
   const startStation = useCallback(
@@ -233,7 +193,6 @@ export function FocusRoom() {
 
   const playItem = useCallback(
     (item: QueueItem) => {
-      stopSong();
       stopStations();
       setActiveId(item.id);
       setPlaying(true);
@@ -243,29 +202,20 @@ export function FocusRoom() {
         if (station) startStation(station.kind);
         return;
       }
-
-      if (!songAudioRef.current) {
-        songAudioRef.current = new Audio();
-        songAudioRef.current.addEventListener('ended', () => setPlaying(false));
-      }
-      const el = songAudioRef.current;
-      el.src = item.preview;
-      el.volume = volume;
-      void el.play().catch(() => setPlaying(false));
+      // Spotify track plays via embed iframe in the Radio panel
     },
-    [startStation, stopSong, stopStations, volume],
+    [startStation, stopStations],
   );
 
   const togglePlay = useCallback(() => {
     if (playing) {
-      stopSong();
       stopStations();
       setPlaying(false);
       return;
     }
     const current = queue.find((q) => q.id === activeId) || queue[0];
     if (current) playItem(current);
-  }, [activeId, playItem, playing, queue, stopSong, stopStations]);
+  }, [activeId, playItem, playing, queue, stopStations]);
 
   const stepQueue = useCallback(
     (dir: 1 | -1) => {
@@ -285,16 +235,9 @@ export function FocusRoom() {
         0.05,
       );
     }
-    if (songAudioRef.current) songAudioRef.current.volume = volume;
   }, [volume]);
 
-  useEffect(
-    () => () => {
-      stopStations();
-      stopSong();
-    },
-    [stopSong, stopStations],
-  );
+  useEffect(() => () => stopStations(), [stopStations]);
 
   const runSearch = useCallback(async (e?: React.FormEvent) => {
     e?.preventDefault();
@@ -303,63 +246,78 @@ export function FocusRoom() {
     setSearching(true);
     setSearchError('');
     try {
-      const songs = await searchDeezer(q);
+      if (!hasSpotifyCredentials()) {
+        throw new Error('missing_credentials');
+      }
+      const songs = await searchSpotify(q);
       setResults(songs);
       if (songs.length === 0) setSearchError('No matches. Try another title or artist.');
-    } catch {
+    } catch (err) {
       setResults([]);
-      setSearchError('Search is unavailable right now. Check your connection and try again.');
+      setSearchError(
+        err instanceof Error && err.message === 'missing_credentials'
+          ? 'Add VITE_SPOTIFY_CLIENT_ID and VITE_SPOTIFY_CLIENT_SECRET to .env.local, then restart dev.'
+          : 'Spotify search is unavailable right now. Check credentials / connection and try again.',
+      );
     } finally {
       setSearching(false);
     }
   }, [query]);
 
-  const enqueueSong = useCallback((song: Song) => {
-    const item: QueueItem = {
+  const toQueueItem = useCallback((song: SpotifySong): QueueItem => {
+    return {
       type: 'song',
       id: `song-${song.id}`,
       title: song.title,
       artist: song.artist,
-      preview: song.preview,
       artwork: song.artwork,
+      embedUrl: song.embedUrl,
+      url: song.url,
     };
-    setQueue((q) => {
-      if (q.some((x) => x.id === item.id)) return q;
-      const stations = q.filter((x) => x.type === 'station');
-      const songs = q.filter((x) => x.type === 'song');
-      return [...songs, item, ...stations];
-    });
   }, []);
 
-  const playResult = useCallback(
-    (song: Song) => {
-      enqueueSong(song);
-      playItem({
-        type: 'song',
-        id: `song-${song.id}`,
-        title: song.title,
-        artist: song.artist,
-        preview: song.preview,
-        artwork: song.artwork,
+  const enqueueSong = useCallback(
+    (song: SpotifySong) => {
+      const item = toQueueItem(song);
+      setQueue((q) => {
+        if (q.some((x) => x.id === item.id)) return q;
+        const stations = q.filter((x) => x.type === 'station');
+        const songs = q.filter((x) => x.type === 'song');
+        return [...songs, item, ...stations];
       });
     },
-    [enqueueSong, playItem],
+    [toQueueItem],
+  );
+
+  const playResult = useCallback(
+    (song: SpotifySong) => {
+      const item = toQueueItem(song);
+      setQueue((q) => {
+        if (q.some((x) => x.id === item.id)) return q;
+        const stations = q.filter((x) => x.type === 'station');
+        const songs = q.filter((x) => x.type === 'song');
+        return [...songs, item, ...stations];
+      });
+      playItem(item);
+    },
+    [playItem, toQueueItem],
   );
 
   const removeQueueItem = useCallback(
     (id: string) => {
       setQueue((q) => q.filter((x) => x.id !== id));
       if (activeId === id) {
-        stopSong();
         stopStations();
         setPlaying(false);
         setActiveId(null);
       }
     },
-    [activeId, stopSong, stopStations],
+    [activeId, stopStations],
   );
 
   const current = queue.find((q) => q.id === activeId);
+  const currentTrack = current?.type === 'song' ? current : null;
+  const showEmbed = playing && Boolean(currentTrack);
 
   return (
     <section id="focus" className="section">
@@ -368,8 +326,8 @@ export function FocusRoom() {
           <SectionLabel num="04" label="Lo-Fi Radio" />
           <h2 className="display display-md mt-5">Listen & focus.</h2>
           <p className="lede mt-4">
-            Ambient stations, searchable tracks, your Spotify favorites, and a terminal you can
-            type into. Built into the portfolio.
+            Ambient stations, Spotify catalog search, your favorite playlist, and a terminal you
+            can type into. Built into the portfolio.
           </p>
         </div>
 
@@ -412,7 +370,7 @@ export function FocusRoom() {
                 ››
               </button>
               <label className="ml-auto flex w-full max-w-[10rem] min-w-[8rem] items-center gap-2">
-                <span className="sr-only">Volume</span>
+                <span className="sr-only">Volume (ambient stations)</span>
                 <input
                   type="range"
                   min={0}
@@ -421,10 +379,25 @@ export function FocusRoom() {
                   value={volume}
                   onChange={(e) => setVolume(Number(e.target.value))}
                   className="lofi-range"
-                  aria-label="Volume"
+                  aria-label="Volume (ambient stations)"
                 />
               </label>
             </div>
+
+            {showEmbed && currentTrack && (
+              <div className="mt-4 overflow-hidden rounded-xl border border-line">
+                <iframe
+                  title={`Spotify player: ${currentTrack.title}`}
+                  src={currentTrack.embedUrl}
+                  width="100%"
+                  height="152"
+                  frameBorder="0"
+                  allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+                  loading="lazy"
+                  className="block w-full"
+                />
+              </div>
+            )}
 
             <p className="mono-label mt-6 border-t border-line pt-4">Queue</p>
             <ul className="mt-2" aria-label="Playback queue">
@@ -450,7 +423,7 @@ export function FocusRoom() {
                         </span>
                       </span>
                       {item.type === 'song' && (
-                        <span className="mono-label shrink-0 text-accent/80">Song</span>
+                        <span className="mono-label shrink-0 text-accent/80">Spotify</span>
                       )}
                     </button>
                     {item.type === 'song' && (
@@ -468,7 +441,7 @@ export function FocusRoom() {
               ))}
             </ul>
             <p className="mono-label mt-4">
-              Ambient synthesized · songs via Deezer open API (30s previews)
+              Ambient synthesized · songs via Spotify Web API + embed player
             </p>
           </div>
 
@@ -476,12 +449,12 @@ export function FocusRoom() {
           <div className="lofi-panel lg:col-span-4">
             <div className="flex items-baseline justify-between gap-4">
               <p className="mono-label text-accent">02 / Songs</p>
-              <p className="mono-label">Search catalog</p>
+              <p className="mono-label">Spotify catalog</p>
             </div>
 
             <form onSubmit={runSearch} className="mt-5" role="search">
               <label htmlFor="song-search" className="sr-only">
-                Search songs
+                Search Spotify
               </label>
               <div className="flex gap-2">
                 <input
@@ -555,8 +528,8 @@ export function FocusRoom() {
               ))}
               {!results.length && !searching && (
                 <li className="py-6 text-sm text-mute">
-                  Search millions of tracks. Play uses official 30&nbsp;second previews; queue
-                  keeps them ready for the next listen.
+                  Search the full Spotify catalog. Play opens the official Spotify player for
+                  that track; +Q keeps it ready for the next listen.
                 </li>
               )}
             </ul>
