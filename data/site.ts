@@ -9,6 +9,7 @@ export const site = {
   email: 'owolabitestimony7724@gmail.com',
   github: 'https://github.com/buzzdotsui',
   linkedin: 'https://www.linkedin.com/in/testimony-owolabi/',
+  medium: 'https://owolabitestimony.medium.com/',
   cv: '/CV/Testimony_Owolabi_Claude_Campus_Ambassador_Resume-1.pdf',
   portrait: {
     src: '/portrait.jpg',
@@ -145,6 +146,38 @@ export const stack = {
   ],
 } as const;
 
+export const writing = {
+  label: 'Writing',
+  heading: 'Field notes and long-form work.',
+  note: 'Essays on intelligent industry, systems thinking, and the path so far — published on Medium.',
+  articles: [
+    {
+      title: 'Engineering the Future of Intelligent Industry in Africa',
+      excerpt:
+        'Industrial progress has always been driven by people who look at existing systems and ask a simple question: Can this be done better? The question is no longer whether industry will become intelligent — it is who will build the systems that make it possible.',
+      date: 'Mar 16, 2026',
+      readTime: '5 min read',
+      url: 'https://owolabitestimony.medium.com/engineering-the-future-of-intelligent-industry-in-africa-9984c5f2885f',
+    },
+    {
+      title: 'I Was Never Meant to Be Average',
+      excerpt:
+        'At 18, inside Federal University of Technology Akure, I stopped waiting for opportunity — and started building systems that could change Africa. Born in Offa, raised in Ado Ekiti — and always feeling like something did not quite fit.',
+      date: 'Apr 9, 2026',
+      readTime: '4 min read',
+      url: 'https://owolabitestimony.medium.com/i-was-never-meant-to-be-average-e974007efee5',
+    },
+    {
+      title: 'Inside Metabotics: Engineering the Brain of Smart Factories',
+      excerpt:
+        'Across much of the industrial world today, machines are powerful, but factories are still largely blind. Metabotics is built around a simple idea: industrial processes should not just operate — they should understand themselves.',
+      date: 'Mar 17, 2026',
+      readTime: '4 min read',
+      url: 'https://owolabitestimony.medium.com/inside-metabotics-engineering-the-brain-of-smart-factories-2ad030054f79',
+    },
+  ],
+} as const;
+
 export const elsewhere = {
   label: 'Elsewhere',
   heading: 'Find me online.',
@@ -178,6 +211,14 @@ export const elsewhere = {
       url: 'https://www.linkedin.com/in/testimony-owolabi/',
       logo: '/logos/linkedin.svg',
       brand: '#0A66C2',
+    },
+    {
+      platform: 'Medium',
+      handle: 'owolabitestimony',
+      description: 'Essays on industry, systems, and building in public',
+      url: 'https://owolabitestimony.medium.com/',
+      logo: '/logos/medium.svg',
+      brand: '#FFFFFF',
     },
   ],
 } as const;

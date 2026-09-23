@@ -42,6 +42,14 @@ export interface StackGroup {
   items: readonly StackItem[];
 }
 
+export interface Article {
+  title: string;
+  excerpt: string;
+  date: string;
+  readTime: string;
+  url: string;
+}
+
 export interface SocialLink {
   platform: string;
   handle: string;

@@ -67,6 +67,16 @@ export function Footer() {
                   Email
                 </a>
               </li>
+              <li>
+                <a
+                  href={site.medium}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="link-quiet text-[15px]"
+                >
+                  Medium
+                </a>
+              </li>
             </ul>
           </div>
         </div>

@@ -7,7 +7,7 @@ export function BeyondSoftware() {
     <section id="beyond" className="section">
       <div className="shell">
         <div data-reveal className="section-head">
-          <SectionLabel num="05" label={beyond.label} />
+          <SectionLabel num="06" label={beyond.label} />
           <h2 className="display display-md mt-5">{beyond.heading}</h2>
         </div>
 

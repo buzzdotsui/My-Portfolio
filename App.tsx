@@ -8,6 +8,7 @@ import { Hero } from './components/Hero';
 import { Nav } from './components/Nav';
 import { SelectedWork } from './components/SelectedWork';
 import { Stack } from './components/Stack';
+import { Writing } from './components/Writing';
 import { initReveal } from './utils/reveal';
 
 export default function App() {
@@ -28,6 +29,7 @@ export default function App() {
         <SelectedWork />
         <About />
         <Stack />
+        <Writing />
         <Elsewhere />
         <BeyondSoftware />
         <Contact />

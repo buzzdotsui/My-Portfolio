@@ -339,6 +339,44 @@
     color: #ff6b35;
   }
 
+  /* ── Article rows ── */
+  .article-row {
+    @apply block w-full border-b border-line py-8 text-left sm:py-10;
+    transition: border-color 0.3s ease;
+  }
+
+  .article-row:hover {
+    border-color: #3f3f46;
+  }
+
+  .article-meta {
+    @apply flex flex-wrap items-baseline justify-between gap-x-6 gap-y-2;
+  }
+
+  .article-title {
+    @apply display text-[clamp(1.35rem,2.6vw,1.85rem)] leading-[1.15] transition-colors duration-base;
+  }
+
+  .article-row:hover .article-title {
+    color: #ffffff;
+  }
+
+  .article-cta {
+    @apply mt-5 inline-flex min-h-[44px] items-center gap-2 font-mono text-[11px] uppercase tracking-cta text-paper transition-colors duration-200;
+  }
+
+  .article-row:hover .article-cta {
+    color: #ff6b35;
+  }
+
+  .article-cta svg {
+    transition: transform 0.35s var(--ease-editorial);
+  }
+
+  .article-row:hover .article-cta svg {
+    transform: translate(2px, -2px);
+  }
+
   /* ── Project entry ── */
   .project-entry {
     @apply relative border-t border-line py-12 first:border-t-0 first:pt-0 sm:py-16;
@@ -530,6 +568,7 @@
   }
   .tech-tile::after,
   .social-arrow,
+  .article-cta svg,
   .btn .arrow {
     transition: none;
   }
