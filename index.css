@@ -339,6 +339,101 @@
     color: #ff6b35;
   }
 
+  /* ── Focus room (Lo-Fi radio / timer / wall) ── */
+  .lofi-panel {
+    @apply flex flex-col border border-line bg-surface p-5 sm:p-6;
+  }
+
+  .lofi-btn {
+    @apply inline-flex h-11 min-w-[2.75rem] items-center justify-center border border-line px-4 font-mono text-[11px] uppercase tracking-cta text-paper transition-colors duration-fast;
+  }
+
+  .lofi-btn:hover:not(:disabled) {
+    @apply border-zinc-500 bg-raised;
+  }
+
+  .lofi-btn:disabled {
+    @apply cursor-not-allowed opacity-40;
+  }
+
+  .lofi-btn--primary {
+    @apply border-accent bg-accent text-ink;
+  }
+
+  .lofi-btn--primary:hover:not(:disabled) {
+    @apply border-accent-hover bg-accent-hover;
+  }
+
+  .lofi-range {
+    @apply h-1 w-full cursor-pointer appearance-none bg-line accent-[#ff6b35];
+  }
+
+  .lofi-range::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 14px;
+    height: 14px;
+    border-radius: 999px;
+    background: #ff6b35;
+    border: none;
+    cursor: pointer;
+  }
+
+  .lofi-range::-moz-range-thumb {
+    width: 14px;
+    height: 14px;
+    border-radius: 999px;
+    background: #ff6b35;
+    border: none;
+    cursor: pointer;
+  }
+
+  .lofi-queue-row {
+    @apply flex w-full items-center gap-3 border-b border-line py-3 text-left;
+    transition: border-color 0.3s ease, background-color 0.3s ease;
+  }
+
+  .lofi-queue-row:hover {
+    border-color: #3f3f46;
+    background: #151515;
+  }
+
+  .lofi-queue-row.is-active .mono-label:first-child {
+    @apply text-accent;
+  }
+
+  .lofi-textarea {
+    @apply w-full resize-none border border-line bg-ink px-4 py-3 text-[15px] leading-relaxed text-paper placeholder:text-dim;
+    min-height: 5.5rem;
+  }
+
+  .lofi-textarea:focus {
+    outline: none;
+    border-color: rgba(255, 107, 53, 0.5);
+  }
+
+  .lofi-wall {
+    @apply grid max-h-[22rem] gap-3 overflow-y-auto pr-1 sm:grid-cols-2 lg:grid-cols-1;
+  }
+
+  .lofi-note {
+    @apply border border-[#e8d5a3] bg-[#f3e6c4] p-4 text-ink shadow-[0_1px_0_rgba(0,0,0,0.25)];
+  }
+
+  .lofi-note:nth-child(3n + 2) {
+    @apply bg-[#e4ebe0];
+    border-color: #cfd8c8;
+  }
+
+  .lofi-note:nth-child(3n + 3) {
+    @apply bg-[#f0ddd2];
+    border-color: #e0c8ba;
+  }
+
+  .lofi-note--empty {
+    @apply border-dashed border-line bg-transparent;
+  }
+
   /* ── Article rows ── */
   .article-row {
     @apply block w-full border-b border-line py-8 text-left sm:py-10;
@@ -569,7 +664,12 @@
   .tech-tile::after,
   .social-arrow,
   .article-cta svg,
+  .lofi-btn,
+  .lofi-queue-row,
   .btn .arrow {
+    transition: none;
+  }
+  .lofi-range::-webkit-slider-thumb {
     transition: none;
   }
   *,

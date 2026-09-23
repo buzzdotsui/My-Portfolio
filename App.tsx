@@ -3,6 +3,7 @@ import { About } from './components/About';
 import { BeyondSoftware } from './components/BeyondSoftware';
 import { Contact } from './components/Contact';
 import { Elsewhere } from './components/Elsewhere';
+import { FocusRoom } from './components/FocusRoom';
 import { Footer } from './components/Footer';
 import { Hero } from './components/Hero';
 import { Nav } from './components/Nav';
@@ -29,6 +30,7 @@ export default function App() {
         <SelectedWork />
         <About />
         <Stack />
+        <FocusRoom />
         <Writing />
         <Elsewhere />
         <BeyondSoftware />

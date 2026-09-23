@@ -27,7 +27,7 @@ export function Contact() {
     <section id="contact" className="section">
       <div className="shell">
         <div data-reveal className="section-head">
-          <SectionLabel num="07" label={contact.label} />
+          <SectionLabel num="08" label={contact.label} />
           <h2 className="display display-md mt-5">{contact.heading}</h2>
           <div className="mt-5 space-y-4 text-[15px] leading-[1.7] text-mute sm:text-base">
             {contact.paragraphs.map((paragraph) => (

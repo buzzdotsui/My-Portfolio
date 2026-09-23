@@ -12,9 +12,8 @@ export interface Project {
   stack: string[];
   role: string;
   status: string;
-  /** Live URL when available; omitted for unreleased or local projects. */
-  url?: string;
-  urlLabel?: string;
+  url: string;
+  urlLabel: string;
   image?: ProjectImage;
   /** Typographic plate used when no verified screenshot exists. */
   plate?: {

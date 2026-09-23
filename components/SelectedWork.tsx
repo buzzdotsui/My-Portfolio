@@ -4,8 +4,6 @@ import { ArrowUpRightIcon } from './Icons';
 import { SectionLabel } from './SectionLabel';
 
 function ProjectEntry({ project }: { project: Project }) {
-  const external = Boolean(project.url && project.urlLabel);
-
   return (
     <article data-reveal className="project-entry">
       <span className="project-ghost" aria-hidden="true">
@@ -46,7 +44,7 @@ function ProjectEntry({ project }: { project: Project }) {
           </div>
 
           <div className="lg:col-span-7">
-            {project.image && external ? (
+            {project.image ? (
               <a
                 href={project.url}
                 target="_blank"
@@ -64,19 +62,7 @@ function ProjectEntry({ project }: { project: Project }) {
                   className="img-zoom h-full w-full object-cover object-top"
                 />
               </a>
-            ) : project.image ? (
-              <div className="project-visual">
-                <img
-                  src={project.image.src}
-                  alt={project.image.alt}
-                  width={project.image.width}
-                  height={project.image.height}
-                  loading="lazy"
-                  decoding="async"
-                  className="h-full w-full object-cover object-top"
-                />
-              </div>
-            ) : external ? (
+            ) : (
               <a
                 href={project.url}
                 target="_blank"
@@ -102,38 +88,20 @@ function ProjectEntry({ project }: { project: Project }) {
                   <ArrowUpRightIcon className="h-3.5 w-3.5" />
                 </span>
               </a>
-            ) : (
-              <div className="mono-plate min-h-[15rem] w-full">
-                <span className="mono-label">Project overview</span>
-                <span className="block">
-                  <span className="block font-mono text-lg text-paper sm:text-2xl">
-                    {project.plate?.domain}
-                  </span>
-                  <span className="mt-3 block space-y-1">
-                    {project.plate?.lines.map((line) => (
-                      <span key={line} className="block text-sm text-mute">
-                        {line}
-                      </span>
-                    ))}
-                  </span>
-                </span>
-              </div>
             )}
 
-            {external && (
-              <div className="mt-5 flex flex-wrap items-center justify-between gap-4">
-                <p className="mono-label break-all">{project.urlLabel}</p>
-                <a
-                  href={project.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex min-h-[44px] items-center gap-2 font-mono text-[11px] uppercase tracking-cta text-paper transition-colors duration-200 hover:text-accent"
-                >
-                  View Project
-                  <ArrowUpRightIcon className="h-3.5 w-3.5" />
-                </a>
-              </div>
-            )}
+            <div className="mt-5 flex flex-wrap items-center justify-between gap-4">
+              <p className="mono-label break-all">{project.urlLabel}</p>
+              <a
+                href={project.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex min-h-[44px] items-center gap-2 font-mono text-[11px] uppercase tracking-cta text-paper transition-colors duration-200 hover:text-accent"
+              >
+                View Project
+                <ArrowUpRightIcon className="h-3.5 w-3.5" />
+              </a>
+            </div>
           </div>
         </div>
       </div>

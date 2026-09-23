@@ -81,17 +81,4 @@ export const projects: Project[] = [
       height: 651,
     },
   },
-  {
-    number: '05',
-    name: 'Lo-Fi Radio & Pomodoro Timer',
-    description:
-      'Full-stack app where users queue up royalty-free audio, sync a timer, and leave sticky notes on a shared virtual wall.',
-    stack: [],
-    role: 'Full-stack engineering',
-    status: 'Personal · Full-stack',
-    plate: {
-      domain: 'lofi · focus',
-      lines: ['Royalty-free audio queue', 'Synced Pomodoro timer', 'Shared sticky-note wall'],
-    },
-  },
 ];
