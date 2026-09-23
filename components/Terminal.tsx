@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { site } from '../data/site';
 
 type Line = { id: number; kind: 'in' | 'out' | 'err' | 'ok'; text: string };
@@ -371,7 +371,7 @@ export function Terminal() {
     setBusy(true);
     push('POST /api/hire', 'out');
     const geo = await fetchGeo();
-    let hires: string[] = [];
+    let hires: string[];
     try {
       hires = JSON.parse(localStorage.getItem(HIRES_KEY) || '[]') as string[];
     } catch {
@@ -478,8 +478,7 @@ export function Terminal() {
     setCwd(next);
   };
 
-  const handleNav = useCallback(
-    (cmd: string, args: string[]): boolean => {
+  const handleNav = (cmd: string, args: string[]): boolean => {
       const root = fsRef.current!;
 
       if (cmd === 'pwd') {
@@ -571,7 +570,7 @@ export function Terminal() {
       if (cmd === 'head' || cmd === 'tail') {
         const nFlag = args.findIndex((a) => a === '-n');
         let count = 10;
-        let fileArg = '';
+        let fileArg: string;
         if (nFlag >= 0 && args[nFlag + 1]) {
           count = Number(args[nFlag + 1]) || 10;
           fileArg = args[nFlag + 2] || '';
@@ -665,13 +664,9 @@ export function Terminal() {
       }
 
       return false;
-    },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [cwd, prevCwd],
-  );
+    };
 
-  const handleMeta = useCallback(
-    (cmd: string, args: string[]): boolean => {
+    const handleMeta = (cmd: string, args: string[]): boolean => {
       switch (cmd) {
         case 'help':
         case '?': {
@@ -786,12 +781,9 @@ export function Terminal() {
         default:
           return false;
       }
-    },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [cwd],
-  );
+    };
 
-  const onSubmit = async (e: React.FormEvent) => {
+    const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (busy) return;
     const raw = value.trim();
@@ -887,7 +879,7 @@ export function Terminal() {
                   className="cli-welcome__ch"
                   style={{ animationDelay: `${i * 45}ms` }}
                 >
-                  {ch === ' ' ? ' ' : ch}
+                  {ch === ' ' ? ' ' : ch}
                 </span>
               ))}
             </p>

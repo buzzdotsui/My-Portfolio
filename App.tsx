@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { About } from './components/About';
 import { BeyondSoftware } from './components/BeyondSoftware';
+import { Certifications } from './components/Certifications';
 import { Contact } from './components/Contact';
 import { Elsewhere } from './components/Elsewhere';
 import { FocusRoom } from './components/FocusRoom';
@@ -30,6 +31,7 @@ export default function App() {
         <SelectedWork />
         <About />
         <Stack />
+        <Certifications />
         <FocusRoom />
         <Writing />
         <Elsewhere />

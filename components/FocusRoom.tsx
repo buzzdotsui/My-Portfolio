@@ -202,7 +202,7 @@ export function FocusRoom() {
     <section id="focus" className="section">
       <div className="shell">
         <div data-reveal className="section-head">
-          <SectionLabel num="04" label="Lo-Fi Radio" />
+          <SectionLabel num="05" label="Lo-Fi Radio" />
           <h2 className="display display-md mt-5">Listen & focus.</h2>
           <p className="lede mt-4">
             Ambient stations, your favorite playlist, and a terminal you can type into. Built into

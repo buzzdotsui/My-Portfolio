@@ -63,3 +63,11 @@ export interface NavItem {
   label: string;
   href: string;
 }
+
+export interface Certification {
+  title: string;
+  issuer: string;
+  issued?: string;
+  credentialId?: string;
+  skills?: readonly string[];
+}

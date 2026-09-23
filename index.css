@@ -661,6 +661,8 @@
   .cli-welcome__text {
     @apply font-mono text-[13px] uppercase tracking-cta text-accent sm:text-[15px];
     text-wrap: balance;
+    white-space: pre;
+    word-spacing: 0.35em;
   }
 
   .cli-welcome__ch {
@@ -668,6 +670,10 @@
     opacity: 0;
     transform: translateY(0.55em) rotateX(-70deg);
     animation: cli-welcome-ch 0.45s var(--ease-editorial) forwards;
+  }
+
+  .cli-welcome__ch:where(:not(:last-child)) {
+    margin-right: 0;
   }
 
   @keyframes cli-welcome-ch {

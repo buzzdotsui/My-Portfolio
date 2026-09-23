@@ -42,7 +42,7 @@ export function Elsewhere() {
     <section id="elsewhere" className="section">
       <div className="shell">
         <div data-reveal className="section-head">
-          <SectionLabel num="06" label={elsewhere.label} />
+          <SectionLabel num="07" label={elsewhere.label} />
           <h2 className="display display-md mt-5">{elsewhere.heading}</h2>
         </div>
 

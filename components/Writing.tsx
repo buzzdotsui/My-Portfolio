@@ -53,7 +53,7 @@ export function Writing() {
     <section id="writing" className="section">
       <div className="shell">
         <div data-reveal className="section-head">
-          <SectionLabel num="05" label={writing.label} />
+          <SectionLabel num="06" label={writing.label} />
           <h2 className="display display-md mt-5">{writing.heading}</h2>
           <p className="lede mt-4">{writing.note}</p>
         </div>

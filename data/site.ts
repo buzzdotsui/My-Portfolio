@@ -1,4 +1,4 @@
-import type { NavItem } from '../types';
+import type { Certification, NavItem } from '../types';
 
 export const site = {
   name: 'Testimony Owolabi',
@@ -13,7 +13,7 @@ export const site = {
   github: 'https://github.com/buzzdotsui',
   linkedin: 'https://www.linkedin.com/in/testimony-owolabi/',
   medium: 'https://owolabitestimony.medium.com/',
-  cv: '/CV/Testimony_Owolabi_Claude_Campus_Ambassador_Resume-1.pdf',
+  cv: '/CV/Testimony_Owolabi_Full_Stack_Resume.pdf',
   portrait: {
     src: '/portrait.jpg',
     alt: 'Black and white portrait of Testimony Owolabi',
@@ -25,6 +25,8 @@ export const site = {
 export const navItems: NavItem[] = [
   { label: 'Work', href: '#work' },
   { label: 'About', href: '#about' },
+  { label: 'Stack', href: '#stack' },
+  { label: 'Writing', href: '#writing' },
   { label: 'Contact', href: '#contact' },
 ];
 
@@ -42,6 +44,10 @@ export const about = {
     { label: 'Background', value: 'B.Eng. Metallurgical & Materials Engineering, FUTA' },
     { label: 'Based', value: 'Akure, Nigeria · GMT+1' },
     { label: 'Working across', value: 'Web · AI · Web3' },
+    {
+      label: 'Recent work',
+      value: 'Hospital HMS, product & marketing builds, Metabotics industrial R&D',
+    },
   ],
 } as const;
 
@@ -148,6 +154,104 @@ export const stack = {
     },
   ],
 } as const;
+
+export const certifications = {
+  label: 'Certifications',
+  heading: 'Licenses & certifications.',
+  note: 'Coursework and professional credentials.',
+  credentialsUrl: 'https://www.linkedin.com/in/testimony-owolabi/#licenses',
+  groups: [
+    {
+      title: 'Claude Academy / Anthropic',
+      items: [
+        {
+          title: 'Introduction to Model Context Protocol',
+          issuer: 'Anthropic',
+          issued: 'Sep 2026',
+          credentialId: '542dc552ac6e40baae248773ba04be77',
+          skills: ['Model Context Protocol (MCP)'],
+        },
+        {
+          title: 'Model Context Protocol: Advanced topics',
+          issuer: 'Anthropic',
+          issued: 'Sep 2026',
+          credentialId: '19402148fa11b70845f99b236c45855d',
+          skills: ['Artificial Intelligence (AI)'],
+        },
+        {
+          title: 'AI capabilities and limitations',
+          issuer: 'Anthropic',
+          issued: 'Sep 2026',
+          credentialId: 'fb77cca81340fc53d2b7a9d6dab4bfe0',
+          skills: ['Artificial Intelligence (AI)'],
+        },
+        {
+          title: 'AI Fluency for builders',
+          issuer: 'Anthropic',
+          issued: 'Sep 2026',
+          credentialId: 'f800dfc606f22b63e625199a9dac596f',
+          skills: ['Artificial Intelligence (AI)'],
+        },
+        {
+          title: 'AI Fluency for students',
+          issuer: 'Anthropic',
+          issued: 'Sep 2026',
+          credentialId: '4a34c375527eed1ef14ec38d08794504',
+          skills: ['Artificial Intelligence (AI)'],
+        },
+        {
+          title: 'AI Fluency: Framework and foundations',
+          issuer: 'Anthropic',
+          issued: 'Sep 2026',
+          credentialId: '635f8093a41b5de7ab778d60b2635eb1',
+          skills: ['Artificial Intelligence (AI)'],
+        },
+      ],
+    },
+    {
+      title: 'The Open University',
+      items: [
+        {
+          title: 'Advancing Black leadership',
+          issuer: 'The Open University',
+          skills: ['Leadership'],
+        },
+        {
+          title: 'Introducing Black leadership',
+          issuer: 'The Open University',
+          skills: ['Leadership'],
+        },
+        {
+          title: 'Mathematics for science and technology',
+          issuer: 'The Open University',
+        },
+      ],
+    },
+    {
+      title: 'Professional',
+      items: [
+        {
+          title: 'IBM Full Stack Software Developer Professional Certificate',
+          issuer: 'IBM',
+        },
+        {
+          title: 'freeCodeCamp Full Stack Developer Certification',
+          issuer: 'freeCodeCamp',
+        },
+        {
+          title: 'Oracle Certified Professional: Java SE Developer',
+          issuer: 'Oracle',
+        },
+      ],
+    },
+  ],
+} as const satisfies {
+  label: string;
+  heading: string;
+  note: string;
+  credentialsUrl: string;
+  groups: readonly { title: string; items: readonly Certification[] }[];
+};
 
 export const writing = {
   label: 'Writing',
