@@ -14,7 +14,21 @@ import { Writing } from './components/Writing';
 import { initReveal } from './utils/reveal';
 
 export default function App() {
-  useEffect(() => initReveal(), []);
+  useEffect(() => {
+    const cleanup = initReveal();
+    if ('scrollRestoration' in window.history) {
+      window.history.scrollRestoration = 'manual';
+    }
+    if (window.location.hash) {
+      window.history.replaceState(
+        null,
+        '',
+        window.location.pathname + window.location.search,
+      );
+    }
+    window.scrollTo(0, 0);
+    return cleanup;
+  }, []);
 
   return (
     <div className="min-h-screen bg-ink">
