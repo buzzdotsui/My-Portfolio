@@ -1,35 +1,43 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
+import {
+  ChaosBoundary,
+  ChaosMonkey,
+  StateProbe,
+  useChaos,
+} from './ChaosMonkey';
 import { SectionLabel } from './SectionLabel';
 
-const FOCUS_SEC = 25 * 60;
-const BREAK_SEC = 5 * 60;
-const STORAGE_KEY = 'lofi-wall-notes-v1';
+const QUEUE_KEY = 'lofi-song-queue-v1';
 
-const TRACKS = [
+const STATIONS = [
   { id: 'rain', title: 'Rain on Glass', artist: 'Field Recording', kind: 'rain' as const },
   { id: 'tape', title: 'Tape Hiss', artist: 'Analog Texture', kind: 'tape' as const },
   { id: 'drone', title: 'Night Study', artist: 'Soft Drone', kind: 'drone' as const },
   { id: 'cafe', title: 'Corner Booth', artist: 'Warm Room', kind: 'cafe' as const },
 ];
 
-type TrackKind = (typeof TRACKS)[number]['kind'];
+type StationKind = (typeof STATIONS)[number]['kind'];
 
-type Note = { id: string; text: string; created: number };
+type Song = {
+  id: string;
+  title: string;
+  artist: string;
+  album: string;
+  artwork: string;
+  preview: string;
+};
 
-function formatTime(total: number): string {
-  const m = Math.floor(total / 60);
-  const s = total % 60;
-  return `${m}:${String(s).padStart(2, '0')}`;
-}
+type QueueItem =
+  | { type: 'station'; id: string; title: string; artist: string }
+  | { type: 'song'; id: string; title: string; artist: string; preview: string; artwork: string };
 
-function loadNotes(): Note[] {
+function loadJson<T>(key: string, fallback: T): T {
   try {
-    const raw = localStorage.getItem(STORAGE_KEY);
-    if (!raw) return [];
-    const parsed = JSON.parse(raw) as Note[];
-    return Array.isArray(parsed) ? parsed.slice(0, 24) : [];
+    const raw = localStorage.getItem(key);
+    if (!raw) return fallback;
+    return JSON.parse(raw) as T;
   } catch {
-    return [];
+    return fallback;
   }
 }
 
@@ -41,278 +49,388 @@ function makeNoise(ctx: AudioContext, seconds = 2): AudioBuffer {
   return buf;
 }
 
-export function FocusRoom() {
-  const [trackIndex, setTrackIndex] = useState(0);
-  const [playing, setPlaying] = useState(false);
-  const [volume, setVolume] = useState(0.55);
-  const [mode, setMode] = useState<'focus' | 'break'>('focus');
-  const [secondsLeft, setSecondsLeft] = useState(FOCUS_SEC);
-  const [timerRunning, setTimerRunning] = useState(false);
-  const [syncRadio, setSyncRadio] = useState(true);
-  const [cycles, setCycles] = useState(0);
-  const [noteDraft, setNoteDraft] = useState('');
-  const [notes, setNotes] = useState<Note[]>([]);
+async function searchDeezer(query: string): Promise<Song[]> {
+  const url = `https://api.deezer.com/search?q=${encodeURIComponent(query)}&limit=12`;
+  const candidates = [url, `https://api.allorigins.win/raw?url=${encodeURIComponent(url)}`];
 
-  const audioRef = useRef<{
+  let lastErr: unknown;
+  for (const candidate of candidates) {
+    try {
+      const res = await fetch(candidate);
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      const data = (await res.json()) as {
+        data?: Array<{
+          id: number;
+          title: string;
+          preview: string;
+          artist?: { name?: string };
+          album?: { title?: string; cover_medium?: string };
+        }>;
+      };
+      if (!Array.isArray(data.data)) continue;
+      return data.data
+        .filter((t) => Boolean(t.preview))
+        .map((t) => ({
+          id: String(t.id),
+          title: t.title,
+          artist: t.artist?.name || 'Unknown artist',
+          album: t.album?.title || '',
+          artwork: t.album?.cover_medium || '',
+          preview: t.preview,
+        }));
+    } catch (e) {
+      lastErr = e;
+    }
+  }
+  throw lastErr instanceof Error ? lastErr : new Error('Search failed');
+}
+
+export function FocusRoom() {
+  const [query, setQuery] = useState('');
+  const [results, setResults] = useState<Song[]>([]);
+  const [searching, setSearching] = useState(false);
+  const [searchError, setSearchError] = useState('');
+  const [volume, setVolume] = useState(0.7);
+  const [queue, setQueue] = useState<QueueItem[]>([]);
+  const [activeId, setActiveId] = useState<string | null>(null);
+  const [playing, setPlaying] = useState(false);
+  const { chaos, onBreak, onFix, onToggle } = useChaos();
+
+  const stationRef = useRef<{
     ctx: AudioContext | null;
     master: GainNode | null;
     nodes: AudioNode[];
-    kind: TrackKind | null;
-  }>({ ctx: null, master: null, nodes: [], kind: null });
+  }>({ ctx: null, master: null, nodes: [] });
 
-  const track = TRACKS[trackIndex];
+  const songAudioRef = useRef<HTMLAudioElement | null>(null);
+
+  const defaultQueue: QueueItem[] = STATIONS.map((s) => ({
+    type: 'station',
+    id: s.id,
+    title: s.title,
+    artist: s.artist,
+  }));
 
   useEffect(() => {
-    setNotes(loadNotes());
+    const saved = loadJson<QueueItem[]>(QUEUE_KEY, []);
+    const songsOnly = saved.filter((q) => q.type === 'song');
+    setQueue(songsOnly.length > 0 ? [...songsOnly, ...defaultQueue] : defaultQueue);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
-    try {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(notes));
-    } catch {
-      /* ignore quota */
-    }
-  }, [notes]);
+    localStorage.setItem(QUEUE_KEY, JSON.stringify(queue.filter((q) => q.type === 'song')));
+  }, [queue]);
 
-  const stopSynth = useCallback(() => {
-    const a = audioRef.current;
+  const stopStations = useCallback(() => {
+    const a = stationRef.current;
     a.nodes.forEach((n) => {
       try {
         const anyN = n as unknown as { stop?: (t?: number) => void; disconnect: () => void };
         anyN.stop?.();
         anyN.disconnect();
       } catch {
-        /* already stopped */
+        /* already gone */
       }
     });
     a.nodes = [];
-    a.kind = null;
   }, []);
 
-  const startSynth = useCallback((kind: TrackKind) => {
-    const a = audioRef.current;
-    if (!a.ctx) {
-      const Ctor =
-        window.AudioContext ||
-        (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext;
-      a.ctx = new Ctor();
-      a.master = a.ctx.createGain();
-      a.master.gain.value = volume;
-      a.master.connect(a.ctx.destination);
+  const stopSong = useCallback(() => {
+    const el = songAudioRef.current;
+    if (el) {
+      el.pause();
+      el.currentTime = 0;
     }
-    const ctx = a.ctx;
-    if (ctx.state === 'suspended') void ctx.resume();
-    if (a.master) a.master.gain.value = volume;
+  }, []);
 
-    stopSynth();
-    a.kind = kind;
-
-    const master = a.master!;
-    const noise = makeNoise(ctx, 3);
-
-    if (kind === 'rain' || kind === 'tape' || kind === 'cafe') {
-      const src = ctx.createBufferSource();
-      src.buffer = noise;
-      src.loop = true;
-      const filter = ctx.createBiquadFilter();
-      const gain = ctx.createGain();
-      if (kind === 'rain') {
-        filter.type = 'bandpass';
-        filter.frequency.value = 1800;
-        filter.Q.value = 0.6;
-        gain.gain.value = 0.35;
-      } else if (kind === 'tape') {
-        filter.type = 'highpass';
-        filter.frequency.value = 2400;
-        gain.gain.value = 0.12;
-      } else {
-        filter.type = 'lowpass';
-        filter.frequency.value = 700;
-        gain.gain.value = 0.4;
+  const startStation = useCallback(
+    (kind: StationKind) => {
+      const a = stationRef.current;
+      if (!a.ctx) {
+        const Ctor =
+          window.AudioContext ||
+          (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext;
+        a.ctx = new Ctor();
+        a.master = a.ctx.createGain();
+        a.master.connect(a.ctx.destination);
       }
-      src.connect(filter);
-      filter.connect(gain);
-      gain.connect(master);
-      src.start();
-      a.nodes.push(src, filter, gain);
+      const ctx = a.ctx;
+      if (ctx.state === 'suspended') void ctx.resume();
+      if (a.master) a.master.gain.value = volume;
 
-      if (kind === 'cafe') {
-        const osc = ctx.createOscillator();
-        const og = ctx.createGain();
-        osc.type = 'sine';
-        osc.frequency.value = 90;
-        og.gain.value = 0.03;
-        osc.connect(og);
-        og.connect(master);
-        osc.start();
-        a.nodes.push(osc, og);
-      }
-    } else {
-      const freqs = [110, 164.81, 220, 277.18];
-      freqs.forEach((f, i) => {
-        const osc = ctx.createOscillator();
-        const g = ctx.createGain();
+      stopStations();
+      const master = a.master!;
+      const noise = makeNoise(ctx, 3);
+
+      if (kind === 'rain' || kind === 'tape' || kind === 'cafe') {
+        const src = ctx.createBufferSource();
+        src.buffer = noise;
+        src.loop = true;
         const filter = ctx.createBiquadFilter();
-        osc.type = i % 2 === 0 ? 'sine' : 'triangle';
-        osc.frequency.value = f;
-        filter.type = 'lowpass';
-        filter.frequency.value = 900;
-        g.gain.value = 0.045;
-        osc.connect(filter);
-        filter.connect(g);
-        g.connect(master);
-        osc.start();
-        a.nodes.push(osc, g, filter);
-      });
-      const src = ctx.createBufferSource();
-      src.buffer = noise;
-      src.loop = true;
-      const lp = ctx.createBiquadFilter();
-      lp.type = 'lowpass';
-      lp.frequency.value = 400;
-      const ng = ctx.createGain();
-      ng.gain.value = 0.06;
-      src.connect(lp);
-      lp.connect(ng);
-      ng.connect(master);
-      src.start();
-      a.nodes.push(src, lp, ng);
-    }
-  }, [stopSynth, volume]);
+        const gain = ctx.createGain();
+        if (kind === 'rain') {
+          filter.type = 'bandpass';
+          filter.frequency.value = 1800;
+          filter.Q.value = 0.6;
+          gain.gain.value = 0.35;
+        } else if (kind === 'tape') {
+          filter.type = 'highpass';
+          filter.frequency.value = 2400;
+          gain.gain.value = 0.12;
+        } else {
+          filter.type = 'lowpass';
+          filter.frequency.value = 700;
+          gain.gain.value = 0.4;
+        }
+        src.connect(filter);
+        filter.connect(gain);
+        gain.connect(master);
+        src.start();
+        a.nodes.push(src, filter, gain);
 
-  const playTrack = useCallback(
-    (index: number) => {
-      setTrackIndex(index);
-      startSynth(TRACKS[index].kind);
-      setPlaying(true);
+        if (kind === 'cafe') {
+          const osc = ctx.createOscillator();
+          const og = ctx.createGain();
+          osc.type = 'sine';
+          osc.frequency.value = 90;
+          og.gain.value = 0.03;
+          osc.connect(og);
+          og.connect(master);
+          osc.start();
+          a.nodes.push(osc, og);
+        }
+      } else {
+        [110, 164.81, 220, 277.18].forEach((f, i) => {
+          const osc = ctx.createOscillator();
+          const g = ctx.createGain();
+          const filter = ctx.createBiquadFilter();
+          osc.type = i % 2 === 0 ? 'sine' : 'triangle';
+          osc.frequency.value = f;
+          filter.type = 'lowpass';
+          filter.frequency.value = 900;
+          g.gain.value = 0.045;
+          osc.connect(filter);
+          filter.connect(g);
+          g.connect(master);
+          osc.start();
+          a.nodes.push(osc, g, filter);
+        });
+        const src = ctx.createBufferSource();
+        src.buffer = noise;
+        src.loop = true;
+        const lp = ctx.createBiquadFilter();
+        lp.type = 'lowpass';
+        lp.frequency.value = 400;
+        const ng = ctx.createGain();
+        ng.gain.value = 0.06;
+        src.connect(lp);
+        lp.connect(ng);
+        ng.connect(master);
+        src.start();
+        a.nodes.push(src, lp, ng);
+      }
     },
-    [startSynth],
+    [stopStations, volume],
+  );
+
+  const playItem = useCallback(
+    (item: QueueItem) => {
+      stopSong();
+      stopStations();
+      setActiveId(item.id);
+      setPlaying(true);
+
+      if (item.type === 'station') {
+        const station = STATIONS.find((s) => s.id === item.id);
+        if (station) startStation(station.kind);
+        return;
+      }
+
+      if (!songAudioRef.current) {
+        songAudioRef.current = new Audio();
+        songAudioRef.current.addEventListener('ended', () => setPlaying(false));
+      }
+      const el = songAudioRef.current;
+      el.src = item.preview;
+      el.volume = volume;
+      void el.play().catch(() => setPlaying(false));
+    },
+    [startStation, stopSong, stopStations, volume],
   );
 
   const togglePlay = useCallback(() => {
     if (playing) {
-      stopSynth();
+      stopSong();
+      stopStations();
       setPlaying(false);
-    } else {
-      startSynth(track.kind);
-      setPlaying(true);
+      return;
     }
-  }, [playing, startSynth, stopSynth, track.kind]);
+    const current = queue.find((q) => q.id === activeId) || queue[0];
+    if (current) playItem(current);
+  }, [activeId, playItem, playing, queue, stopSong, stopStations]);
 
-  const nextTrack = useCallback(() => {
-    const next = (trackIndex + 1) % TRACKS.length;
-    playTrack(next);
-  }, [playTrack, trackIndex]);
-
-  const prevTrack = useCallback(() => {
-    const prev = (trackIndex - 1 + TRACKS.length) % TRACKS.length;
-    playTrack(prev);
-  }, [playTrack, trackIndex]);
+  const stepQueue = useCallback(
+    (dir: 1 | -1) => {
+      if (queue.length === 0) return;
+      const idx = queue.findIndex((q) => q.id === activeId);
+      const next = queue[(idx + dir + queue.length) % queue.length];
+      playItem(next);
+    },
+    [activeId, playItem, queue],
+  );
 
   useEffect(() => {
-    const a = audioRef.current;
-    if (a.master && a.ctx) {
-      a.master.gain.setTargetAtTime(volume, a.ctx.currentTime, 0.05);
+    if (stationRef.current.master && stationRef.current.ctx) {
+      stationRef.current.master.gain.setTargetAtTime(
+        volume,
+        stationRef.current.ctx.currentTime,
+        0.05,
+      );
     }
+    if (songAudioRef.current) songAudioRef.current.volume = volume;
   }, [volume]);
 
-  useEffect(() => () => stopSynth(), [stopSynth]);
+  useEffect(
+    () => () => {
+      stopStations();
+      stopSong();
+    },
+    [stopSong, stopStations],
+  );
 
-  useEffect(() => {
-    if (!timerRunning) return;
-    const id = window.setInterval(() => {
-      setSecondsLeft((s) => {
-        if (s > 1) return s - 1;
-        if (mode === 'focus') {
-          setMode('break');
-          setCycles((c) => c + 1);
-          return BREAK_SEC;
-        }
-        setMode('focus');
-        return FOCUS_SEC;
-      });
-    }, 1000);
-    return () => window.clearInterval(id);
-  }, [timerRunning, mode]);
-
-  const startTimer = useCallback(() => {
-    setTimerRunning(true);
-    if (syncRadio && !playing) {
-      startSynth(track.kind);
-      setPlaying(true);
+  const runSearch = useCallback(async (e?: React.FormEvent) => {
+    e?.preventDefault();
+    const q = query.trim();
+    if (!q) return;
+    setSearching(true);
+    setSearchError('');
+    try {
+      if (chaos.latency) {
+        await new Promise((r) => setTimeout(r, 1800));
+      }
+      if (chaos.wsDown) {
+        throw new Error('Socket closed');
+      }
+      const songs = await searchDeezer(q);
+      setResults(songs);
+      if (songs.length === 0) setSearchError('No matches. Try another title or artist.');
+    } catch {
+      setResults([]);
+      setSearchError(
+        chaos.latency || chaos.wsDown
+          ? 'Injected failure: request timed out or socket dropped.'
+          : 'Search is unavailable right now. Check your connection and try again.',
+      );
+    } finally {
+      setSearching(false);
     }
-  }, [syncRadio, playing, startSynth, track.kind]);
+  }, [query, chaos.latency, chaos.wsDown]);
 
-  const pauseTimer = useCallback(() => setTimerRunning(false), []);
-
-  const resetTimer = useCallback(() => {
-    setTimerRunning(false);
-    setMode('focus');
-    setSecondsLeft(FOCUS_SEC);
-  }, []);
-
-  const addNote = useCallback(() => {
-    const text = noteDraft.trim();
-    if (!text) return;
-    const note: Note = {
-      id: `${Date.now()}-${Math.random().toString(36).slice(2, 7)}`,
-      text: text.slice(0, 280),
-      created: Date.now(),
+  const enqueueSong = useCallback((song: Song) => {
+    const item: QueueItem = {
+      type: 'song',
+      id: `song-${song.id}`,
+      title: song.title,
+      artist: song.artist,
+      preview: song.preview,
+      artwork: song.artwork,
     };
-    setNotes((n) => [note, ...n].slice(0, 24));
-    setNoteDraft('');
-  }, [noteDraft]);
-
-  const removeNote = useCallback((id: string) => {
-    setNotes((n) => n.filter((x) => x.id !== id));
+    setQueue((q) => {
+      if (q.some((x) => x.id === item.id)) return q;
+      const stations = q.filter((x) => x.type === 'station');
+      const songs = q.filter((x) => x.type === 'song');
+      return [...songs, item, ...stations];
+    });
   }, []);
 
-  const total = mode === 'focus' ? FOCUS_SEC : BREAK_SEC;
-  const progress = 1 - secondsLeft / total;
+  const playResult = useCallback(
+    (song: Song) => {
+      enqueueSong(song);
+      playItem({
+        type: 'song',
+        id: `song-${song.id}`,
+        title: song.title,
+        artist: song.artist,
+        preview: song.preview,
+        artwork: song.artwork,
+      });
+    },
+    [enqueueSong, playItem],
+  );
 
-  const timeDisplay = useMemo(() => formatTime(secondsLeft), [secondsLeft]);
+  const removeQueueItem = useCallback(
+    (id: string) => {
+      setQueue((q) => q.filter((x) => x.id !== id));
+      if (activeId === id) {
+        stopSong();
+        stopStations();
+        setPlaying(false);
+        setActiveId(null);
+      }
+    },
+    [activeId, stopSong, stopStations],
+  );
+
+  const current = queue.find((q) => q.id === activeId);
 
   return (
     <section id="focus" className="section">
       <div className="shell">
         <div data-reveal className="section-head">
           <SectionLabel num="04" label="Lo-Fi Radio" />
-          <h2 className="display display-md mt-5">Focus room.</h2>
+          <h2 className="display display-md mt-5">Listen & focus.</h2>
           <p className="lede mt-4">
-            A full-stack style workspace: queue royalty-free ambient audio, run a synced Pomodoro,
-            and leave sticky notes on a shared wall. Built into the portfolio, no install.
+            Queue ambient stations, search a huge open catalog for tracks, or break the page on
+            purpose and watch the self-heal script restore it.
           </p>
         </div>
 
-        <div data-reveal className="mt-12 grid gap-6 lg:grid-cols-12">
-          {/* Radio */}
+        <div
+          data-reveal
+          className={`mt-12 grid gap-6 lg:grid-cols-12${chaos.gridDown ? ' chaos-grid-broken' : ''}`}
+        >
+          {/* Now playing + queue */}
           <div className="lofi-panel lg:col-span-5">
             <div className="flex items-baseline justify-between gap-4">
               <p className="mono-label text-accent">01 / Radio</p>
               <p className="mono-label">{playing ? 'On air' : 'Standby'}</p>
             </div>
 
-            <p className="mt-5 font-mono text-sm uppercase tracking-[0.14em] text-paper">
-              {track.title}
-            </p>
-            <p className="mt-1 text-sm text-mute">{track.artist}</p>
+            <ChaosBoundary resetKey={chaos.resetKey}>
+              <StateProbe
+                corrupt={chaos.corrupt}
+                title={current?.title || 'Nothing selected'}
+                artist={current?.artist || 'Pick a station or song'}
+              />
+            </ChaosBoundary>
 
-            <div className="mt-5 flex items-center gap-3">
-              <button type="button" className="lofi-btn" onClick={prevTrack} aria-label="Previous track">
+            <div className="mt-5 flex flex-wrap items-center gap-3">
+              <button
+                type="button"
+                className="lofi-btn"
+                onClick={() => stepQueue(-1)}
+                aria-label="Previous"
+              >
                 ‹‹
               </button>
               <button
                 type="button"
                 className="lofi-btn lofi-btn--primary"
                 onClick={togglePlay}
-                aria-label={playing ? 'Pause radio' : 'Play radio'}
+                aria-label={playing ? 'Pause' : 'Play'}
               >
                 {playing ? 'Pause' : 'Play'}
               </button>
-              <button type="button" className="lofi-btn" onClick={nextTrack} aria-label="Next track">
+              <button
+                type="button"
+                className="lofi-btn"
+                onClick={() => stepQueue(1)}
+                aria-label="Next"
+              >
                 ››
               </button>
-              <label className="ml-auto flex min-w-0 flex-1 max-w-[10rem] items-center gap-2">
+              <label className="ml-auto flex w-full max-w-[10rem] min-w-[8rem] items-center gap-2">
                 <span className="sr-only">Volume</span>
                 <input
                   type="range"
@@ -327,162 +445,143 @@ export function FocusRoom() {
               </label>
             </div>
 
-            <ul className="mt-6 border-t border-line" aria-label="Audio queue">
-              {TRACKS.map((t, i) => (
-                <li key={t.id}>
-                  <button
-                    type="button"
-                    className={`lofi-queue-row${i === trackIndex ? ' is-active' : ''}`}
-                    onClick={() => playTrack(i)}
-                    aria-current={i === trackIndex ? 'true' : undefined}
+            <p className="mono-label mt-6 border-t border-line pt-4">Queue</p>
+            <ul className="mt-2" aria-label="Playback queue">
+              {queue.map((item, i) => (
+                <li key={item.id}>
+                  <div
+                    className={`lofi-queue-row${item.id === activeId ? ' is-active' : ''}`}
                   >
-                    <span className="mono-label w-8 shrink-0">
-                      {String(i + 1).padStart(2, '0')}
-                    </span>
-                    <span className="min-w-0 flex-1 truncate text-left text-[15px] text-paper">
-                      {t.title}
-                    </span>
-                    <span className="mono-label shrink-0">{t.artist}</span>
-                  </button>
-                </li>
-              ))}
-            </ul>
-            <p className="mono-label mt-4">Synthesized ambient · royalty-free</p>
-          </div>
-
-          {/* Pomodoro */}
-          <div className="lofi-panel lg:col-span-3">
-            <div className="flex items-baseline justify-between gap-4">
-              <p className="mono-label text-accent">02 / Timer</p>
-              <p className="mono-label">{mode === 'focus' ? 'Focus' : 'Break'}</p>
-            </div>
-
-            <p
-              className="mt-6 font-mono text-[clamp(3rem,8vw,4.5rem)] font-medium leading-none tracking-[-0.04em] text-paper"
-              aria-live="polite"
-            >
-              {timeDisplay}
-            </p>
-
-            <div
-              className="mt-4 h-1 w-full bg-line"
-              role="progressbar"
-              aria-valuemin={0}
-              aria-valuemax={100}
-              aria-valuenow={Math.round(progress * 100)}
-              aria-label="Timer progress"
-            >
-              <div
-                className="h-full bg-accent transition-[width] duration-1000 ease-linear"
-                style={{ width: `${progress * 100}%` }}
-              />
-            </div>
-
-            <div className="mt-6 flex flex-wrap gap-2">
-              {!timerRunning ? (
-                <button type="button" className="lofi-btn lofi-btn--primary" onClick={startTimer}>
-                  Start
-                </button>
-              ) : (
-                <button type="button" className="lofi-btn" onClick={pauseTimer}>
-                  Pause
-                </button>
-              )}
-              <button type="button" className="lofi-btn" onClick={resetTimer}>
-                Reset
-              </button>
-            </div>
-
-            <label className="mt-6 flex cursor-pointer items-start gap-3 border-t border-line pt-5">
-              <input
-                type="checkbox"
-                checked={syncRadio}
-                onChange={(e) => setSyncRadio(e.target.checked)}
-                className="mt-1 h-4 w-4 shrink-0 accent-[#ff6b35]"
-              />
-              <span className="text-sm leading-snug text-mute">
-                Sync radio with timer
-                <span className="mt-1 block text-[13px] text-dim">
-                  Starting focus queues the current track.
-                </span>
-              </span>
-            </label>
-
-            <p className="mono-label mt-6">Cycles completed · {cycles}</p>
-          </div>
-
-          {/* Sticky wall */}
-          <div className="lofi-panel lg:col-span-4">
-            <div className="flex items-baseline justify-between gap-4">
-              <p className="mono-label text-accent">03 / Wall</p>
-              <p className="mono-label">{notes.length} notes</p>
-            </div>
-
-            <div className="mt-5">
-              <label htmlFor="wall-note" className="sr-only">
-                Sticky note
-              </label>
-              <textarea
-                id="wall-note"
-                value={noteDraft}
-                onChange={(e) => setNoteDraft(e.target.value)}
-                onKeyDown={(e) => {
-                  if (e.key === 'Enter' && (e.metaKey || e.ctrlKey)) {
-                    e.preventDefault();
-                    addNote();
-                  }
-                }}
-                maxLength={280}
-                rows={3}
-                placeholder="Leave a note on the wall…"
-                className="lofi-textarea"
-              />
-              <div className="mt-3 flex items-center justify-between gap-3">
-                <p className="mono-label">{noteDraft.length}/280</p>
-                <button
-                  type="button"
-                  className="lofi-btn lofi-btn--primary"
-                  onClick={addNote}
-                  disabled={!noteDraft.trim()}
-                >
-                  Pin note
-                </button>
-              </div>
-            </div>
-
-            <ul className="lofi-wall mt-5" aria-label="Sticky notes">
-              {notes.length === 0 && (
-                <li className="lofi-note lofi-note--empty">
-                  <p className="text-sm text-mute">
-                    Empty wall. Pin a thought, a lyric, or a reminder for the next session.
-                  </p>
-                </li>
-              )}
-              {notes.map((note) => (
-                <li key={note.id} className="lofi-note">
-                  <p className="whitespace-pre-wrap break-words text-[14px] leading-snug text-ink">
-                    {note.text}
-                  </p>
-                  <div className="mt-3 flex items-center justify-between gap-2">
-                    <time className="font-mono text-[10px] uppercase tracking-label text-ink/50">
-                      {new Date(note.created).toLocaleDateString(undefined, {
-                        month: 'short',
-                        day: 'numeric',
-                      })}
-                    </time>
                     <button
                       type="button"
-                      onClick={() => removeNote(note.id)}
-                      className="font-mono text-[10px] uppercase tracking-label text-ink/50 transition-colors hover:text-ink"
-                      aria-label="Delete note"
+                      className="flex min-w-0 flex-1 items-center gap-3 text-left"
+                      onClick={() => playItem(item)}
                     >
-                      Remove
+                      <span className="mono-label w-8 shrink-0">
+                        {String(i + 1).padStart(2, '0')}
+                      </span>
+                      <span className="min-w-0 flex-1">
+                        <span className="block truncate text-[15px] text-paper">
+                          {item.title}
+                        </span>
+                        <span className="block truncate text-[13px] text-mute">
+                          {item.artist}
+                        </span>
+                      </span>
+                      {item.type === 'song' && (
+                        <span className="mono-label shrink-0 text-accent/80">Song</span>
+                      )}
                     </button>
+                    {item.type === 'song' && (
+                      <button
+                        type="button"
+                        className="mono-label shrink-0 px-2 text-dim transition-colors hover:text-paper"
+                        onClick={() => removeQueueItem(item.id)}
+                        aria-label={`Remove ${item.title} from queue`}
+                      >
+                        ×
+                      </button>
+                    )}
                   </div>
                 </li>
               ))}
             </ul>
+            <p className="mono-label mt-4">
+              Ambient synthesized · songs via Deezer open API (30s previews)
+            </p>
           </div>
+
+          {/* Song search */}
+          <div className="lofi-panel lg:col-span-4">
+            <div className="flex items-baseline justify-between gap-4">
+              <p className="mono-label text-accent">02 / Songs</p>
+              <p className="mono-label">Search catalog</p>
+            </div>
+
+            <form onSubmit={runSearch} className="mt-5" role="search">
+              <label htmlFor="song-search" className="sr-only">
+                Search songs
+              </label>
+              <div className="flex gap-2">
+                <input
+                  id="song-search"
+                  type="search"
+                  value={query}
+                  onChange={(e) => setQuery(e.target.value)}
+                  placeholder="Artist, title, album…"
+                  className="lofi-input"
+                  autoComplete="off"
+                />
+                <button
+                  type="submit"
+                  className="lofi-btn lofi-btn--primary shrink-0"
+                  disabled={searching || !query.trim()}
+                >
+                  {searching ? '…' : 'Search'}
+                </button>
+              </div>
+            </form>
+
+            {searchError && (
+              <p className="mt-3 text-sm text-accent" role="status">
+                {searchError}
+              </p>
+            )}
+
+            <ul className="mt-4 max-h-[26rem] overflow-y-auto" aria-label="Search results">
+              {results.map((song) => (
+                <li key={song.id} className="border-b border-line">
+                  <div className="flex items-center gap-3 py-3">
+                    {song.artwork ? (
+                      <img
+                        src={song.artwork}
+                        alt=""
+                        width={40}
+                        height={40}
+                        loading="lazy"
+                        className="h-10 w-10 shrink-0 border border-line object-cover"
+                      />
+                    ) : (
+                      <span
+                        className="h-10 w-10 shrink-0 border border-line bg-raised"
+                        aria-hidden="true"
+                      />
+                    )}
+                    <div className="min-w-0 flex-1">
+                      <p className="truncate text-[15px] text-paper">{song.title}</p>
+                      <p className="truncate text-[13px] text-mute">
+                        {song.artist}
+                        {song.album ? ` · ${song.album}` : ''}
+                      </p>
+                    </div>
+                    <button
+                      type="button"
+                      className="lofi-btn h-9 shrink-0 px-3"
+                      onClick={() => playResult(song)}
+                    >
+                      Play
+                    </button>
+                    <button
+                      type="button"
+                      className="lofi-btn h-9 shrink-0 px-3"
+                      onClick={() => enqueueSong(song)}
+                      aria-label={`Queue ${song.title}`}
+                    >
+                      +Q
+                    </button>
+                  </div>
+                </li>
+              ))}
+              {!results.length && !searching && (
+                <li className="py-6 text-sm text-mute">
+                  Search millions of tracks. Play uses official 30&nbsp;second previews; queue
+                  keeps them ready for the next listen.
+                </li>
+              )}
+            </ul>
+          </div>
+
+          <ChaosMonkey chaos={chaos} onBreak={onBreak} onFix={onFix} onToggle={onToggle} />
         </div>
       </div>
     </section>

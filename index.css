@@ -339,9 +339,18 @@
     color: #ff6b35;
   }
 
-  /* ── Focus room (Lo-Fi radio / timer / wall) ── */
+  /* ── Focus room (Lo-Fi radio / songs / chaos) ── */
   .lofi-panel {
     @apply flex flex-col border border-line bg-surface p-5 sm:p-6;
+  }
+
+  .lofi-input {
+    @apply min-w-0 flex-1 border border-line bg-ink px-4 py-3 text-[15px] text-paper placeholder:text-dim;
+  }
+
+  .lofi-input:focus {
+    outline: none;
+    border-color: rgba(255, 107, 53, 0.5);
   }
 
   .lofi-btn {
@@ -402,36 +411,49 @@
     @apply text-accent;
   }
 
-  .lofi-textarea {
-    @apply w-full resize-none border border-line bg-ink px-4 py-3 text-[15px] leading-relaxed text-paper placeholder:text-dim;
-    min-height: 5.5rem;
+  .lofi-panel--chaos {
+    border-color: #2a2a2a;
   }
 
-  .lofi-textarea:focus {
-    outline: none;
-    border-color: rgba(255, 107, 53, 0.5);
+  .chaos-toggle {
+    @apply flex w-full items-center gap-3 border border-line bg-ink px-3 py-2.5 text-left transition-colors duration-fast;
   }
 
-  .lofi-wall {
-    @apply grid max-h-[22rem] gap-3 overflow-y-auto pr-1 sm:grid-cols-2 lg:grid-cols-1;
+  .chaos-toggle:hover:not(:disabled) {
+    border-color: #3f3f46;
   }
 
-  .lofi-note {
-    @apply border border-[#e8d5a3] bg-[#f3e6c4] p-4 text-ink shadow-[0_1px_0_rgba(0,0,0,0.25)];
+  .chaos-toggle:disabled {
+    @apply cursor-not-allowed opacity-50;
   }
 
-  .lofi-note:nth-child(3n + 2) {
-    @apply bg-[#e4ebe0];
-    border-color: #cfd8c8;
+  .chaos-toggle.is-on {
+    border-color: rgba(255, 107, 53, 0.55);
+    background: rgba(255, 107, 53, 0.06);
   }
 
-  .lofi-note:nth-child(3n + 3) {
-    @apply bg-[#f0ddd2];
-    border-color: #e0c8ba;
+  .chaos-toggle__dot {
+    @apply h-2.5 w-2.5 shrink-0 rounded-full bg-zinc-600;
   }
 
-  .lofi-note--empty {
-    @apply border-dashed border-line bg-transparent;
+  .chaos-toggle.is-on .chaos-toggle__dot {
+    background: #ff6b35;
+    box-shadow: 0 0 0 3px rgba(255, 107, 53, 0.18);
+  }
+
+  .chaos-grid-broken {
+    display: flex !important;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .chaos-grid-broken > * {
+    width: 100%;
+    max-width: none;
+  }
+
+  .chaos-log {
+    font-family: 'Geist Mono', ui-monospace, monospace;
   }
 
   /* ── Article rows ── */
