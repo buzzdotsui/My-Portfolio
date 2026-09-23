@@ -29,9 +29,9 @@ export const about = {
   label: 'About',
   heading: 'Engineering is the through-line.',
   paragraphs: [
-    "I'm a full-stack software engineer. I design and build production systems — the kind with real users, real data, and real failure modes. Client work and product builds across web, AI, and Web3.",
+    "I'm a full-stack software engineer. I design and build production systems: the kind with real users, real data, and real failure modes. Client work and product builds across web, AI, and Web3.",
     'Before software took over, I studied Metallurgical & Materials Engineering at FUTA. Materials science teaches you that everything has constraints: load limits, heat tolerances, corrosion, cost. Software has constraints too. Most people learn that in production. I learned it twice.',
-    "That background is why I care about how systems behave under pressure — on screen and off. It's the reason Metabotics exists.",
+    "That background is why I care about how systems behave under pressure, on screen and off. It's the reason Metabotics exists.",
   ],
   pullQuote: 'The physical world is the original legacy system.',
   facts: [
@@ -46,8 +46,8 @@ export const beyond = {
   label: 'Beyond Software',
   heading: 'I build software for the physical world.',
   paragraphs: [
-    'Screens are not the only place software should live. Metabotics is my long-term direction: intelligent monitoring, automation, and data systems for industrial processes — where materials engineering and software engineering meet.',
-    'The scope covers software, industrial systems, automation, AI, manufacturing, digital twins, and materials engineering. Early stage by design — the architecture is set, the infrastructure is being built.',
+    'Screens are not the only place software should live. Metabotics is my long-term direction: intelligent monitoring, automation, and data systems for industrial processes, where materials engineering and software engineering meet.',
+    'The scope covers software, industrial systems, automation, AI, manufacturing, digital twins, and materials engineering. Early stage by design: the architecture is set, the infrastructure is being built.',
   ],
   pipeline: [
     {
@@ -71,7 +71,7 @@ export const beyond = {
       desc: 'Close the loop between observation and action.',
     },
   ],
-  status: 'Status — Research & Prototyping',
+  status: 'Status: Research & Prototyping',
   url: 'https://metabotics.vercel.app/',
   urlLabel: 'metabotics.vercel.app',
 } as const;
@@ -149,12 +149,12 @@ export const stack = {
 export const writing = {
   label: 'Writing',
   heading: 'Field notes and long-form work.',
-  note: 'Essays on intelligent industry, systems thinking, and the path so far — published on Medium.',
+  note: 'Essays on intelligent industry, systems thinking, and the path so far, published on Medium.',
   articles: [
     {
       title: 'I Was Never Meant to Be Average',
       excerpt:
-        'At 18, inside Federal University of Technology Akure, I stopped waiting for opportunity — and started building systems that could change Africa. Born in Offa, raised in Ado Ekiti — and always feeling like something did not quite fit.',
+        'At 18, inside Federal University of Technology Akure, I stopped waiting for opportunity and started building systems that could change Africa. Born in Offa, raised in Ado Ekiti, and always feeling like something did not quite fit.',
       date: 'Apr 9, 2026',
       readTime: '4 min read',
       url: 'https://owolabitestimony.medium.com/i-was-never-meant-to-be-average-e974007efee5',
@@ -162,7 +162,7 @@ export const writing = {
     {
       title: 'Inside Metabotics: Engineering the Brain of Smart Factories',
       excerpt:
-        'Across much of the industrial world today, machines are powerful, but factories are still largely blind. Metabotics is built around a simple idea: industrial processes should not just operate — they should understand themselves.',
+        'Across much of the industrial world today, machines are powerful, but factories are still largely blind. Metabotics is built around a simple idea: industrial processes should not just operate, they should understand themselves.',
       date: 'Mar 17, 2026',
       readTime: '4 min read',
       url: 'https://owolabitestimony.medium.com/inside-metabotics-engineering-the-brain-of-smart-factories-2ad030054f79',
@@ -170,7 +170,7 @@ export const writing = {
     {
       title: 'Engineering the Future of Intelligent Industry in Africa',
       excerpt:
-        'Industrial progress has always been driven by people who look at existing systems and ask a simple question: Can this be done better? The question is no longer whether industry will become intelligent — it is who will build the systems that make it possible.',
+        'Industrial progress has always been driven by people who look at existing systems and ask a simple question: Can this be done better? The question is no longer whether industry will become intelligent, it is who will build the systems that make it possible.',
       date: 'Mar 16, 2026',
       readTime: '5 min read',
       url: 'https://owolabitestimony.medium.com/engineering-the-future-of-intelligent-industry-in-africa-9984c5f2885f',
@@ -227,7 +227,7 @@ export const contact = {
   label: 'Contact',
   heading: 'Working on something real?',
   paragraphs: [
-    "I'm open to software engineering roles and serious collaborations — especially anything at the edge of software and the physical world.",
+    "I'm open to software engineering roles and serious collaborations, especially anything at the edge of software and the physical world.",
     'Tell me what you are building. I will tell you honestly whether I can help.',
   ],
 } as const;

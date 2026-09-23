@@ -117,7 +117,7 @@ export function SelectedWork() {
           <SectionLabel num="01" label="Selected Work" />
           <h2 className="display display-md mt-5">Shipped and in use.</h2>
           <p className="lede mt-4">
-            Products in production — what it is, what I did, and what it was built with.
+            Products in production: what it is, what I did, and what it was built with.
           </p>
         </div>
 

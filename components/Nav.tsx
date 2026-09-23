@@ -63,7 +63,7 @@ export function Nav() {
         <a
           href="#top"
           className="group inline-flex items-baseline font-mono text-[13px] font-medium uppercase tracking-brand text-paper"
-          aria-label={`${site.brand} — back to top`}
+          aria-label={`${site.brand}, back to top`}
         >
           {site.brand}
           <span

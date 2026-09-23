@@ -1,4 +1,4 @@
-# Testimony Owolabi — Portfolio
+# Testimony Owolabi | Portfolio
 
 Personal portfolio of **Testimony Owolabi**, Full-Stack Software Engineer.
 
@@ -22,10 +22,10 @@ npm run build
 
 ## Structure
 
-- `data/` — typed site content (projects, copy, stack)
-- `components/` — section components
-- `utils/reveal.ts` — scroll-reveal (respects `prefers-reduced-motion`)
-- `public/` — portrait, project screenshots, CV
+- `data/` | typed site content (projects, copy, stack)
+- `components/` | section components
+- `utils/reveal.ts` | scroll-reveal (respects `prefers-reduced-motion`)
+- `public/` | portrait, project screenshots, CV
 
 ## Links
 

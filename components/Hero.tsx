@@ -14,7 +14,7 @@ export function Hero() {
         <div className="grid items-end gap-10 lg:grid-cols-12 lg:gap-12">
           <div className="lg:col-span-8">
             <div className="rise rise-1 flex flex-wrap items-center gap-x-4 gap-y-2">
-              <p className="mono-label">Testimony Owolabi — Full-Stack Software Engineer</p>
+              <p className="mono-label">Testimony Owolabi, Full-Stack Software Engineer</p>
               <span className="hidden h-px w-8 bg-line sm:block" aria-hidden="true" />
               <p className="mono-label flex items-center gap-2 text-mute">
                 <span
@@ -35,7 +35,7 @@ export function Hero() {
 
             <p className="lede mt-7 rise rise-3">
               Production systems across{' '}
-              <span className="text-paper">Web · AI · Web3</span> — shipped for clients and for
+              <span className="text-paper">Web · AI · Web3</span>, shipped for clients and for
               myself. Trained as a materials engineer, so I care how things behave under pressure.
             </p>
 

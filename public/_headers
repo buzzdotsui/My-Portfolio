@@ -23,6 +23,6 @@
 /*.html
   Cache-Control: public, max-age=0, must-revalidate
 
-# robots.txt — no cache
+# robots.txt: no cache
 /robots.txt
   Cache-Control: public, max-age=3600

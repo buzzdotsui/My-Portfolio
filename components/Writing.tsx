@@ -16,7 +16,7 @@ function ArticleRow({ article, index }: { article: Article; index: number }) {
         target="_blank"
         rel="noopener noreferrer"
         className="article-row group"
-        aria-label={`${article.title} — ${article.readTime} (opens in new tab)`}
+        aria-label={`${article.title}, ${article.readTime} (opens in new tab)`}
       >
         <div className="article-meta">
           <p className="mono-label">

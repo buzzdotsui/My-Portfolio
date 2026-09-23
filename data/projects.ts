@@ -5,7 +5,7 @@ export const projects: Project[] = [
     number: '01',
     name: 'Juphil Aluminum',
     description:
-      'Production website for an aluminum roofing manufacturer in Akure — designed, built, and deployed end to end.',
+      'Production website for an aluminum roofing manufacturer in Akure, designed, built, and deployed end to end.',
     stack: ['Next.js', 'TypeScript', 'Resend', 'Vercel'],
     role: 'Design / Development / Deployment',
     status: 'Live · Client work',
@@ -22,7 +22,7 @@ export const projects: Project[] = [
     number: '02',
     name: 'Accurate Medical Center HMS',
     description:
-      'Hospital management system for a working medical facility — patient records, appointments, staff roles, and clinical workflows in one product.',
+      'Hospital management system for a working medical facility: patient records, appointments, staff roles, and clinical workflows in one product.',
     stack: [
       'Next.js',
       'React',
@@ -51,7 +51,7 @@ export const projects: Project[] = [
     number: '03',
     name: 'ReubX World',
     description:
-      'E-commerce platform for a premium fashion brand — product collections, browsing, and an ordering flow through WhatsApp.',
+      'E-commerce platform for a premium fashion brand: product collections, browsing, and an ordering flow through WhatsApp.',
     stack: [],
     role: 'Design & development',
     status: 'Live · Product',
@@ -68,7 +68,7 @@ export const projects: Project[] = [
     number: '04',
     name: 'Gilgal Dental Clinics',
     description:
-      'Website redesign concept for a dental practice in Ikoyi, Lagos — premium visual system, appointment request flow, and a live frontend implementation.',
+      'Website redesign concept for a dental practice in Ikoyi, Lagos: premium visual system, appointment request flow, and a live frontend implementation.',
     stack: ['Next.js', 'React', 'TypeScript', 'Tailwind CSS', 'Framer Motion'],
     role: 'UX / UI / Frontend',
     status: 'Live · Design concept',
@@ -76,7 +76,7 @@ export const projects: Project[] = [
     urlLabel: 'gilgal-dental.vercel.app',
     image: {
       src: '/work/gilgal.jpg',
-      alt: 'Gilgal Dental Clinics website redesign concept — service overview preview',
+      alt: 'Gilgal Dental Clinics website redesign concept, service overview preview',
       width: 1363,
       height: 651,
     },
